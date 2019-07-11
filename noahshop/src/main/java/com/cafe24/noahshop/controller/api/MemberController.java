@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,19 +14,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.noahshop.dto.JSONResult;
+import com.cafe24.noahshop.service.MemberService;
 import com.cafe24.noahshop.vo.MemberVo;
+
+import springfox.documentation.spring.web.json.Json;
 
 @RestController("userAPIController")
 @RequestMapping("/api/user")
-public class UserController {
+public class MemberController {
 
+	//@Autowired
+	private MemberService memberService;
+	
 	@RequestMapping(value = "/checkId/{id}", method = RequestMethod.GET)
 	public JSONResult checkId(@PathVariable(value = "id") String id) {
-		Boolean exist = true;
-
+		
 		// checkId Service
-
-		return JSONResult.success(exist);
+		//Boolean isExist = memberService.checkId(id);
+		
+		return JSONResult.success("return:checkId");
+	}
+	
+	@RequestMapping(value="/joinForm", method = RequestMethod.GET)
+	public JSONResult joinForm() {
+		
+		return JSONResult.success("form");
+	}
+	
+	
+	@RequestMapping(value="/joinsuccess", method = RequestMethod.GET)
+	public JSONResult joinsuccess() {
+		
+		return JSONResult.success("redirect:joinsuccess");
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.PUT)
@@ -40,6 +60,8 @@ public class UserController {
 		}
 		
 		// add service
-		return JSONResult.success(vo);
+		//MemberVo authVo = memberService.join(vo);
+		
+		return JSONResult.success("return:join");
 	}
 }

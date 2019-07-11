@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { AppConfig.class, TestWebConfig.class })
 @WebAppConfiguration
-public class UserControllerTest {
+public class MemberControllerTest {
 
 	private MockMvc mockMvc;
 
