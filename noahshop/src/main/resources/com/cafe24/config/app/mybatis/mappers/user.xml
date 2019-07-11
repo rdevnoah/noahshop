@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+
+	<insert id="insert" parameterType="uservo">
+	<![CDATA[
+		insert into user (no, name, email, password, gender, join_date)
+		values(null, #{name }, #{email }, #{password }, #{gender }, now())
+	]]>
+	<selectKey keyProperty="no" resultType="long" order="AFTER">
+		select last_insert_id()
+	</selectKey>
+  	</insert>
+  	
+  	<select id="getByEmailAndPassword" parameterType="uservo" resultType="uservo">
+  	<![CDATA[
+  		select no, name, role 
+  		from user 
+  		where email=#{email } and password=#{password }
+  	]]>
+  	</select>
+  	
+  	<select id="getByNo" parameterType="long" resultType="uservo">
+  	<![CDATA[
+  		select no, name, email, gender from user where no=#{no }
+  	]]>	
+  	</select>
+  	
+  	<select id="getByEmail" parameterType="string" resultType="uservo">
+  	<![CDATA[
+  		select no, name, email, gender
+  		from user 
+  		where email = #{email }
+  	]]>
+  	</select>
+  	
+  	<update id="update" parameterType="uservo">
+  	<![CDATA[
+  		update user 
+  		set name=#{name },
+  	]]> 
+  	<!-- password가 있으면 패스워드 바꿔주고 그냥 빈칸으로 입력하면 안넣어주는 것. 
+  		 jstl 태그 비슷하게도 쓸 수 있다.-->
+  		<if test="password != ''">    
+	  		<![CDATA[
+	  			password= #{password },
+	  		]]> 
+  		</if>
+  	<![CDATA[
+  		gender=#{gender } 
+  		where no=#{no }
+  	]]>
+  	</update>
+
+</mapper>
