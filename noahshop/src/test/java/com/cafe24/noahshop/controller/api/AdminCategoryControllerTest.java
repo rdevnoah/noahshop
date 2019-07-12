@@ -1,7 +1,9 @@
 package com.cafe24.noahshop.controller.api;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -56,5 +58,23 @@ public class AdminCategoryControllerTest {
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
 					.andExpect(jsonPath("$.data.name", is("상의")));
+	}
+	
+	@Test
+	public void testModify() throws Exception {
+		CategoryVo vo = new CategoryVo();
+		vo.setName("상의입니다.");
+		ResultActions resultActions = mockMvc.perform(post("/api/admin/category").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isOk())
+					.andDo(print())
+					.andExpect(jsonPath("$.data.name", is("상의입니다.")));
+	}
+	
+	@Test
+	public void testDelete() throws Exception {
+		ResultActions resultActions = mockMvc.perform(delete("/api/admin/category/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
+		resultActions.andExpect(status().isOk())
+					.andDo(print())
+					.andExpect(jsonPath("$.data", is(2)));
 	}
 }

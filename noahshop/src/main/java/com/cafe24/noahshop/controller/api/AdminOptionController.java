@@ -7,17 +7,15 @@ import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.noahshop.dto.JSONResult;
-import com.cafe24.noahshop.vo.ProductVo;
+import com.cafe24.noahshop.vo.OptionVo;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -26,9 +24,9 @@ import io.swagger.annotations.ApiOperation;
 /**
  * @title Cafe24 Personal-ShoppingMall
  * @packagename : com.cafe24.noahshop.controller.api
- * @filename : AdminProductController.java
+ * @filename : AdminOptionController.java
  * @author : rdevnoah
- * @since : Jul 11, 2019
+ * @since : Jul 12, 2019
  * @version : 1.0
  * @see 
  * 
@@ -38,30 +36,20 @@ import io.swagger.annotations.ApiOperation;
  * Date             AUTHOR           NOTE
  * -------------    -------------    --------------------------------
  * Jul 12, 2019     rdevnoah         Initialize
- * Jul 12, 2019     rdevnoah         test add, delete, modify
+ * Jul 12, 2019     rdevnoah         test add, modify, delete
  * </pre>
  */
-@RestController("adminProductAPIController")
-@RequestMapping("/api/admin/product")
-public class AdminProductController {
+@RestController("adminOptionAPIController")
+@RequestMapping("/api/admin/option")
+public class AdminOptionController {
 	
-	@ApiOperation(value = "get add product form", notes = "상품등록 폼 가져오기")
-	@GetMapping("/addform")
-	public JSONResult addform() {
-		
-		//get add form
-		
-		return JSONResult.success("return:addform");
-	}
-	
-	@ApiOperation(value = "add product by admin", notes = "관리자 상품 등록")
+	@ApiOperation(value = "add option", notes = "옵션 등록")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name="vo", value="상품정보", required=true, dataType="ProductVo", defaultValue="")
+		@ApiImplicitParam(name="vo", value="옵션", required=true, dataType="OptionVo", defaultValue="")
 	})
 	@PutMapping
-	public JSONResult add(@RequestBody @Valid ProductVo vo, BindingResult result) {
+	public JSONResult add(@RequestBody @Valid OptionVo vo, BindingResult result) {
 		
-		//validation
 		if (result.hasErrors()) {
 			// 에러 메세지 확인
 			List<ObjectError> list = result.getAllErrors();
@@ -70,27 +58,31 @@ public class AdminProductController {
 			}
 			return JSONResult.fail("invalid Data");
 		}
-		
-		//add service
-		
 		return JSONResult.success(vo);
 	}
 	
-	@ApiOperation(value = "delete product by admin", notes = "관리자 상품 삭제")
-	@ApiImplicitParam(name="no", value="상품번호", required = true, dataType = "long", defaultValue = "")
+	@ApiOperation(value = "modify option", notes = "옵션 정보 변경")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="vo", value="변경할 옵션 정보", required=true, dataType="OptionVo", defaultValue="")
+	})
+	@PostMapping
+	public JSONResult modify(@RequestBody OptionVo vo) {
+		
+		// modify
+		return JSONResult.success(vo);
+	}
+	
+	@ApiOperation(value = "delete option", notes = "옵션 삭제")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="no", value="삭제할 옵션 번호", required=true, dataType="long", defaultValue="")
+	})
 	@DeleteMapping("/{no}")
 	public JSONResult delete(@PathVariable(value = "no") Long no) {
+
+		//delete
 		
-		// delete 처리
+		//카테고리 상품 미지정 카테고리로 이동
+		
 		return JSONResult.success(no);
-	}
-	
-	@PostMapping
-	@ApiOperation(value = "modify product info by admin", notes = "상품정보 변경 : 수량, 이름, 카테고리 etc")
-	@ApiImplicitParam(name="vo", value = "변경할 상품 정보", required = true, dataType = "ProductVo", defaultValue = "")
-	public JSONResult modify(@RequestBody ProductVo vo) {
-		//modify : 수량, 이름, 카테고리 etc
-		
-		return JSONResult.success(vo);
 	}
 }

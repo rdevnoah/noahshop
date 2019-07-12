@@ -2,7 +2,6 @@ package com.cafe24.noahshop.controller.api;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -24,15 +23,15 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.noahshop.config.AppConfig;
 import com.cafe24.noahshop.config.TestWebConfig;
-import com.cafe24.noahshop.vo.ProductVo;
+import com.cafe24.noahshop.vo.CategoryVo;
+import com.cafe24.noahshop.vo.OptionVo;
 import com.google.gson.Gson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes= {AppConfig.class, TestWebConfig.class})
 @WebAppConfiguration
-public class AdminProductControllerTest {
-	
-	private MockMvc mockMvc;
+public class AdminOptionControllerTest {
+private MockMvc mockMvc;
 	
 	@Autowired
 	private WebApplicationContext wac;
@@ -43,44 +42,30 @@ public class AdminProductControllerTest {
 	}
 	
 	@Test
-	public void testAddForm() throws Exception {
-		ResultActions resultActions = mockMvc.perform(get("/api/admin/product/addform").contentType(MediaType.APPLICATION_JSON));
-		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")));
-		
-	}
-	
-	@Test
 	public void testAdd() throws Exception {
-		ProductVo vo = new ProductVo();
-		vo.setName("아디다스 져지");
-		vo.setMoney(23000);
-		ResultActions resultActions = mockMvc.perform(put("/api/admin/product").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		OptionVo vo = new OptionVo();
+		vo.setName("상의");
+		ResultActions resultActions = mockMvc.perform(put("/api/admin/option").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
-					.andExpect(jsonPath("$.data.name", is("아디다스 져지")))
-					.andExpect(jsonPath("$.data.money",is(23000)));
-	}
-	
-	@Test
-	public void testDelete() throws Exception {
-		ResultActions resultActions = mockMvc.perform(delete("/api/admin/product/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
-		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")))
-					.andExpect(jsonPath("$.data",is(2)));
+					.andExpect(jsonPath("$.data.name", is("상의")));
 	}
 	
 	@Test
 	public void testModify() throws Exception {
-		ProductVo vo = new ProductVo();
-		vo.setName("시원한 반바지!");
-		
-		ResultActions resultActions = mockMvc.perform(post("/api/admin/product").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		OptionVo vo = new OptionVo();
+		vo.setName("사이즈");
+		ResultActions resultActions = mockMvc.perform(post("/api/admin/option").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")))
-					.andExpect(jsonPath("$.data.name",is("시원한 반바지!")));
+					.andExpect(jsonPath("$.data.name", is("사이즈")));
+	}
+	
+	@Test
+	public void testDelete() throws Exception {
+		ResultActions resultActions = mockMvc.perform(delete("/api/admin/option/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
+		resultActions.andExpect(status().isOk())
+					.andDo(print())
+					.andExpect(jsonPath("$.data", is(2)));
 	}
 }
