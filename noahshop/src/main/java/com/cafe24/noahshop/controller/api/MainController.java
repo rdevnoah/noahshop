@@ -1,5 +1,6 @@
 package com.cafe24.noahshop.controller.api;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
  * @packagename : com.cafe24.noahshop.controller.api
  * @filename : MainController.java
  * @author : rdevnoah
- * @since : Jul 12, 2019
+ * @since : Jul 11, 2019
  * @version : 1.0
  * @see 
  * 
@@ -36,7 +37,7 @@ public class MainController {
 	private ProductService productService;
 	
 	@ApiOperation(value="get main page", notes = "메인화면 가져오기")
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@GetMapping
 	public JSONResult main() {
 		// --------- 한 service에서 다른 repository에서 가져와서 한번에 도착
 		// 진열상품목록 get

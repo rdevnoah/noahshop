@@ -12,6 +12,7 @@ public class MemberVo {
 	private String id;
 	
 	@Length(min = 8, max = 16)
+	@NotEmpty
 	private String password;
 	
 	@NotEmpty

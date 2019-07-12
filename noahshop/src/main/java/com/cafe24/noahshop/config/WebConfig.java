@@ -9,7 +9,7 @@ import com.cafe24.config.web.MVCConfig;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"com.cafe24.noahshop.controller"})
+@ComponentScan({"com.cafe24.noahshop.controller", "com.cafe24.noahshop.exception"})
 @Import({SwaggerConfig.class, MVCConfig.class})
 public class WebConfig {
 

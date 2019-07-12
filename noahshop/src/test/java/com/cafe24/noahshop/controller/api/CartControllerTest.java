@@ -1,8 +1,11 @@
 package com.cafe24.noahshop.controller.api;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
@@ -40,30 +43,32 @@ public class CartControllerTest {
 
 	@Test
 	public void testadd() throws Exception {
-		
+
 		ProductVo vo = new ProductVo();
 		ResultActions resultActions = mockMvc
-				.perform(put("/api/cart").contentType(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-		resultActions.andExpect(status().isOk())
-		.andDo(print());
+				.perform(put("/api/cart").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isOk()).andDo(print());
 	}
-	
+
 	@Test
 	public void testget() throws Exception {
-		ResultActions resultActions = mockMvc
-				.perform(get("/api/cart").contentType(MediaType.APPLICATION_JSON));
-		resultActions.andExpect(status().isOk())
-		.andDo(print());
+		ResultActions resultActions = mockMvc.perform(get("/api/cart").contentType(MediaType.APPLICATION_JSON));
+		resultActions.andExpect(status().isOk()).andDo(print());
 	}
-	
+
 	@Test
 	public void testCartOrder() throws Exception {
 		ResultActions resultActions = mockMvc
 				.perform(get("/api/cart/orderform").contentType(MediaType.APPLICATION_JSON));
-		resultActions.andExpect(status().isOk())
-		.andDo(print());
+		resultActions.andExpect(status().isOk()).andDo(print());
 	}
-	
-	
+
+	@Test
+	public void testDeleteCart() throws Exception {
+		ResultActions resultActions = mockMvc.perform(delete("/api/cart/{no}", "2:4:5:6").contentType(MediaType.APPLICATION_JSON));
+		resultActions.andExpect(status().isOk())
+					.andDo(print())
+					.andExpect(jsonPath("$.result", is("success")));
+	}
 
 }

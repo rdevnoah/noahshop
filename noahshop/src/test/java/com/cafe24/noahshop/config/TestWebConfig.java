@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.cafe24.noahshop.controller")
+@ComponentScan({"com.cafe24.noahshop.controller", "com.cafe24.noahshop.exception"})
 @Import({SwaggerConfig.class, TestMVCConfig.class})
 public class TestWebConfig{
 }

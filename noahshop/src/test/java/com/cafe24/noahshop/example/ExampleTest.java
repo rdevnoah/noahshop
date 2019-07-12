@@ -29,6 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class ExampleTest {
 	// 테스트 케이스(메소드)끼릴 공유해야 할 변수가 있으면
 	// static!!
