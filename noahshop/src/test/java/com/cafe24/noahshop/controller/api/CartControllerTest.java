@@ -59,7 +59,7 @@ public class CartControllerTest {
 	@Test
 	public void testCartOrder() throws Exception {
 		ResultActions resultActions = mockMvc
-				.perform(put("/api/cart/order/{sessionCart}","aaaaa:2*2*2*2-3*3*3*3").contentType(MediaType.APPLICATION_JSON));
+				.perform(get("/api/cart/orderform").contentType(MediaType.APPLICATION_JSON));
 		resultActions.andExpect(status().isOk())
 		.andDo(print());
 	}
