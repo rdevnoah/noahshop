@@ -53,18 +53,23 @@ public class MemberControllerTest {
 
 		// insert member (invalid data)
 		MemberVo vo = new MemberVo(null, "asdfasdf", "asdf", "aaa", "1123412313", "asdfasdfasdfasdf",
-				"asdfasf@asdfas.com", null, null);
+							"asdfasf@asdfas.com", null, null);
+
 		resultActions = mockMvc
 				.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("fail")))
 				.andExpect(jsonPath("$.message", is("invalid Data")));
 
 		// insert member (valid data)
 		vo = new MemberVo(null, "asdfasfasdf", "ajskdlfjg", "aaa", "1123412313", "asdfasdfasdfasdf",
-				"asdfasf@asdfas.com", null, null);
+							"asdfasf@asdfas.com", null, null);
 		resultActions = mockMvc
 				.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")));
+		
+		resultActions.andExpect(status().isOk())
+					.andDo(print())
+					.andExpect(jsonPath("$.result", is("success")));
 	}
 
 	@Test
