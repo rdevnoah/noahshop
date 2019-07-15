@@ -142,6 +142,7 @@ public class MemberControllerTest {
 		String password = "aaaaaaaaaa";
 		// 임시로 tel을 null validator 추가해준 test
 		//String tel = "010-2222-2222";
+		
 		MemberVo vo = new MemberVo();
 		vo.setId(id);
 		vo.setPassword(password);
