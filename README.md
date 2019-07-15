@@ -1,3 +1,10 @@
+## 과제 바로가기
+1주차 [[link]](https://github.com/rdevnoah/final_shoppingmall/wiki/1st-week-2019.07.01~2019.07.05)
+
+2주차 [[link]](https://github.com/rdevnoah/noahshop/wiki/2nd-Week-2019.07.08-~-2019.07.12)
+
+_ _ _
+
 ## cafe24 신입연수 프로젝트 - shopping mall 
 
 - 교육 과정 전반에 걸쳐 기술을 활용할 수 있는 shopping mall을 제작하고, 매주 부여되는 과제를 기한 내에 수행한다.
@@ -67,6 +74,4 @@ _ _ _
 
 _ _ _
 
-1주차 [[link]](https://github.com/rdevnoah/final_shoppingmall/wiki/1st-week-2019.07.01~2019.07.05)
 
-2주차 [[link]](https://github.com/rdevnoah/noahshop/wiki/2nd-Week-2019.07.08-~-2019.07.12)
