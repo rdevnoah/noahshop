@@ -47,50 +47,61 @@ public class MemberControllerTest {
 
 		// checkId
 		ResultActions resultActions = mockMvc
-				.perform(get("/api/user/checkId/{id}", "aaaa").contentType(MediaType.APPLICATION_JSON));
+										.perform(get("/api/user/checkId/{id}", "aaaa").contentType(MediaType.APPLICATION_JSON));
 
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")));
+		resultActions.andExpect(status().isOk())
+					.andDo(print())
+					.andExpect(jsonPath("$.result", is("success")));
 
 		// insert member (invalid data)
-		MemberVo vo = new MemberVo(null, "asdfasdf", "asdf", "aaa", "1123412313", "asdfasdfasdfasdf",
+		MemberVo vo = new MemberVo(null, "asdfasdf", "asdf", "aaa", "11234123133", "asdfasdfasdfasdf",
 							"asdfasf@asdfas.com", null, null);
 
 		resultActions = mockMvc
-				.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+							.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("fail")))
-				.andExpect(jsonPath("$.message", is("invalid Data")));
+		resultActions.andExpect(status().isBadRequest())
+					.andDo(print()).andExpect(jsonPath("$.result", is("fail")))
+					.andExpect(jsonPath("$.message", is("invalid Data")));
 
 		// insert member (valid data)
-		vo = new MemberVo(null, "asdfasfasdf", "ajskdlfjg", "aaa", "1123412313", "asdfasdfasdfasdf",
+		vo = new MemberVo(null, "asdfasfasdf", "ajskdlfjg", "aaa", "112-3412-3313", "asdfasdfasdfasdf",
 							"asdfasf@asdfas.com", null, null);
 		resultActions = mockMvc
-				.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+							.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		
+		resultActions.andExpect(status().isOk())
+					.andDo(print())
+					.andExpect(jsonPath("$.result", is("success")));
+		
+		
+	}
+
+	@Test
+	public void testJoinForm() throws Exception {
+		ResultActions resultActions = mockMvc
+										.perform(get("/api/user/joinform").contentType(MediaType.APPLICATION_JSON));
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
 					.andExpect(jsonPath("$.result", is("success")));
 	}
 
 	@Test
-	public void testJoinForm() throws Exception {
-		ResultActions resultActions = mockMvc
-				.perform(get("/api/user/joinform").contentType(MediaType.APPLICATION_JSON));
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")));
-	}
-
-	@Test
 	public void testJoinSuccess() throws Exception {
 		ResultActions resultActions = mockMvc
-				.perform(get("/api/user/joinsuccess").contentType(MediaType.APPLICATION_JSON));
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")));
+										.perform(get("/api/user/joinsuccess").contentType(MediaType.APPLICATION_JSON));
+		resultActions.andExpect(status().isOk())
+					.andDo(print())
+					.andExpect(jsonPath("$.result", is("success")));
 	}
 
 	@Test
 	public void testModifyForm() throws Exception {
 		ResultActions resultActions = mockMvc
-				.perform(get("/api/user/modifyform").contentType(MediaType.APPLICATION_JSON));
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")));
+										.perform(get("/api/user/modifyform").contentType(MediaType.APPLICATION_JSON));
+		resultActions.andExpect(status().isOk())
+					.andDo(print())
+					.andExpect(jsonPath("$.result", is("success")));
 	}
 
 	@Test
@@ -104,9 +115,11 @@ public class MemberControllerTest {
 		vo.setTel("010-1111-1111");
 
 		ResultActions resultActions = mockMvc.perform(post("/api/user").contentType(MediaType.APPLICATION_JSON)
-				.content(new Gson().toJson(vo)));
+										.content(new Gson().toJson(vo)));
 		
-		resultActions.andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.result", is("success")))
+		resultActions.andDo(print())
+					.andExpect(status().isOk())
+					.andExpect(jsonPath("$.result", is("success")))
 					.andExpect(jsonPath("$.data.tel", is("010-1111-1111")))
 					.andExpect(jsonPath("$.data.email", is("test@test.com")));
 	}
@@ -114,7 +127,7 @@ public class MemberControllerTest {
 	@Test
 	public void testLoginForm() throws Exception {
 		ResultActions resultActions = mockMvc
-				.perform(get("/api/user/loginform").contentType(MediaType.APPLICATION_JSON));
+										.perform(get("/api/user/loginform").contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
@@ -127,8 +140,13 @@ public class MemberControllerTest {
 		// valid data test
 		String id = "zzagam2";
 		String password = "aaaaaaaaaa";
-		ResultActions resultActions = mockMvc.perform(post("/api/user/login").param("id", id)
-				.param("password", password).contentType(MediaType.APPLICATION_JSON));
+		// 임시로 tel을 null validator 추가해준 test
+		//String tel = "010-2222-2222";
+		MemberVo vo = new MemberVo();
+		vo.setId(id);
+		vo.setPassword(password);
+		vo.setTel(null);
+		ResultActions resultActions = mockMvc.perform(post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
