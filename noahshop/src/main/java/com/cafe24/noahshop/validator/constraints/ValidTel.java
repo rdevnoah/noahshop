@@ -15,7 +15,7 @@ import com.cafe24.noahshop.validator.TelValidator;
 @Target(FIELD)
 @Constraint(validatedBy = TelValidator.class)
 public @interface ValidTel {
-	String message() default "Invalid Tel";
+	String message() default "잘못된 전화번호입니다.";
 	
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {}; 

@@ -55,8 +55,8 @@ public class AdminOptionController {
 			List<ObjectError> list = result.getAllErrors();
 			for (ObjectError error : list) {
 				System.out.println("Validation Error : " + error);
+				return JSONResult.fail("invalid Data");
 			}
-			return JSONResult.fail("invalid Data");
 		}
 		return JSONResult.success(vo);
 	}

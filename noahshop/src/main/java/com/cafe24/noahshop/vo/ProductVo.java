@@ -1,8 +1,12 @@
 package com.cafe24.noahshop.vo;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class ProductVo {
 	private Long no;
 	private Long categoryNo;
+	
+	@NotEmpty
 	private String code;
 	private String name;
 	private int money;

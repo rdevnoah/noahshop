@@ -49,6 +49,12 @@ private MockMvc mockMvc;
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
 					.andExpect(jsonPath("$.data.name", is("상의")));
+		
+		vo.setName(null);
+		resultActions = mockMvc.perform(put("/api/admin/option").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isOk())
+					.andDo(print())
+					.andExpect(jsonPath("$.result", is("fail")));
 	}
 	
 	@Test

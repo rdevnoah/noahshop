@@ -60,7 +60,7 @@ public class OrderController {
 	@PostMapping("/orderform")
 	public JSONResult orderform(@RequestBody ProductVo vo) {
 		// 선택한 상품 상세정보를 통해 orderform으로 이동처리
-		return JSONResult.success("return:orderform");
+		return JSONResult.success(vo);
 	}
 	
 	@ApiOperation(value="add order", notes = "상품 주문처리")
@@ -76,6 +76,7 @@ public class OrderController {
 			List<ObjectError> list = result.getAllErrors();
 			for (ObjectError error : list) {
 				System.out.println("Validation Error : " + error);
+				return JSONResult.fail("invalid data");
 			}
 		}
 		

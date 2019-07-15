@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -52,6 +54,9 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/api/user")
 public class MemberController {
 
+	@Autowired
+	private MessageSource messageSource;
+	
 	// @Autowired
 	private MemberService memberService;
 
@@ -91,8 +96,8 @@ public class MemberController {
 			List<ObjectError> list = result.getAllErrors();
 			for (ObjectError error : list) {
 				System.out.println("Validation Error : " + error);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("invalid Data"));
 			}
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("invalid Data"));
 		}
 
 		// add service (add member + add salt + add key)
@@ -113,17 +118,17 @@ public class MemberController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "vo", value = "수정할 회원정보", required = true, dataType = "MemberVo", defaultValue = "") })
 	@PostMapping
-	public JSONResult modify(@RequestBody @Valid MemberVo vo, BindingResult result) {
+	public ResponseEntity<JSONResult> modify(@RequestBody @Valid MemberVo vo, BindingResult result) {
 		if (result.hasErrors()) {
 			// 에러 메세지 확인
 			List<ObjectError> list = result.getAllErrors();
 			for (ObjectError error : list) {
 				System.out.println("Validation Error : " + error);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("invalid data"));
 			}
-			return JSONResult.fail("invalid Data");
 		}
 
-		return JSONResult.success(vo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(vo));
 	}
 
 	@ApiOperation(value = "get login form", notes = "로그인 폼 가져오기")
@@ -143,11 +148,13 @@ public class MemberController {
 		
 		// validation
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-		Set<ConstraintViolation<MemberVo>> validatorResults = validator.validateProperty(vo, "tel");
+		Set<ConstraintViolation<MemberVo>> validatorResults = validator.validateProperty(vo, "id");
 		
 		if(validatorResults.isEmpty() == false) {
 			for(ConstraintViolation<MemberVo> validatorResult : validatorResults) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(validatorResult.getMessage())); 
+				String message = validatorResult.getMessage();
+				//String message = messageSource.getMessage("", null, LocaleContextHolder.getLocale());
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(message)); 
 			}
 		}
 

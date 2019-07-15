@@ -55,12 +55,20 @@ public class AdminProductControllerTest {
 	public void testAdd() throws Exception {
 		ProductVo vo = new ProductVo();
 		vo.setName("아디다스 져지");
+		vo.setCode("123adfg32");
 		vo.setMoney(23000);
 		ResultActions resultActions = mockMvc.perform(put("/api/admin/product").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
 					.andExpect(jsonPath("$.data.name", is("아디다스 져지")))
 					.andExpect(jsonPath("$.data.money",is(23000)));
+		
+		//invalid 
+		vo.setCode(null);
+		resultActions = mockMvc.perform(put("/api/admin/product").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isBadRequest())
+		.andDo(print())
+		.andExpect(jsonPath("$.result", is("fail")));
 	}
 	
 	@Test

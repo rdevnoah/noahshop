@@ -3,6 +3,7 @@ package com.cafe24.noahshop.controller.api;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -28,6 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.cafe24.noahshop.config.AppConfig;
 import com.cafe24.noahshop.config.TestWebConfig;
 import com.cafe24.noahshop.vo.OrderVo;
+import com.cafe24.noahshop.vo.ProductVo;
 import com.google.gson.Gson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,16 +45,36 @@ public class OrderControllerTest {
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 	}
+	
+	@Test
+	public void testOrderForm() throws Exception{
+		ProductVo vo = new ProductVo();
+		vo.setName("청바지!!");
+		
+		ResultActions resultActions = mockMvc
+				.perform(post("/api/order/orderform").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")));
+	}
+	
 	@Test
 	public void testAddOrder() throws Exception {
 		OrderVo vo = new OrderVo();
 		vo.setAddress("대구대구대구대구");
+		vo.setIsMember("T");
 
 		ResultActions resultActions = mockMvc
 				.perform(put("/api/order").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print());
+		
+		vo.setIsMember(null);
+		resultActions = mockMvc
+				.perform(put("/api/order").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isOk())
+					.andDo(print())
+					.andExpect(jsonPath("$.result", is("fail")));
 	}
 
 	@Test

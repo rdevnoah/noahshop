@@ -1,11 +1,14 @@
 package com.cafe24.noahshop.vo;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class OrderVo {
 	private Long no;
 	private Long memberNo;
 	private String orderNo;
 	private String orderDate;
 	private String address;
+	@NotEmpty
 	private String isMember;
 	private String password;
 	private String payment;

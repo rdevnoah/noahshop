@@ -1,7 +1,11 @@
 package com.cafe24.noahshop.vo;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class OptionVo {
 	private Long no;
+	
+	@NotEmpty
 	private String name;
 
 	public OptionVo() {

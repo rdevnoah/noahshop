@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.noahshop.dto.JSONResult;
@@ -59,7 +60,7 @@ public class AdminProductController {
 		@ApiImplicitParam(name="vo", value="상품정보", required=true, dataType="ProductVo", defaultValue="")
 	})
 	@PutMapping
-	public JSONResult add(@RequestBody @Valid ProductVo vo, BindingResult result) {
+	public ResponseEntity<JSONResult> add(@RequestBody @Valid ProductVo vo, BindingResult result) {
 		
 		//validation
 		if (result.hasErrors()) {
@@ -67,13 +68,13 @@ public class AdminProductController {
 			List<ObjectError> list = result.getAllErrors();
 			for (ObjectError error : list) {
 				System.out.println("Validation Error : " + error);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("invalid data"));
 			}
-			return JSONResult.fail("invalid Data");
 		}
 		
 		//add service
 		
-		return JSONResult.success(vo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(vo));
 	}
 	
 	@ApiOperation(value = "delete product by admin", notes = "관리자 상품 삭제")

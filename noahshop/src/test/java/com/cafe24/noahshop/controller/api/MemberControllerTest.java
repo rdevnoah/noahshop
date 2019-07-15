@@ -122,6 +122,15 @@ public class MemberControllerTest {
 					.andExpect(jsonPath("$.result", is("success")))
 					.andExpect(jsonPath("$.data.tel", is("010-1111-1111")))
 					.andExpect(jsonPath("$.data.email", is("test@test.com")));
+		
+		// invalid
+		vo.setTel(null);
+		resultActions = mockMvc.perform(post("/api/user").contentType(MediaType.APPLICATION_JSON)
+				.content(new Gson().toJson(vo)));
+		resultActions.andDo(print())
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.result", is("fail")));
+		
 	}
 
 	@Test
@@ -141,19 +150,26 @@ public class MemberControllerTest {
 		String id = "zzagam2";
 		String password = "aaaaaaaaaa";
 		// 임시로 tel을 null validator 추가해준 test
-		//String tel = "010-2222-2222";
 		
 		MemberVo vo = new MemberVo();
 		vo.setId(id);
 		vo.setPassword(password);
-		vo.setTel(null);
+		
 		ResultActions resultActions = mockMvc.perform(post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")));
+					.andExpect(jsonPath("$.result", is("success")))
+					.andExpect(jsonPath("$.data.id", is("zzagam2")));
 
 		// invalid data test
+		
+		
+		vo.setId("zz");
+		resultActions = mockMvc.perform(post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isBadRequest())
+		.andDo(print())
+		.andExpect(jsonPath("$.result", is("fail")));
 
 		/*
 		 * id = "zz"; password = "aa"; resultActions =
