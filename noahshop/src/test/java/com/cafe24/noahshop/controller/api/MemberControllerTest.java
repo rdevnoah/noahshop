@@ -21,13 +21,13 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.noahshop.config.AppConfig;
+import com.cafe24.noahshop.config.TestAppConfig;
 import com.cafe24.noahshop.config.TestWebConfig;
 import com.cafe24.noahshop.vo.MemberVo;
 import com.google.gson.Gson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { AppConfig.class, TestWebConfig.class })
+@ContextConfiguration(classes = { TestAppConfig.class, TestWebConfig.class })
 @WebAppConfiguration
 public class MemberControllerTest {
 
@@ -47,11 +47,12 @@ public class MemberControllerTest {
 
 		// checkId
 		ResultActions resultActions = mockMvc
-										.perform(get("/api/user/checkId/{id}", "aaaa").contentType(MediaType.APPLICATION_JSON));
+										.perform(get("/api/user/checkId/{id}", "zzagam2").contentType(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")));
+					.andExpect(jsonPath("$.result", is("success")))
+					.andExpect(jsonPath("$.data", is("zzagam2")));
 
 		// insert member (invalid data)
 		MemberVo vo = new MemberVo(null, "asdfasdf", "asdf", "aaa", "11234123133", "asdfasdfasdfasdf",
@@ -61,11 +62,10 @@ public class MemberControllerTest {
 							.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		
 		resultActions.andExpect(status().isBadRequest())
-					.andDo(print()).andExpect(jsonPath("$.result", is("fail")))
-					.andExpect(jsonPath("$.message", is("invalid Data")));
+					.andDo(print()).andExpect(jsonPath("$.result", is("fail")));
 
 		// insert member (valid data)
-		vo = new MemberVo(null, "asdfasfasdf", "ajskdlfjg", "aaa", "112-3412-3313", "asdfasdfasdfasdf",
+		vo = new MemberVo(null, "zzagam2", "qntlwkd1!", "aaa", "112-3412-3313", "asdfasdfasdfasdf",
 							"asdfasf@asdfas.com", null, null);
 		resultActions = mockMvc
 							.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
@@ -110,7 +110,7 @@ public class MemberControllerTest {
 		vo.setId("zzagam2");
 		vo.setAddress("수원시 팔달구 우만동");
 		vo.setName("김영호");
-		vo.setPassword("ghghghghghgh");
+		vo.setPassword("qntlfwkd1!");
 		vo.setEmail("test@test.com");
 		vo.setTel("010-1111-1111");
 
@@ -148,7 +148,7 @@ public class MemberControllerTest {
 
 		// valid data test
 		String id = "zzagam2";
-		String password = "aaaaaaaaaa";
+		String password = "qntlfwkd1!";
 		// 임시로 tel을 null validator 추가해준 test
 		
 		MemberVo vo = new MemberVo();
@@ -165,7 +165,8 @@ public class MemberControllerTest {
 		// invalid data test
 		
 		
-		vo.setId("zz");
+		vo.setId("zzagam2");
+		vo.setPassword("qntlfwkd11");
 		resultActions = mockMvc.perform(post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isBadRequest())
 		.andDo(print())

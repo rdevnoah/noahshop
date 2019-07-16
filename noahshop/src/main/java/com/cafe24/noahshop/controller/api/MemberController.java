@@ -69,7 +69,7 @@ public class MemberController {
 		// checkId Service
 		// Boolean isExist = memberService.checkId(id);
 
-		return JSONResult.success("return:checkId");
+		return JSONResult.success(id);
 	}
 
 	@ApiOperation(value = "get join form", notes = "회원가입 form 가져오기")
@@ -96,7 +96,7 @@ public class MemberController {
 			List<ObjectError> list = result.getAllErrors();
 			for (ObjectError error : list) {
 				System.out.println("Validation Error : " + error);
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("invalid Data"));
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
 			}
 		}
 
@@ -124,7 +124,7 @@ public class MemberController {
 			List<ObjectError> list = result.getAllErrors();
 			for (ObjectError error : list) {
 				System.out.println("Validation Error : " + error);
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("invalid data"));
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
 			}
 		}
 
@@ -148,12 +148,14 @@ public class MemberController {
 		
 		// validation
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-		Set<ConstraintViolation<MemberVo>> validatorResults = validator.validateProperty(vo, "id");
+		Set<ConstraintViolation<MemberVo>> validatorResults = validator.validateProperty(vo, "password");
 		
 		if(validatorResults.isEmpty() == false) {
 			for(ConstraintViolation<MemberVo> validatorResult : validatorResults) {
 				String message = validatorResult.getMessage();
+				
 				//String message = messageSource.getMessage("", null, LocaleContextHolder.getLocale());
+				
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(message)); 
 			}
 		}

@@ -5,9 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.cafe24.config.web.MessageConfig;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan({"com.cafe24.noahshop.controller", "com.cafe24.noahshop.exception"})
-@Import({SwaggerConfig.class, TestMVCConfig.class})
+@Import({SwaggerConfig.class, TestMVCConfig.class, MessageConfig.class})
 public class TestWebConfig{
 }

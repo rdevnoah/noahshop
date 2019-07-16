@@ -2,10 +2,11 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<package name="com.cafe24.myshop.vo"/>
+		<package name="com.cafe24.noahshop.vo"/>
     </typeAliases>	
     
 	<mappers>
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/member.xml"/>
 		<!-- <mapper resource="com/cafe24/config/app/mybatis/mappers/guestbook.xml" /> -->
 		
 	</mappers>

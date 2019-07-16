@@ -3,6 +3,7 @@ package com.cafe24.noahshop.vo;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.cafe24.noahshop.validator.constraints.ValidPassword;
 import com.cafe24.noahshop.validator.constraints.ValidTel;
 
 public class MemberVo {
@@ -13,8 +14,9 @@ public class MemberVo {
 	@Length(min = 4, max = 12)
 	private String id;
 	
-	@Length(min = 8, max = 16)
+	
 	@NotEmpty
+	@ValidPassword
 	private String password;
 	
 	@NotEmpty
