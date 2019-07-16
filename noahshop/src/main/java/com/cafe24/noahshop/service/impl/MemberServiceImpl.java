@@ -39,9 +39,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public boolean checkId(String id) {
-		boolean isModify = true;
-		// dao
-		return isModify;
+		String isModify = memberDao.checkId(id);
+		// 비어있으면 아이디 중복 아닌 것.
+		return isModify != null;
 	}
 
 	@Transactional
@@ -57,7 +57,8 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.insertKey(map);
 		return joinUser;
 	}
-
+	
+	@Transactional
 	@Override
 	public MemberVo getMemberByNo(Long no) {
 		String key = memberDao.getKeyByNo(no);

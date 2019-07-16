@@ -11,7 +11,7 @@ public class MessageConfig {
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource= new ResourceBundleMessageSource();
-		messageSource.setBasename("com/cafe24/config/web/messages/messages_ko");
+		messageSource.setBasename("com/cafe24/config/web/messagedfs/messages_ko.properties");
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
 	}

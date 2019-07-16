@@ -16,4 +16,6 @@ public interface MemberDao {
 	public boolean deleteAllKey();
 
 	public String getKeyByNo(Long no);
+
+	public String checkId(String id);
 }

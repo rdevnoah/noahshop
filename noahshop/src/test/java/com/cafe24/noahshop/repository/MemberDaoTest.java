@@ -1,12 +1,13 @@
 package com.cafe24.noahshop.repository;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,12 @@ public class MemberDaoTest {
 		assertTrue(memberDao.insertKey(map));
 	}
 	
-	/*
-	 * @Test public void testDI() { assertNotNull(sqlSession); }
-	 */
+	//@Test
+	public void testCheckID() {
+		String unusedId = "asdfasdf";
+		assertNull(memberDao.checkId(unusedId));
+		
+		String usedId = "q77q78";
+		assertNotNull(memberDao.checkId(usedId));
+	}
 }

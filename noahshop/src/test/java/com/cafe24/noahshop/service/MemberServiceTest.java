@@ -33,13 +33,13 @@ public class MemberServiceTest {
 		assertNotNull(memberService);
 	}
 	
-	@Before
+	//@Before
 	public void deleteDB() {
 		memberDao.deleteAll();
 		memberDao.deleteAllKey();
 	}
 	
-	@Test
+	//@Test
 	public void testInsert() {
 		MemberVo vo = new MemberVo(null, "zzagam2"
 				, "password1", "김영호", "010-4532-3018"
@@ -62,14 +62,15 @@ public class MemberServiceTest {
 	
 	
 	
-	//@Test
+	@Test
 	public void testCheckId() {
 		String id = "zzagam2";
 		
 		// 이미 존재하는 아이디
-		assertThat(memberService.checkId(id), is(false));
-		
-		// 존재하지 않는 아이디
 		assertThat(memberService.checkId(id), is(true));
+		
+		id = "asdfasag";
+		// 존재하지 않는 아이디
+		assertThat(memberService.checkId(id), is(false));
 	}
 }

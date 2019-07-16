@@ -61,8 +61,9 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectOne("member.getMemberByNo", map);
 	}
 	
-	public boolean checkId(String id) {
-		return true;
+	@Override
+	public String checkId(String id) {
+		return sqlSession.selectOne("member.checkId", id);
 	}
 
 	@Override
