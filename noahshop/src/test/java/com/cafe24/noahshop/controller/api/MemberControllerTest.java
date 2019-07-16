@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,6 +54,7 @@ public class MemberControllerTest {
 					.andDo(print())
 					.andExpect(jsonPath("$.result", is("success")))
 					.andExpect(jsonPath("$.data", is("zzagam2")));
+		
 
 		// insert member (invalid data)
 		MemberVo vo = new MemberVo(null, "asdfasdf", "asdf", "aaa", "11234123133", "asdfasdfasdfasdf",
@@ -192,4 +194,5 @@ public class MemberControllerTest {
 					.andExpect(jsonPath("$.result", is("success")));
 	}
 
+	
 }

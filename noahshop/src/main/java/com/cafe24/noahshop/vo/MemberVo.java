@@ -34,6 +34,8 @@ public class MemberVo {
 	private String regDate;
 	private String role;
 	
+	private String key;
+	
 	public MemberVo() {}
 
 	public MemberVo(Long no, String id, String password, String name, String tel, String address, String email,
@@ -52,6 +54,14 @@ public class MemberVo {
 
 	public Long getNo() {
 		return no;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	public void setNo(Long no) {

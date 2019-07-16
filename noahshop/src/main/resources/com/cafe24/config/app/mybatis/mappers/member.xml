@@ -5,11 +5,18 @@
 	<insert id="insert" parameterType="membervo">
    	<![CDATA[
 		insert into member 
-		values(nextval('member_no_seq'), #{id }, #{password }, #{name }
-        , #{tel }, #{address }, #{email }, now(), 'USER')
+		values(nextval('member_no_seq')
+				, encode(encrypt(convert_to(#{id },'utf8'),convert_to(#{key },'utf8'), 'aes'),'hex')
+				, #{password }
+				, encode(encrypt(convert_to(#{name },'utf8'),convert_to(#{key },'utf8'), 'aes'),'hex')
+				, encode(encrypt(convert_to(#{tel },'utf8'),convert_to(#{key },'utf8'), 'aes'),'hex')
+				, encode(encrypt(convert_to(#{address },'utf8'),convert_to(#{key },'utf8'), 'aes'),'hex')
+				, encode(encrypt(convert_to(#{email },'utf8'),convert_to(#{key },'utf8'), 'aes'),'hex')
+				, now()
+				, 'USER')
 	]]>
 		<selectKey resultType="long" keyProperty="no" order="AFTER">
-			select currval('member_no_seq');
+			select currval('member_no_seq')
 		</selectKey>
 		
 	</insert>
@@ -19,6 +26,39 @@
 			delete from member
 		]]>
 	</delete>
-
+	
+	<delete id="deleteAllKey">
+		<![CDATA[
+			delete from key
+		]]>
+	</delete>
+	
+	<insert id="insertKey" parameterType="map">
+   	<![CDATA[
+		insert into key(member_no, key)
+		values(#{member.no }, #{key })
+	]]>
+	</insert>
+	
+	<select id="getMemberByNo" parameterType="long" resultType="membervo">
+		<![CDATA[
+			select no
+			, convert_from(decrypt(decode(id,'hex'), convert_to(#{key }, 'utf8'),'aes'),'utf8') as id
+			, password
+			, convert_from(decrypt(decode(name,'hex'), convert_to(#{key }, 'utf8'),'aes'),'utf8') as name
+			, convert_from(decrypt(decode(tel,'hex'), convert_to(#{key }, 'utf8'),'aes'),'utf8') as tel
+			, convert_from(decrypt(decode(address,'hex'), convert_to(#{key }, 'utf8'),'aes'),'utf8') as address
+			, convert_from(decrypt(decode(email,'hex'), convert_to(#{key }, 'utf8'),'aes'),'utf8') as email
+			, join_date as joinDate
+			, role
+			from member where no=#{no }
+		]]>
+	</select>
+	
+	<select id="getKeyByNo" parameterType="long" resultType="string">
+		<![CDATA[
+			select key from key where member_no=#{no }
+		]]>
+	</select>
 
 </mapper>
