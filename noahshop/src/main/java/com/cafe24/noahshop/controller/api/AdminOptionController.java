@@ -1,25 +1,18 @@
 package com.cafe24.noahshop.controller.api;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.cafe24.noahshop.dto.JSONResult;
+import com.cafe24.noahshop.service.AdminOptionService;
 import com.cafe24.noahshop.vo.OptionVo;
-
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @title Cafe24 Personal-ShoppingMall
@@ -42,14 +35,17 @@ import io.swagger.annotations.ApiOperation;
 @RestController("adminOptionAPIController")
 @RequestMapping("/api/admin/option")
 public class AdminOptionController {
-	
-	@ApiOperation(value = "add option", notes = "옵션 등록")
+
+	@Autowired
+	private AdminOptionService adminOptionService;
+
+
+	@ApiOperation(value = "add parent option", notes = "상위 옵션 등록")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="vo", value="옵션", required=true, dataType="OptionVo", defaultValue="")
 	})
 	@PutMapping
 	public JSONResult add(@RequestBody @Valid OptionVo vo, BindingResult result) {
-		
 		if (result.hasErrors()) {
 			// 에러 메세지 확인
 			List<ObjectError> list = result.getAllErrors();
@@ -58,7 +54,31 @@ public class AdminOptionController {
 				return JSONResult.fail("invalid Data");
 			}
 		}
-		return JSONResult.success(vo);
+
+		OptionVo addResult = adminOptionService.addParentOption(vo);
+
+		return JSONResult.success(addResult);
+	}
+
+	@ApiOperation(value = "add child option", notes = "하위 옵션 등록")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name="vo", value="옵션", required=true, dataType="OptionVo", defaultValue=""),
+			@ApiImplicitParam(name="no", value="상위옵션 번호", required=true, dataType="long", defaultValue="")
+	})
+	@PutMapping("/{no}")
+	public JSONResult add(@RequestBody @Valid OptionVo vo, @PathVariable(value = "no") Long parentNo, BindingResult result){
+		if (result.hasErrors()) {
+			// 에러 메세지 확인
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				System.out.println("Validation Error : " + error);
+				return JSONResult.fail(error.getDefaultMessage());
+			}
+		}
+		vo.setParent_no(parentNo);
+		OptionVo addResult = adminOptionService.addChildOption(vo);
+
+		return JSONResult.success(parentNo);
 	}
 	
 	@ApiOperation(value = "modify option", notes = "옵션 정보 변경")

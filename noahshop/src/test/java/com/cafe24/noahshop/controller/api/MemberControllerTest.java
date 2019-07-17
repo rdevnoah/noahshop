@@ -45,7 +45,7 @@ public class MemberControllerTest {
 	@Rollback(true)
 	@Test
 	public void testJoin() throws Exception {
-		
+
 		// checkId insert data()
 		MemberVo checkVo = new MemberVo(null, "q77q78", "qntlfwkd1!", "김노아", "010-4444-3333", "천안시 서북구 두정동"
 				, "ehfhfhdehd@naver.com", null, null);

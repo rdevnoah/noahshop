@@ -1,28 +1,28 @@
 package com.cafe24.noahshop.controller.api;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import com.cafe24.noahshop.vo.OptionVo;
+import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.noahshop.vo.OptionVo;
-import com.google.gson.Gson;
+import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AdminOptionControllerTest {
@@ -35,21 +35,45 @@ private MockMvc mockMvc;
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 	}
-	
+
+	@Rollback(true)
 	@Test
 	public void testAdd() throws Exception {
+
 		OptionVo vo = new OptionVo();
-		vo.setName("상의");
-		ResultActions resultActions = mockMvc.perform(put("/api/admin/option").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		// 상위옵션 add test
+		vo.setName("TOP");
+		ResultActions resultActions = mockMvc.perform(put("/api/admin/option").contentType(MediaType.APPLICATION_JSON)
+																							.content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
-					.andExpect(jsonPath("$.data.name", is("상의")));
-		
+					.andExpect(jsonPath("$.data.name", is(vo.getName())));
+
+		vo = new OptionVo();
+		vo.setName("BOTTOM");
+		resultActions = mockMvc.perform(put("/api/admin/option").contentType(MediaType.APPLICATION_JSON)
+				.content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.data.name", is(vo.getName())));
+
+		// test Validation
 		vo.setName(null);
 		resultActions = mockMvc.perform(put("/api/admin/option").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
 					.andExpect(jsonPath("$.result", is("fail")));
+
+
+		// 하위옵션 (테스트시 parentNo 잘 넣어서 테스트하기.(자동화 방법 찾자))
+		/*vo.setName("베스트상품");
+		resultActions = mockMvc.perform(put("/api/admin/option/{no}", 24).contentType(MediaType.APPLICATION_JSON)
+				.content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.data", is(24)));
+*/
+		// 하위옵션 add test
 	}
 	
 	@Test
