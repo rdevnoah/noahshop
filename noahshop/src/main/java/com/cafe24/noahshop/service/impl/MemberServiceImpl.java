@@ -1,16 +1,15 @@
 package com.cafe24.noahshop.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.cafe24.noahshop.repository.MemberDao;
+import com.cafe24.noahshop.service.MemberService;
+import com.cafe24.noahshop.vo.MemberVo;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cafe24.noahshop.repository.MemberDao;
-import com.cafe24.noahshop.service.MemberService;
-import com.cafe24.noahshop.vo.MemberVo;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @title Cafe24 Personal-ShoppingMall
@@ -19,9 +18,7 @@ import com.cafe24.noahshop.vo.MemberVo;
  * @author : rdevnoah
  * @since : Jul 16, 2019
  * @version : 1.0
- * @see
- * 
- *      <pre>
+ * @see <pre>
  * == Modification Information ==
  * 
  * Date             AUTHOR           NOTE
@@ -29,7 +26,7 @@ import com.cafe24.noahshop.vo.MemberVo;
  * Jul 16, 2019     rdevnoah         Initialize
  * Jul 16, 2019     rdevnoah         insert test
  * Jul 16, 2019     rdevnoah         insert test (encrypt, decrypt)
- *      </pre>
+ * </pre>
  */
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -65,8 +62,7 @@ public class MemberServiceImpl implements MemberService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("no", no);
 		map.put("key", key);
-		MemberVo vo = memberDao.getMemberByNo(map);
-		return vo;
+		return memberDao.getMemberByNo(map);
 	}
 
 }

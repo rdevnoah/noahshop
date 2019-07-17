@@ -7,22 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * <pre>
+ *
  * @title Cafe24 Personal-ShoppingMall
  * @packagename : com.cafe24.noahshop.service.impl
  * @author : noah
  * @since : 2019-07-17
  * @version : 1.0
- * @see
- *
- *
+ * @see <pre>
  * == Modification Information ==
  *
  * Date             AUTHOR           NOTE
  * -------------    -------------    --------------------------------
  * 2019-07-17         noah             Initialize
- *
  * </pre>
+ *
  */
 @Service
 public class AdminOptionServiceImpl implements AdminOptionService {
@@ -32,14 +30,12 @@ public class AdminOptionServiceImpl implements AdminOptionService {
 
     @Override
     public OptionVo addChildOption(OptionVo vo) {
-        OptionVo result = adminOptionDao.addChildOption(vo);
-        return result;
+        return  adminOptionDao.addChildOption(vo);
     }
 
     @Override
     public OptionVo addParentOption(OptionVo vo) {
-        OptionVo result = adminOptionDao.addParentOption(vo);
-        return result;
+        return adminOptionDao.addParentOption(vo);
     }
 
 }
