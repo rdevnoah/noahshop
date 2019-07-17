@@ -4,22 +4,17 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import com.cafe24.noahshop.config.TestAppConfig;
-import com.cafe24.noahshop.config.TestWebConfig;
 import com.cafe24.noahshop.repository.MemberDao;
 import com.cafe24.noahshop.vo.MemberVo;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes= {TestAppConfig.class, TestWebConfig.class})
-@WebAppConfiguration
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class MemberServiceTest {
 
 	@Autowired

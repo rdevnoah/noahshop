@@ -11,16 +11,13 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import com.cafe24.noahshop.config.TestAppConfig;
 import com.cafe24.noahshop.vo.MemberVo;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes= {TestAppConfig.class})
-@WebAppConfiguration
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class MemberDaoTest {
 	
 	@Autowired

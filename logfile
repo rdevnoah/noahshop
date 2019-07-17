@@ -225,3 +225,16 @@
 2019-07-16 17:46:03.927 KST [7763] DETAIL:  Failing row contains (null, QKvEeGcO8v3KYV7q).
 2019-07-16 17:46:03.927 KST [7763] STATEMENT:  insert into key(member_no, key)
 			values($1, $2)
+2019-07-16 20:21:37.723 KST [5893] ERROR:  syntax error at or near "k" at character 91
+2019-07-16 20:21:37.723 KST [5893] STATEMENT:  select convert_from(decrypt(decode(id,'hex'), convert_to((select k.key from key where key k, member m where k.member_no=m.no), 'utf8'),'aes'),'utf8') as id from member
+2019-07-16 20:24:51.489 KST [5893] ERROR:  more than one row returned by a subquery used as an expression
+2019-07-16 20:24:51.489 KST [5893] STATEMENT:  select convert_from(decrypt(decode(id,'hex'), convert_to((select k.key from key k, member m where k.member_no=m.no), 'utf8'),'aes'),'utf8') as id from member
+2019-07-16 20:26:09.669 KST [5893] ERROR:  column k.member_id does not exist at character 130
+2019-07-16 20:26:09.669 KST [5893] HINT:  Perhaps you meant to reference the column "k.member_no".
+2019-07-16 20:26:09.669 KST [5893] STATEMENT:  select convert_from(decrypt(decode(m.id,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as id from member m, key k where m.id = k.member_id
+2019-07-16 20:29:41.185 KST [5893] ERROR:  subquery in FROM must have an alias at character 16
+2019-07-16 20:29:41.185 KST [5893] HINT:  For example, FROM (SELECT ...) [AS] foo.
+2019-07-16 20:29:41.185 KST [5893] STATEMENT:  select id from (select convert_from(decrypt(decode(m.id,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as id 
+			from member m, key k 
+			where m.no = k.member_no)
+			where id='q77q78'
