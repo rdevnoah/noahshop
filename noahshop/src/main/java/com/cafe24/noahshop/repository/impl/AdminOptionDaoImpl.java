@@ -6,6 +6,23 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ *
+ * @title Cafe24 Personal-ShoppingMall
+ * @packagename : com.cafe24.noahshop.repository.impl
+ * @author : rdevnoah
+ * @since : 2019-07-17
+ * @version : 1.0
+ * @see <pre>
+ * == Modification Information ==
+ *
+ * Date             AUTHOR           NOTE
+ * -------------    -------------    --------------------------------
+ * 2019-07-17       rdevnoah         Initialize
+ * 2019-07-17       rdevnoah         add implement complete
+ *
+ * </pre>
+ */
 @Repository
 public class AdminOptionDaoImpl implements AdminOptionDao {
 
