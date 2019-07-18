@@ -42,20 +42,12 @@ private MockMvc mockMvc;
 
 		OptionVo vo = new OptionVo();
 		// 상위옵션 add test
-		vo.setName("TOP");
+		vo.setName("COLOR");
 		ResultActions resultActions = mockMvc.perform(put("/api/admin/option").contentType(MediaType.APPLICATION_JSON)
 																							.content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())
 					.andDo(print())
 					.andExpect(jsonPath("$.data.name", is(vo.getName())));
-
-		vo = new OptionVo();
-		vo.setName("BOTTOM");
-		resultActions = mockMvc.perform(put("/api/admin/option").contentType(MediaType.APPLICATION_JSON)
-				.content(new Gson().toJson(vo)));
-		resultActions.andExpect(status().isOk())
-				.andDo(print())
-				.andExpect(jsonPath("$.data.name", is(vo.getName())));
 
 		// test Validation
 		vo.setName(null);
@@ -66,14 +58,14 @@ private MockMvc mockMvc;
 
 
 		// 하위옵션 (테스트시 parentNo 잘 넣어서 테스트하기.(자동화 방법 찾자))
-		/*vo.setName("베스트상품");
-		resultActions = mockMvc.perform(put("/api/admin/option/{no}", 24).contentType(MediaType.APPLICATION_JSON)
+		// 하위옵션 add test
+		vo.setName("XXS");
+
+		resultActions = mockMvc.perform(put("/api/admin/option/{no}", 1).contentType(MediaType.APPLICATION_JSON)
 				.content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())
 				.andDo(print())
-				.andExpect(jsonPath("$.data", is(24)));
-*/
-		// 하위옵션 add test
+				.andExpect(jsonPath("$.data", is(1)));
 	}
 	
 	@Test

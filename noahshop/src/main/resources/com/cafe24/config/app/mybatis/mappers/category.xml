@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+	<insert id="insertParent" parameterType="categoryvo">
+		insert into category_parent values (default , #{name })
+		<selectKey resultType="long" keyProperty="no" order="AFTER">
+			select currval('category_parent_no_seq')
+		</selectKey>
+
+	</insert>
+
+	<insert id="insertChild" parameterType="categoryvo">
+		insert into category_child(no, name, option_parent_no) values (default , #{name }, #{parentNo})
+		<selectKey resultType="long" keyProperty="no" order="AFTER">
+			select currval('category_child_no_seq')
+		</selectKey>
+
+	</insert>
+</mapper>

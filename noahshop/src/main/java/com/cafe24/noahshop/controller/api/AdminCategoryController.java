@@ -1,10 +1,12 @@
 package com.cafe24.noahshop.controller.api;
 
 import com.cafe24.noahshop.dto.JSONResult;
+import com.cafe24.noahshop.service.AdminCategoryService;
 import com.cafe24.noahshop.vo.CategoryVo;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +30,16 @@ import java.util.List;
  * -------------    -------------    --------------------------------
  * Jul 12, 2019     rdevnoah         Initialize
  * Jul 12, 2019     rdevnoah         test add, modify, delete
- * Jul 12, 2019     rdevnoah         add implement complete
+ * Jul 12, 2019     rdevnoah         add implement test
+ * Jul 18, 2019     rdevnoah         add implement complete
  * </pre>
  */
 @RestController("adminCategoryAPIController")
 @RequestMapping("/api/admin/category")
 public class AdminCategoryController {
-	
+
+	@Autowired
+	private AdminCategoryService adminCategoryService;
 	
 	@ApiOperation(value="get add Category Form", notes = "카테고리 등록 폼 가져오기")
 	@GetMapping("/addform")
@@ -57,6 +62,8 @@ public class AdminCategoryController {
 				return JSONResult.fail("invalid Data");
 			}
 		}
+
+		vo = adminCategoryService.addParentCategory(vo);
 		return JSONResult.success(vo);
 	}
 	

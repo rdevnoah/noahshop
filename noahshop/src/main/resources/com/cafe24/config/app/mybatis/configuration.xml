@@ -8,6 +8,7 @@
 	<mappers>
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/member.xml"/>
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/option.xml"/>
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/category.xml"/>
 
 		
 	</mappers>
