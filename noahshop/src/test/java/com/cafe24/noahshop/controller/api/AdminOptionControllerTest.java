@@ -46,43 +46,47 @@ private MockMvc mockMvc;
 		ResultActions resultActions = mockMvc.perform(put("/api/admin/option").contentType(MediaType.APPLICATION_JSON)
 																							.content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.data.name", is(vo.getName())));
+				  	 .andDo(print())
+				 	 .andExpect(jsonPath("$.data.name", is(vo.getName())));
 
 		// test Validation
 		vo.setName(null);
 		resultActions = mockMvc.perform(put("/api/admin/option").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("fail")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("fail")));
 
 
 		// 하위옵션 (테스트시 parentNo 잘 넣어서 테스트하기.(자동화 방법 찾자))
 		// 하위옵션 add test
 		vo.setName("XXS");
 
-		resultActions = mockMvc.perform(put("/api/admin/option/{no}", 1).contentType(MediaType.APPLICATION_JSON)
-				.content(new Gson().toJson(vo)));
+		resultActions = mockMvc.perform(put("/api/admin/option/{no}", 1).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
 		resultActions.andExpect(status().isOk())
-				.andDo(print())
-				.andExpect(jsonPath("$.data", is(1)));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.data", is(1)));
 	}
 	
 	@Test
 	public void testModify() throws Exception {
 		OptionVo vo = new OptionVo();
 		vo.setName("사이즈");
+
 		ResultActions resultActions = mockMvc.perform(post("/api/admin/option").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.data.name", is("사이즈")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.data.name", is("사이즈")));
 	}
 	
 	@Test
 	public void testDelete() throws Exception {
 		ResultActions resultActions = mockMvc.perform(delete("/api/admin/option/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
+
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.data", is(2)));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.data", is(2)));
 	}
 }

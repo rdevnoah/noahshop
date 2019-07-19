@@ -3,7 +3,7 @@
 
 <mapper namespace="option">
     <insert id="insertParent" parameterType="optionvo">
-		insert into option_parent values (default , #{name })
+		insert into option_parent values (nextval('option_parent_no_seq') , #{name })
         <selectKey resultType="long" keyProperty="no" order="AFTER">
             select currval('option_parent_no_seq')
         </selectKey>
@@ -11,7 +11,7 @@
     </insert>
 
     <insert id="insertChild" parameterType="optionvo">
-        insert into option_child(no, name, option_parent_no) values (default , #{name }, #{parentNo})
+        insert into option_child(no, name, option_parent_no) values (nextval('option_child_no_seq') , #{name }, #{parentNo})
         <selectKey resultType="long" keyProperty="no" order="AFTER">
             select currval('option_child_no_seq')
         </selectKey>

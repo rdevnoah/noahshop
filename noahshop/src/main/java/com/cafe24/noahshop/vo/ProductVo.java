@@ -9,23 +9,29 @@ public class ProductVo {
 	@NotEmpty
 	private String code;
 	private String name;
-	private int money;
+	private int price;
 	private String description;
 	private String regDate;
 	private String dpMain;
 	private String isSell;
 
+	private String optionParentName;
+	private String optionChildName;
+	private int stock;
+
+
+
 	public ProductVo() {
 	}
 
-	public ProductVo(Long no, Long categoryNo, String code, String name, int money, String description, String regDate,
+	public ProductVo(Long no, Long categoryNo, String code, String name, int price, String description, String regDate,
 			String dpMain, String isSell) {
 		super();
 		this.no = no;
 		this.categoryNo = categoryNo;
 		this.code = code;
 		this.name = name;
-		this.money = money;
+		this.price = price;
 		this.description = description;
 		this.regDate = regDate;
 		this.dpMain = dpMain;
@@ -60,16 +66,40 @@ public class ProductVo {
 		return name;
 	}
 
+	public String getOptionParentName() {
+		return optionParentName;
+	}
+
+	public void setOptionParentName(String optionParentName) {
+		this.optionParentName = optionParentName;
+	}
+
+	public String getOptionChildName() {
+		return optionChildName;
+	}
+
+	public void setOptionChildName(String optionChildName) {
+		this.optionChildName = optionChildName;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public int getMoney() {
-		return money;
+	public int getPrice() {
+		return price;
 	}
 
-	public void setMoney(int money) {
-		this.money = money;
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	public String getDescription() {

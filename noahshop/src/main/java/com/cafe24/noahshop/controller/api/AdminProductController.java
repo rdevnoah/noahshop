@@ -1,28 +1,18 @@
 package com.cafe24.noahshop.controller.api;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
+import com.cafe24.noahshop.dto.JSONResult;
+import com.cafe24.noahshop.vo.ProductVo;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.cafe24.noahshop.dto.JSONResult;
-import com.cafe24.noahshop.vo.ProductVo;
-
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @title Cafe24 Personal-ShoppingMall
@@ -51,7 +41,8 @@ public class AdminProductController {
 	public JSONResult addform() {
 		
 		//get add form
-		
+
+
 		return JSONResult.success("return:addform");
 	}
 	

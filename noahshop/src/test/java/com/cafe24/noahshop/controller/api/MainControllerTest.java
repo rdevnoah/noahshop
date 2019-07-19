@@ -1,12 +1,5 @@
 package com.cafe24.noahshop.controller.api;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +11,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -42,14 +42,16 @@ public class MainControllerTest {
 	@Test
 	public void testgetMain() throws Exception {
 		ResultActions resultActions = mockMvc.perform(get("/").contentType(MediaType.APPLICATION_JSON));
+
 		resultActions.andExpect(status().isOk())
-		.andDo(print())
-		.andExpect(jsonPath("$.data", is("success")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.data", is("success")));
 		
 		resultActions = mockMvc.perform(get("").contentType(MediaType.APPLICATION_JSON));
+
 		resultActions.andExpect(status().isOk())
-		.andDo(print())
-		.andExpect(jsonPath("$.data", is("success")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.data", is("success")));
 		
 		
 		

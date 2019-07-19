@@ -3,7 +3,7 @@
 
 <mapper namespace="category">
 	<insert id="insertParent" parameterType="categoryvo">
-		insert into category_parent values (default , #{name })
+		insert into category_parent values (nextval('category_parent_no_seq') , #{name })
 		<selectKey resultType="long" keyProperty="no" order="AFTER">
 			select currval('category_parent_no_seq')
 		</selectKey>
@@ -11,7 +11,7 @@
 	</insert>
 
 	<insert id="insertChild" parameterType="categoryvo">
-		insert into category_child(no, name, option_parent_no) values (default , #{name }, #{parentNo})
+		insert into category_child(no, name, category_parent_no) values (nextval('category_child_no_seq') , #{name }, #{parentNo})
 		<selectKey resultType="long" keyProperty="no" order="AFTER">
 			select currval('category_child_no_seq')
 		</selectKey>

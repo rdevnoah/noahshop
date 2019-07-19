@@ -47,10 +47,12 @@ public class AdminCategoryController {
 		return JSONResult.success("result:addform");
 	}
 	
-	@ApiOperation(value = "add category", notes = "카테고리 등록")
+	@ApiOperation(value = "add parent category", notes = "상위 카테고리 등록")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="vo", value="카테고리", required=true, dataType="CategoryVo", defaultValue="")
 	})
+
+
 	@PutMapping
 	public JSONResult add(@RequestBody @Valid CategoryVo vo, BindingResult result) {
 		
@@ -66,7 +68,30 @@ public class AdminCategoryController {
 		vo = adminCategoryService.addParentCategory(vo);
 		return JSONResult.success(vo);
 	}
-	
+
+
+	@ApiOperation(value = "add child category", notes = "하위 카테고리 등록")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name="vo", value="카테고리", required=true, dataType="CategoryVo", defaultValue=""),
+			@ApiImplicitParam(name="parentCategoryNo", value="상위카테고리번호", required=true, dataType="String", defaultValue=""),
+	})
+	@PutMapping("/{no}")
+	public JSONResult add(@RequestBody @Valid CategoryVo vo, @PathVariable(value = "no") Long parentCategoryNo, BindingResult result){
+		if (result.hasErrors()) {
+			// 에러 메세지 확인
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				System.out.println("Validation Error : " + error);
+				return JSONResult.fail("invalid Data");
+			}
+		}
+
+		vo.setParentNo(parentCategoryNo);
+		vo = adminCategoryService.addChildCategory(vo);
+
+		return JSONResult.success(vo);
+	}
+
 	@ApiOperation(value = "modify category", notes = "카테고리 정보 변경")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="vo", value="변경할 카테고리 정보", required=true, dataType="CategoryVo", defaultValue="")

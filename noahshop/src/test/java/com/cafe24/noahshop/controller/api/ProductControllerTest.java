@@ -1,9 +1,5 @@
 package com.cafe24.noahshop.controller.api;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +11,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -33,24 +33,23 @@ public class ProductControllerTest {
 
 	@Test
 	public void testDetail() throws Exception {
-		ResultActions resultActions = mockMvc
-				.perform(get("/api/product/detail/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/api/product/detail/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk())
-		.andDo(print());
+			 		 .andDo(print());
 	}
 
 	@Test
 	public void testSearch() throws Exception {
-		ResultActions resultActions = mockMvc
-				.perform(get("/api/product/search/{keyword}", "청바지").contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/api/product/search/{keyword}", "청바지").contentType(MediaType.APPLICATION_JSON));
+
 		resultActions.andExpect(status().isOk())
-		.andDo(print());
+					 .andDo(print());
 		
-		resultActions = mockMvc
-				.perform(get("/api/product/search/{keyword}/{categoryNo}", "청바지", 2L).contentType(MediaType.APPLICATION_JSON));
+		resultActions = mockMvc.perform(get("/api/product/search/{keyword}/{categoryNo}", "청바지", 2L).contentType(MediaType.APPLICATION_JSON));
+
 		resultActions.andExpect(status().isOk())
-		.andDo(print());
+					 .andDo(print());
 		
 	}
 	

@@ -41,8 +41,8 @@ public class AdminCategoryControllerTest {
 	public void testAddCategoryForm() throws Exception {
 		ResultActions resultActions = mockMvc.perform(get("/api/admin/category/addform").contentType(MediaType.APPLICATION_JSON));
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")));
 	}
 
 	@Rollback(true)
@@ -52,17 +52,25 @@ public class AdminCategoryControllerTest {
 		vo.setName("TOP");
 		ResultActions resultActions = mockMvc.perform(put("/api/admin/category").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")))
-					.andExpect(jsonPath("$.data.name", is("TOP")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")))
+					 .andExpect(jsonPath("$.data.name", is("TOP")));
 
 
 		// check Validation
 		vo.setName(null);
 		resultActions = mockMvc.perform(put("/api/admin/category").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("fail")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("fail")));
+
+		// check child Category Add
+		vo.setName("나시");
+		resultActions = mockMvc.perform(put("/api/admin/category/{no}", 1L).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isOk())
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")))
+					 .andExpect(jsonPath("$.data.name", is("나시")));
 	}
 	
 	@Test
@@ -71,15 +79,15 @@ public class AdminCategoryControllerTest {
 		vo.setName("상의입니다.");
 		ResultActions resultActions = mockMvc.perform(post("/api/admin/category").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.data.name", is("상의입니다.")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.data.name", is("상의입니다.")));
 	}
 	
 	@Test
 	public void testDelete() throws Exception {
 		ResultActions resultActions = mockMvc.perform(delete("/api/admin/category/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.data", is(2)));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.data", is(2)));
 	}
 }

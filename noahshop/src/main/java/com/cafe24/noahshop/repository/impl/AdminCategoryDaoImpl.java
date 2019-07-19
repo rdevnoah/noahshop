@@ -34,4 +34,10 @@ public class AdminCategoryDaoImpl implements AdminCategoryDao {
         sqlSession.insert("category.insertParent", vo);
         return vo;
     }
+
+    @Override
+    public CategoryVo addChildCategory(CategoryVo vo) {
+        sqlSession.insert("category.insertChild", vo);
+        return vo;
+    }
 }

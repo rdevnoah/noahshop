@@ -1,13 +1,7 @@
 package com.cafe24.noahshop.controller.api;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import com.cafe24.noahshop.vo.MemberVo;
+import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,8 +16,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.noahshop.vo.MemberVo;
-import com.google.gson.Gson;
+import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @RunWith(SpringRunner.class)
@@ -52,104 +49,113 @@ public class MemberControllerTest {
 		
 		
 		ResultActions resultActions = mockMvc.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(checkVo)));
+
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")))
-					.andExpect(jsonPath("$.data.id", is("q77q78")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")))
+					 .andExpect(jsonPath("$.data.id", is("q77q78")));
 		
 		
 		// check used Id
 		resultActions = mockMvc.perform(get("/api/user/checkId/{id}", "q77q78").contentType(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("fail")))
-					.andExpect(jsonPath("$.message", is("이미 사용중인 아이디입니다.")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("fail")))
+					 .andExpect(jsonPath("$.message", is("이미 사용중인 아이디입니다.")));
 		
 		// check unused Id
 		resultActions = mockMvc.perform(get("/api/user/checkId/{id}", "unused123").contentType(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")))
-					.andExpect(jsonPath("$.data", is("unused123")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")))
+					 .andExpect(jsonPath("$.data", is("unused123")));
 		
 		// checkId Validation (invalid)
 		
 		resultActions = mockMvc.perform(get("/api/user/checkId/{id}", "as").contentType(MediaType.APPLICATION_JSON));
 
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("fail")));
+		resultActions.andExpect(status().isOk())
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("fail")));
 		 
 		// checkId Validation (invalid)
 		
 		resultActions = mockMvc.perform(get("/api/user/checkId/{id}", " ").contentType(MediaType.APPLICATION_JSON));
 
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("fail")));
+		resultActions.andExpect(status().isOk())
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("fail")));
 		
 		
 		// checkId Validation (invalid)
 		
 		resultActions = mockMvc.perform(get("/api/user/checkId/{id}", "asdlfhaldjksflahsdlfkadfj").contentType(MediaType.APPLICATION_JSON));
 
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("fail")));
+		resultActions.andExpect(status().isOk())
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("fail")));
 		
 		
 		// checkId Validation (Valid)
 		
 		resultActions = mockMvc.perform(get("/api/user/checkId/{id}", "ghgh123").contentType(MediaType.APPLICATION_JSON));
 
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data", is("ghgh123")));
+		resultActions.andExpect(status().isOk())
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")))
+					 .andExpect(jsonPath("$.data", is("ghgh123")));
 
 		// insert member (invalid data)
 		MemberVo vo = new MemberVo(null, "", "password1!!", "김영호", "010-4532-3018", "대구시 수성구 시지동",
 							"zzagam2@gmail.com", null, null);
 
-		resultActions = mockMvc
-							.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions = mockMvc.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		
 		resultActions.andExpect(status().isBadRequest())
-					.andDo(print()).andExpect(jsonPath("$.result", is("fail")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("fail")));
 
 		// insert member (valid data)
 		vo = new MemberVo(null, "zzagam2", "qntlfwkd1!", "김영호", "112-3412-3313", "경기도 수원시 팔달구 우만동",
 							"zzagam2@gmail.com", null, null);
-		resultActions = mockMvc
-							.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions = mockMvc.perform(put("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")))
-					.andExpect(jsonPath("$.data.name", is("김영호")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")))
+					 .andExpect(jsonPath("$.data.name", is("김영호")));
 		
 		
 	}
 
 	@Test
 	public void testJoinForm() throws Exception {
-		ResultActions resultActions = mockMvc
-										.perform(get("/api/user/joinform").contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/api/user/joinform").contentType(MediaType.APPLICATION_JSON));
+
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")));
 	}
 
 	@Test
 	public void testJoinSuccess() throws Exception {
-		ResultActions resultActions = mockMvc
-										.perform(get("/api/user/joinsuccess").contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/api/user/joinsuccess").contentType(MediaType.APPLICATION_JSON));
+
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")));
 	}
 
 	@Test
 	public void testModifyForm() throws Exception {
-		ResultActions resultActions = mockMvc
-										.perform(get("/api/user/modifyform").contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/api/user/modifyform").contentType(MediaType.APPLICATION_JSON));
+
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")));
 	}
 
 	@Test
@@ -162,33 +168,32 @@ public class MemberControllerTest {
 		vo.setEmail("test@test.com");
 		vo.setTel("010-1111-1111");
 
-		ResultActions resultActions = mockMvc.perform(post("/api/user").contentType(MediaType.APPLICATION_JSON)
-										.content(new Gson().toJson(vo)));
+		ResultActions resultActions = mockMvc.perform(post("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		
 		resultActions.andDo(print())
-					.andExpect(status().isOk())
-					.andExpect(jsonPath("$.result", is("success")))
-					.andExpect(jsonPath("$.data.tel", is("010-1111-1111")))
-					.andExpect(jsonPath("$.data.email", is("test@test.com")));
+					 .andExpect(status().isOk())
+					 .andExpect(jsonPath("$.result", is("success")))
+					 .andExpect(jsonPath("$.data.tel", is("010-1111-1111")))
+					 .andExpect(jsonPath("$.data.email", is("test@test.com")));
 		
 		// invalid
 		vo.setTel(null);
-		resultActions = mockMvc.perform(post("/api/user").contentType(MediaType.APPLICATION_JSON)
-				.content(new Gson().toJson(vo)));
+
+		resultActions = mockMvc.perform(post("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
 		resultActions.andDo(print())
-		.andExpect(status().isBadRequest())
-		.andExpect(jsonPath("$.result", is("fail")));
+					 .andExpect(status().isBadRequest())
+					 .andExpect(jsonPath("$.result", is("fail")));
 		
 	}
 
 	@Test
 	public void testLoginForm() throws Exception {
-		ResultActions resultActions = mockMvc
-										.perform(get("/api/user/loginform").contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/api/user/loginform").contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")));
 	}
 
 	@Test
@@ -206,19 +211,21 @@ public class MemberControllerTest {
 		ResultActions resultActions = mockMvc.perform(post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")))
-					.andExpect(jsonPath("$.data.id", is("zzagam2")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")))
+					 .andExpect(jsonPath("$.data.id", is("zzagam2")));
 
 		// invalid data test
 		
 		
 		vo.setId("zzagam2");
 		vo.setPassword("qntlfwkd11");
+
 		resultActions = mockMvc.perform(post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
 		resultActions.andExpect(status().isBadRequest())
-		.andDo(print())
-		.andExpect(jsonPath("$.result", is("fail")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("fail")));
 
 		/*
 		 * id = "zz"; password = "aa"; resultActions =
@@ -236,8 +243,8 @@ public class MemberControllerTest {
 		ResultActions resultActions = mockMvc.perform(get("/api/user/logout").contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk())
-					.andDo(print())
-					.andExpect(jsonPath("$.result", is("success")));
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")));
 	}
 
 	

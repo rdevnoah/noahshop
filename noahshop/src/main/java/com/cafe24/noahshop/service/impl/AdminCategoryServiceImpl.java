@@ -33,4 +33,9 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     public CategoryVo addParentCategory(CategoryVo vo) {
         return adminCategoryDao.addParentCategory(vo);
     }
+
+    @Override
+    public CategoryVo addChildCategory(CategoryVo vo) {
+        return adminCategoryDao.addChildCategory(vo);
+    }
 }
