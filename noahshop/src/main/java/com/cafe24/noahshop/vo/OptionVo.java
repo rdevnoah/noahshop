@@ -10,6 +10,8 @@ public class OptionVo {
 
     private Long parentNo;
 
+    private int stock;
+
     public OptionVo() {
     }
 
@@ -17,6 +19,13 @@ public class OptionVo {
         this.no = no;
         this.name = name;
         this.parentNo = parent_no;
+    }
+
+    public OptionVo(Long no, @NotEmpty String name, Long parentNo, int stock) {
+        this.no = no;
+        this.name = name;
+        this.parentNo = parentNo;
+        this.stock = stock;
     }
 
     public Long getNo() {
@@ -31,11 +40,11 @@ public class OptionVo {
         return name;
     }
 
-    public Long getParent_no() {
+    public Long getParentNo() {
         return parentNo;
     }
 
-    public void setParent_no(Long parentNo) {
+    public void setParentNo(Long parentNo) {
         this.parentNo = parentNo;
     }
 
@@ -43,4 +52,11 @@ public class OptionVo {
         this.name = name;
     }
 
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 }

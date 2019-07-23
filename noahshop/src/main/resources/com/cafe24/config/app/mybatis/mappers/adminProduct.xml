@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminProduct">
+	<insert id="insertProduct" parameterType="productVo">
+		insert into product(no, category_no, code, name, price, description, reg_date, dp_main, is_sell)
+		values( nextval('product_no_seq'), #{categoryNo }, #{code }, #{name }, #{price }, #{description }, now(), 'N', 'N')
+		<selectKey resultType="long" keyProperty="no" order="AFTER">
+			select currval('product_no_seq')
+		</selectKey>
+	</insert>
+
+	<insert id="insertImage" parameterType="map">
+		insert into product_image
+		values
+		<foreach collection="images" item="item" index="index" separator=",">
+			(nextval('product_image_no_seq'), #{no}, #{item.url})
+		</foreach>
+
+	</insert>
+
+	<insert id="insertProductDetail" parameterType="map">
+		insert into product_detail
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(nextval('product_detail_no_seq'), #{item.stock}, #{item.optionChildNo1}, #{item.optionChildNo2} ,#{item.productNo})
+		</foreach>
+
+	</insert>
+</mapper>

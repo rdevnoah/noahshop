@@ -42,7 +42,7 @@ private MockMvc mockMvc;
 
 		OptionVo vo = new OptionVo();
 		// 상위옵션 add test
-		vo.setName("COLOR");
+			vo.setName("COLOR");
 		ResultActions resultActions = mockMvc.perform(put("/api/admin/option").contentType(MediaType.APPLICATION_JSON)
 																							.content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk())

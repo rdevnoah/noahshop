@@ -1,6 +1,8 @@
 package com.cafe24.noahshop.controller.api;
 
-import com.cafe24.noahshop.vo.OptionVo;
+import com.cafe24.noahshop.dto.ProductAddDto;
+import com.cafe24.noahshop.vo.OptionStockVo;
+import com.cafe24.noahshop.vo.ProductImageVo;
 import com.cafe24.noahshop.vo.ProductVo;
 import com.google.gson.Gson;
 import org.junit.Before;
@@ -9,11 +11,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -23,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class AdminProductControllerTest {
 	
 	private MockMvc mockMvc;
@@ -46,38 +54,56 @@ public class AdminProductControllerTest {
 	}
 	
 	@Test
+	@Rollback(true)
 	public void testAdd() throws Exception {
 
-		ProductVo productVo = new ProductVo();
-		OptionVo parentOption = new OptionVo();
+		ProductAddDto dto = new ProductAddDto();
+		dto.setName("Sample T-shirts");
 
-		// 메인 진열 X 판매 X
-		productVo.setCategoryNo(1L);
-		productVo.setName("멜라토닌 반팔티셔츠");
-		productVo.setPrice(14000);
-		productVo.setDescription("HTML 문서");
-		productVo.setDpMain("N");
-		productVo.setIsSell("N");
+		dto.setDescription("sample Product Description");
 
-		productVo.setOptionParentName("SIZE");
-		productVo.setOptionChildName("L");
-		productVo.setStock(230);
+		List<ProductImageVo> images = new ArrayList<ProductImageVo>();
+		ProductImageVo image = new ProductImageVo();
+		image.setUrl("url1");
+		images.add(image);
 
+		image = new ProductImageVo();
+		image.setUrl("url2");
+		images.add(image);
 
-		ResultActions resultActions = mockMvc.perform(put("/api/admin/product").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(productVo)));
+		dto.setImage(images);
+
+		dto.setCategoryNo(1L);
+		dto.setIsSell("N");
+		dto.setDpMain("N");
+
+		// 판매여부 N, 메인DP N, OPTION 없음
+
+		ResultActions resultActions = mockMvc.perform(put("/api/admin/product").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(dto)));
 
 		resultActions.andExpect(status().isOk())
-					 .andDo(print())
-					 .andExpect(jsonPath("$.data.name", is("아디다스 져지")))
-					 .andExpect(jsonPath("$.data.money",is(23000)));
-		
-		//invalid 
-		productVo.setCode(null);
-		resultActions = mockMvc.perform(put("/api/admin/product").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(productVo)));
+					 .andDo(print());
 
-		resultActions.andExpect(status().isBadRequest())
-					 .andDo(print())
-					 .andExpect(jsonPath("$.result", is("fail")));
+		// 판매여부 Y, OPTION 있음
+		dto.setIsSell("Y");
+		List<OptionStockVo> optionList = new ArrayList<OptionStockVo>();
+		OptionStockVo option = new OptionStockVo();
+		option.setOptionChild1No(1L);
+		option.setOptionChild1No(4L);
+		option.setStock(230);
+		optionList.add(option);
+		option = new OptionStockVo();
+		option.setOptionChild1No(2L);
+		option.setOptionChild2No(4L);
+		option.setStock(120);
+		optionList.add(option);
+
+		dto.setOptionStockVoList(optionList);
+		resultActions = mockMvc.perform(put("/api/admin/product").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(dto)));
+		resultActions.andExpect(status().isOk());
+
+
+
 	}
 	
 	@Test

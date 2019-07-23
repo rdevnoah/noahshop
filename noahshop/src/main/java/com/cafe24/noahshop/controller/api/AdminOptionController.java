@@ -77,7 +77,7 @@ public class AdminOptionController {
 				return JSONResult.fail(error.getDefaultMessage());
 			}
 		}
-		vo.setParent_no(parentNo);
+		vo.setParentNo(parentNo);
 		OptionVo addResult = adminOptionService.addChildOption(vo);
 
 		return JSONResult.success(parentNo);
