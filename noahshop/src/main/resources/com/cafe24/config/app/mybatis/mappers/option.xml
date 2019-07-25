@@ -15,8 +15,27 @@
         <selectKey resultType="long" keyProperty="no" order="AFTER">
             select currval('option_child_no_seq')
         </selectKey>
-
     </insert>
+
+    <select id="getListByProductNo" parameterType="long" resultType="optionVo">
+        select *
+        from(
+                select oc.no as no, oc.name as name, oc.option_parent_no as parentNo, op.name as parentName
+                from option_child oc, (select distinct a.option_child1_no
+                                       from (select *
+                                             from product_detail
+                                             where product_no=#{no }) a) b, option_parent op
+                where oc.no=b.option_child1_no and oc.option_parent_no=op.no
+                union
+                select oc.no as no, oc.name as name, oc.option_parent_no as parentNo, op.name as parentName
+                from option_child oc, (select distinct a.option_child2_no
+                                       from (select *
+                                             from product_detail
+                                             where product_no=#{no }) a) b, option_parent op
+                where oc.no=b.option_child2_no and oc.option_parent_no=op.no
+        ) c order by c.parentNo, c.no
+    </select>
+
 
 
 </mapper>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+	<select id="getProductByNo" parameterType="long" resultType="productVo">
+		select no, category_no as categoryNo, code, name, price, description, reg_date as regDate, dp_main as dpMain, is_sell as isSell
+		from product
+		where no=#{no }
+	</select>
+
+</mapper>

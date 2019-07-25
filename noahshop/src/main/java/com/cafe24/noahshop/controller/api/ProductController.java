@@ -1,17 +1,17 @@
 package com.cafe24.noahshop.controller.api;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.cafe24.noahshop.dto.JSONResult;
 import com.cafe24.noahshop.service.ProductService;
-
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * 
@@ -30,13 +30,14 @@ import io.swagger.annotations.ApiOperation;
  * -------------    -------------    --------------------------------
  * Jul 11, 2019     rdevnoah         Initialize
  * Jul 12, 2019     rdevnoah         test search
+ * Jul 25, 2019     rdevnoah         getDetail 이미지 제외 구현 완료
  * </pre>
  */
 @RestController("productAPIController")
 @RequestMapping("/api/product")
 public class ProductController {
 
-	//@Autowired
+	@Autowired
 	private ProductService productService;
 	
 	@ApiOperation(value="get product's detail info", notes = "상품 상세정보 가져오기")
@@ -45,10 +46,13 @@ public class ProductController {
 	})
 	@GetMapping("/detail/{no}")
 	public JSONResult getDetail(@PathVariable Long no) {
-		
+
 		//상품상세정보
-		//productService.getDetail(no);
-		return JSONResult.success("return:detail");
+
+
+		Map<String, Object> map = productService.getProductDetail(no);
+
+		return JSONResult.success(map);
 	}
 	
 	@ApiOperation(value="search by keyword", notes = "키워드를 통해 상품 검색")

@@ -10,12 +10,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ProductControllerTest {
@@ -31,10 +33,13 @@ public class ProductControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 	}
 
+	// 상품 하나의 detail 가져오기
 	@Test
-	public void testDetail() throws Exception {
-		ResultActions resultActions = mockMvc.perform(get("/api/product/detail/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
+	public void testGetDetail() throws Exception {
 
+		// product no에 따라 상품 가져오기 형재 product_no 3
+
+		ResultActions resultActions = mockMvc.perform(get("/api/product/detail/{no}", 1L).contentType(MediaType.APPLICATION_JSON));
 		resultActions.andExpect(status().isOk())
 			 		 .andDo(print());
 	}

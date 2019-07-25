@@ -1,19 +1,36 @@
 package com.cafe24.noahshop.service;
 
+import com.cafe24.noahshop.vo.ProductVo;
+
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
-import com.cafe24.noahshop.vo.ProductVo;
-
-@Service
+/**
+ * @author : rdevnoah
+ * @version : 1.0
+ * @title Cafe24 Personal-ShoppingMall
+ * @packagename : com.cafe24.noahshop.service
+ * @see <pre>
+ *
+ * == Modification Information ==
+ *
+ * Date             AUTHOR           NOTE
+ * -------------    -------------    --------------------------------
+ * 2019-07-25       rdevnoah         Initialize
+ * 2019-07-25       rdevnoah         image 제외 get detail 완료
+ *
+ * </pre>
+ * @since : 2019-07-25
+ */
 public interface ProductService {
-	ProductVo getDetail(Long no);
+	Map<String, Object> getProductDetail(Long no);
+	//Todo: getImage in getProductDetail();
 
 	Map<String, Object> searchByKeyword(String keyword);
 
 	List<ProductVo> searchByKeywordInCategory(String keyword, Long categoryNo);
+
+
 
 	Map<String, Object> getMain();
 }
