@@ -47,7 +47,6 @@ public class AdminProductController {
 	@ApiOperation(value = "get add product form", notes = "상품등록 폼 가져오기")
 	@GetMapping("/addform")
 	public JSONResult addform() {
-		
 		//get add form
 
 

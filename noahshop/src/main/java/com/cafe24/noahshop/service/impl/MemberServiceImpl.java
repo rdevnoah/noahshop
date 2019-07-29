@@ -60,6 +60,7 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVo getMemberByNo(Long no) {
 		String key = memberDao.getKeyByNo(no);
 		Map<String, Object> map = new HashMap<String, Object>();
+
 		map.put("no", no);
 		map.put("key", key);
 		return memberDao.getMemberByNo(map);

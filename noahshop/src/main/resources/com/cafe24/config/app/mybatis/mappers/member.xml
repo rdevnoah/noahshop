@@ -50,7 +50,7 @@
 		]]>
 	</select>
 	
-	<select id="getMemberByNo" parameterType="long" resultType="membervo">
+	<select id="getMemberByNo" parameterType="map" resultType="membervo">
 		<![CDATA[
 			select no
 			, convert_from(decrypt(decode(id,'hex'), convert_to(#{key }, 'utf8'),'aes'),'utf8') as id

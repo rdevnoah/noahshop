@@ -31,7 +31,7 @@ public class MemberVo {
 
     @NotEmpty
     private String email;
-    private String regDate;
+    private String joinDate;
     private String role;
 
     private String key;
@@ -40,7 +40,7 @@ public class MemberVo {
     }
 
     public MemberVo(Long no, String id, String password, String name, String tel, String address, String email,
-                    String regDate, String role) {
+                    String joinDate, String role) {
         super();
         this.no = no;
         this.id = id;
@@ -49,7 +49,7 @@ public class MemberVo {
         this.tel = tel;
         this.address = address;
         this.email = email;
-        this.regDate = regDate;
+        this.joinDate = joinDate;
         this.role = role;
     }
 
@@ -118,11 +118,11 @@ public class MemberVo {
     }
 
     public String getRegDate() {
-        return regDate;
+        return joinDate;
     }
 
-    public void setRegDate(String regDate) {
-        this.regDate = regDate;
+    public void setRegDate(String joinDate) {
+        this.joinDate= joinDate;
     }
 
     public String getRole() {

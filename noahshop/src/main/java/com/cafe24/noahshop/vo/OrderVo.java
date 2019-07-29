@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class OrderVo {
 	private Long no;
 	private Long memberNo;
-	private String orderNo;
+	private String orderCode;
 	private String orderDate;
 	private String address;
 	@NotEmpty
@@ -18,18 +18,21 @@ public class OrderVo {
 	private String status;
 	private String buyerTel;
 
+	private Long orderNo;
+	private Long productDetailNo;
+	private int quantity;
+
+	private String message;
+
+
 	public OrderVo() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public OrderVo(Long no, Long memberNo, String orderNo, String orderDate, String address, String isMember,
-			String password, String payment, int price, String buyerName, String email, String status,
-			String buyerTel) {
-		super();
+
+	public OrderVo(Long no, Long memberNo, String orderCode, String orderDate, String address, @NotEmpty String isMember, String password, String payment, int price, String buyerName, String email, String status, String buyerTel, Long orderNo, Long productDetailNo, int quantity, String message) {
 		this.no = no;
 		this.memberNo = memberNo;
-		this.orderNo = orderNo;
+		this.orderCode = orderCode;
 		this.orderDate = orderDate;
 		this.address = address;
 		this.isMember = isMember;
@@ -40,6 +43,10 @@ public class OrderVo {
 		this.email = email;
 		this.status = status;
 		this.buyerTel = buyerTel;
+		this.orderNo = orderNo;
+		this.productDetailNo = productDetailNo;
+		this.quantity = quantity;
+		this.message = message;
 	}
 
 	public Long getNo() {
@@ -58,12 +65,12 @@ public class OrderVo {
 		this.memberNo = memberNo;
 	}
 
-	public String getOrderNo() {
-		return orderNo;
+	public String getOrderCode() {
+		return orderCode;
 	}
 
-	public void setOrderNo(String orderNo) {
-		this.orderNo = orderNo;
+	public void setOrderCode(String orderCode) {
+		this.orderCode = orderCode;
 	}
 
 	public String getOrderDate() {
@@ -145,8 +152,37 @@ public class OrderVo {
 	public void setBuyerTel(String buyerTel) {
 		this.buyerTel = buyerTel;
 	}
-	
-	
-	
 
+	public Long getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(Long orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public Long getProductDetailNo() {
+		return productDetailNo;
+	}
+
+	public void setProductDetailNo(Long productDetailNo) {
+		this.productDetailNo = productDetailNo;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="order">
+	<insert id="insertOrder" parameterType="ordervo">
+		insert into "order"(no, member_no, order_code,
+							order_date, address, is_member,
+							password, payment, price,
+							buyer_name, email, status, buyer_tel)
+		values (nextval('order_no_seq'), #{memberNo}, #{orderCode },
+							now(), #{address }, #{isMember }::is_member,
+							#{password }, #{payment }::order_payment, #{price },
+							#{buyerName }, #{email }, #{status }::order_status, #{buyerTel})
+
+		<selectKey resultType="long" keyProperty="no" order="AFTER">
+			select currval('order_no_seq')
+		</selectKey>
+	</insert>
+
+	<insert id="insertOrderProduct" parameterType="ordervo">
+		insert into order_product(order_no, product_detail_no, quantity)
+		values (#{no }, #{productDetailNo }, #{quantity })
+	</insert>
+
+	<insert id="insertDelivery" parameterType="deliveryvo">
+		insert into delivery(no, status, name, address, tel, message)
+		values(#{no }, #{status }::delivery_status, #{name }, #{address }, #{tel }, #{message })
+
+	</insert>
+</mapper>

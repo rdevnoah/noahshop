@@ -1,30 +1,22 @@
 package com.cafe24.noahshop.controller.api;
 
-import java.util.List;
+import com.cafe24.noahshop.dto.JSONResult;
+import com.cafe24.noahshop.service.MemberService;
+import com.cafe24.noahshop.service.OrderService;
+import com.cafe24.noahshop.vo.MemberVo;
+import com.cafe24.noahshop.vo.OrderVo;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.cafe24.noahshop.dto.JSONResult;
-import com.cafe24.noahshop.service.OrderService;
-import com.cafe24.noahshop.vo.OrderVo;
-import com.cafe24.noahshop.vo.ProductVo;
-
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import java.util.List;
 
 /**
  * 
@@ -49,17 +41,21 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/api/order")
 public class OrderController {
 	
-	//@Autowired
+	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private MemberService memberService;
 	
-	
-	@ApiOperation(value="show order form", notes = "주문정보입력창 이동")
+	@ApiOperation(value="show order form", notes = "회원 주문정보입력창 이동")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name="vo", value="상품상세정보", required=true, dataType="ProductVo", defaultValue="")
+		@ApiImplicitParam(name="no", value="사용자정보", required=true, dataType="long", defaultValue="")
 	})
-	@PostMapping("/orderform")
-	public JSONResult orderform(@RequestBody ProductVo vo) {
-		// 선택한 상품 상세정보를 통해 orderform으로 이동처리
+	@PostMapping("/orderform/{no}")
+	public JSONResult orderform(@PathVariable(value = "no") Long no) {
+
+		//회원정보 가져오기
+		MemberVo vo = memberService.getMemberByNo(no);
 		return JSONResult.success(vo);
 	}
 	
@@ -79,11 +75,13 @@ public class OrderController {
 				return JSONResult.fail("invalid data");
 			}
 		}
-		
-		//order service
-		//String orderCode = orderService.addOrder(vo);
+
+
+		vo = orderService.addMemberOrder(vo);
+
+
 			
-		return JSONResult.success("return:addOrder");
+		return JSONResult.success(vo);
 	}
 	
 	@ApiOperation(value = "get Order", notes = "주문내역 가져외-회원:모든 주문, 비회원:로그인+주문조회정보입력페이지 이동")
