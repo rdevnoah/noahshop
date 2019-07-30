@@ -29,4 +29,9 @@ public class ProductDaoImpl implements ProductDao {
     public List<ProductVo> getProductList() {
         return sqlSession.selectList("product.getProductList");
     }
+
+    @Override
+    public List<ProductVo> getProductListByCategoryNo(Long categoryNo) {
+        return sqlSession.selectList("product.getProductListByCategoryNo", categoryNo);
+    }
 }

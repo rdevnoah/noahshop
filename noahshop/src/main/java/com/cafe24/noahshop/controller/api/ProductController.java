@@ -31,6 +31,7 @@ import java.util.Map;
  * Jul 11, 2019     rdevnoah         Initialize
  * Jul 12, 2019     rdevnoah         test search
  * Jul 25, 2019     rdevnoah         getDetail 이미지 제외 구현 완료
+ * Jul 30, 2019     rdevnoah         getListByCategoryNo 구현 완료
  * </pre>
  */
 @RestController("productAPIController")
@@ -54,7 +55,21 @@ public class ProductController {
 
 		return JSONResult.success(map);
 	}
-	
+
+	@ApiOperation(value="get product List by CategoryNo", notes = "카테고리별 상품 리스트 가져오기")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name="categoryNo", value="카테고리번호", required=true, dataType="long", defaultValue="")
+	})
+	@GetMapping("/{categoryNo}")
+	public JSONResult getListByCategoryNo(@PathVariable(value = "categoryNo") Long categoryNo){
+
+		Map<String, Object> map = productService.getListByCategoryNo(categoryNo);
+
+		return JSONResult.success(map);
+	}
+
+
+
 	@ApiOperation(value="search by keyword", notes = "키워드를 통해 상품 검색")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="keyword", value="검색 키워드", required=true, dataType="string", defaultValue="")

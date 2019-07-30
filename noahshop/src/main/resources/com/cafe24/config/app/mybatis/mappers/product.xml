@@ -21,6 +21,12 @@
 		where p.no=i.product_no and p.dp_main='N' and p.is_sell='Y'
 	</select>
 
+	<select id="getProductListByCategoryNo" resultMap="productResult">
+		select p.no, p.name, p.price, i.no as image_no, i.url as image_url
+		from product p, product_image i
+		where p.no=i.product_no and p.is_sell='Y' and p.category_no=#{categoryNo }
+	</select>
+
 
 	<resultMap id="productResult" type="productvo">
 		<result property="no" column="no"/>
@@ -30,6 +36,5 @@
 			<id property="no" column="image_no"/>
 			<id property="url" column="image_url"/>
 		</collection>
-
 	</resultMap>
 </mapper>

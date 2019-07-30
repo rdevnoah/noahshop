@@ -45,6 +45,16 @@ public class ProductControllerTest {
 	}
 
 	@Test
+	public void testGetByCategoryNo() throws Exception {
+		ResultActions resultActions = mockMvc.perform(get("/api/product/{categoryNo}", 2L).contentType(MediaType.APPLICATION_JSON));
+
+		resultActions.andExpect(status().isOk())
+					 .andDo(print());
+
+	}
+
+
+	@Test
 	public void testSearch() throws Exception {
 		ResultActions resultActions = mockMvc.perform(get("/api/product/search/{keyword}", "청바지").contentType(MediaType.APPLICATION_JSON));
 

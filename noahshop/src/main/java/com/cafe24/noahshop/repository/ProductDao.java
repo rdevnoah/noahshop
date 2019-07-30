@@ -19,6 +19,7 @@ import java.util.List;
  * 2019-07-29       rdevnoah         상품 상세정보가져오기 완료
  * 2019-07-30       rdevnoah         메인 상품 리스트 가져오기 완료
  * 2019-07-30       rdevnoah         상품 리스트 가져오기 완료
+ * 2019-07-30       rdevnoah         카테고리 번호 별 상품 리스트 가져오기 완료
  *
  * </pre>
  * @since : 2019-07-25
@@ -31,4 +32,5 @@ public interface ProductDao {
 
     List<ProductVo> getProductList();
 
+    List<ProductVo> getProductListByCategoryNo(Long categoryNo);
 }

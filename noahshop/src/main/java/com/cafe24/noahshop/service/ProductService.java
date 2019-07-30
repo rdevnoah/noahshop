@@ -18,6 +18,7 @@ import java.util.Map;
  * -------------    -------------    --------------------------------
  * 2019-07-25       rdevnoah         Initialize
  * 2019-07-25       rdevnoah         image 제외 get detail 완료
+ * 2019-07-30       rdevnoah         getListByCategoryNo 구현 완료
  *
  * </pre>
  * @since : 2019-07-25
@@ -25,12 +26,10 @@ import java.util.Map;
 public interface ProductService {
 	Map<String, Object> getProductDetail(Long no);
 	//Todo: getImage in getProductDetail();
+    Map<String, Object> getListByCategoryNo(Long categoryNo);
 
 	Map<String, Object> searchByKeyword(String keyword);
 
 	List<ProductVo> searchByKeywordInCategory(String keyword, Long categoryNo);
 
-
-
-	Map<String, Object> getMain();
 }
