@@ -132,6 +132,15 @@ public class MemberControllerTest {
 	}
 
 	@Test
+	public void testGetOrderList() throws Exception {
+		ResultActions resultActions = mockMvc.perform(get("/api/user/orderlist/{no}", 1L).contentType(MediaType.APPLICATION_JSON));
+
+		resultActions.andExpect(status().isOk())
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")));
+	}
+
+	@Test
 	public void testJoinForm() throws Exception {
 		ResultActions resultActions = mockMvc.perform(get("/api/user/joinform").contentType(MediaType.APPLICATION_JSON));
 

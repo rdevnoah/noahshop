@@ -24,6 +24,8 @@ public class OrderVo {
 
 	private String message;
 
+	private String deliveryStatus;
+
 
 	public OrderVo() {
 	}
@@ -47,6 +49,14 @@ public class OrderVo {
 		this.productDetailNo = productDetailNo;
 		this.quantity = quantity;
 		this.message = message;
+	}
+
+	public String getDeliveryStatus() {
+		return deliveryStatus;
+	}
+
+	public void setDeliveryStatus(String deliveryStatus) {
+		this.deliveryStatus = deliveryStatus;
 	}
 
 	public Long getNo() {

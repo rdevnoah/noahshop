@@ -3,31 +3,17 @@ package com.cafe24.noahshop.service.impl;
 import com.cafe24.noahshop.repository.MemberDao;
 import com.cafe24.noahshop.service.MemberService;
 import com.cafe24.noahshop.vo.MemberVo;
+import com.cafe24.noahshop.vo.OrderVo;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-/**
- * @title Cafe24 Personal-ShoppingMall
- * @packagename : com.cafe24.noahshop.service.impl
- * @filename : MemberServiceImpl.java
- * @author : rdevnoah
- * @since : Jul 16, 2019
- * @version : 1.0
- * @see <pre>
- * == Modification Information ==
- * 
- * Date             AUTHOR           NOTE
- * -------------    -------------    --------------------------------
- * Jul 16, 2019     rdevnoah         Initialize
- * Jul 16, 2019     rdevnoah         insert test
- * Jul 16, 2019     rdevnoah         insert test (encrypt, decrypt)
- * </pre>
- */
+
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -65,5 +51,11 @@ public class MemberServiceImpl implements MemberService {
 		map.put("key", key);
 		return memberDao.getMemberByNo(map);
 	}
+
+    @Override
+    public List<OrderVo> getOrderListById(Long no) {
+        List<OrderVo> orderList = memberDao.getOrderListById(no);
+		return orderList;
+    }
 
 }

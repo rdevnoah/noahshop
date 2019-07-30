@@ -1,33 +1,16 @@
 package com.cafe24.noahshop.repository.impl;
 
-import java.util.Map;
-
+import com.cafe24.noahshop.repository.MemberDao;
+import com.cafe24.noahshop.vo.MemberVo;
+import com.cafe24.noahshop.vo.OrderVo;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cafe24.noahshop.repository.MemberDao;
-import com.cafe24.noahshop.vo.MemberVo;
+import java.util.List;
+import java.util.Map;
 
-/**
- * @title Cafe24 Personal-ShoppingMall
- * @packagename : com.cafe24.noahshop.repository.impl
- * @filename : MemberDaoImpl.java
- * @author : rdevnoah
- * @since : Jul 16, 2019
- * @version : 1.0
- * @see 
- * 
- * <pre>
- * == Modification Information ==
- * 
- * Date             AUTHOR           NOTE
- * -------------    -------------    --------------------------------
- * Jul 16, 2019     rdevnoah         Initialize
- * Jul 16, 2019     rdevnoah         insert test
- * Jul 16, 2019     rdevnoah         test data ENCRYPT, DECRYPT
- * </pre>
- */
+
 @Repository
 public class MemberDaoImpl implements MemberDao {
 
@@ -66,7 +49,13 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectOne("member.checkId", id);
 	}
 
-	@Override
+    @Override
+    public List<OrderVo> getOrderListById(Long no) {
+
+		return sqlSession.selectList("member.getOrderListById", no);
+    }
+
+    @Override
 	public String getKeyByNo(Long no) {
 		return sqlSession.selectOne("member.getKeyByNo", no);
 	}

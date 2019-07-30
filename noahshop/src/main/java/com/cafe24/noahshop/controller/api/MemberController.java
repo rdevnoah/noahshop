@@ -1,14 +1,12 @@
 package com.cafe24.noahshop.controller.api;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.Validator;
-
+import com.cafe24.noahshop.dto.JSONResult;
+import com.cafe24.noahshop.service.MemberService;
+import com.cafe24.noahshop.vo.MemberVo;
+import com.cafe24.noahshop.vo.OrderVo;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -16,21 +14,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.cafe24.noahshop.dto.JSONResult;
-import com.cafe24.noahshop.service.MemberService;
-import com.cafe24.noahshop.vo.MemberVo;
-
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -50,6 +42,7 @@ import io.swagger.annotations.ApiOperation;
  * Jul 11, 2019     rdevnoah         Initialize
  * Jul 12, 2019     rdevnoah         test modify, login, logout
  * Jul 16, 2019     rdevnoah         join(service, repositogy) test, checkIdTest()
+ * Jul 30, 2019     rdevnoah         join(service, repositogy) test, checkIdTest()
  *      </pre>
  */
 @RestController("userAPIController")
@@ -190,12 +183,16 @@ public class MemberController {
 		return ResponseEntity.ok().body(JSONResult.success(vo));
 	}
 
-	@ApiOperation(value = "logout", notes = "로그아웃 처리하기")
-	@GetMapping("/logout")
-	public JSONResult logout(HttpServletRequest request) {
+	@ApiOperation(value = "get order List by Member_id", notes = "회원 주문내역 보기")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "no", value = "회원 번호", required = true, dataType = "Long", defaultValue = "")
+	})
+	@GetMapping("/orderlist/{no}")
+	public JSONResult getOrderList(@PathVariable(value = "no") Long no){
 
-		// session invalidate
+		List<OrderVo> orderList = memberService.getOrderListById(no);
 
-		return JSONResult.success("return:do logout and go main page");
+		return JSONResult.success(orderList);
 	}
+
 }

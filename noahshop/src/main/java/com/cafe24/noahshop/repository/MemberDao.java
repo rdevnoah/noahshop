@@ -1,9 +1,31 @@
 package com.cafe24.noahshop.repository;
 
+import com.cafe24.noahshop.vo.MemberVo;
+import com.cafe24.noahshop.vo.OrderVo;
+
+import java.util.List;
 import java.util.Map;
 
-import com.cafe24.noahshop.vo.MemberVo;
-
+/**
+ * @title Cafe24 Personal-ShoppingMall
+ * @packagename : com.cafe24.noahshop.repository
+ * @filename : MemberDao.java
+ * @author : rdevnoah
+ * @since : Jul 16, 2019
+ * @version : 1.0
+ * @see
+ *
+ * <pre>
+ * == Modification Information ==
+ *
+ * Date             AUTHOR           NOTE
+ * -------------    -------------    --------------------------------
+ * Jul 16, 2019     rdevnoah         Initialize
+ * Jul 16, 2019     rdevnoah         insert test
+ * Jul 16, 2019     rdevnoah         test data ENCRYPT, DECRYPT
+ * Jul 30, 2019     rdevnoah         getOrderListById 구현완료
+ * </pre>
+ */
 public interface MemberDao {
 	public MemberVo insert(MemberVo vo);
 	
@@ -18,4 +40,6 @@ public interface MemberDao {
 	public String getKeyByNo(Long no);
 
 	public String checkId(String id);
+
+    List<OrderVo> getOrderListById(Long no);
 }
