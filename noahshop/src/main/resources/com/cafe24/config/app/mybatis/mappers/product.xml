@@ -8,4 +8,28 @@
 		where no=#{no }
 	</select>
 
+
+	<select id="getMainProduct" resultMap="productResult">
+		select p.no, p.name, p.price, i.no as image_no, i.url as image_url
+		from product p, product_image i
+		where p.no=i.product_no and p.dp_main='Y' and p.is_sell='Y'
+	</select>
+
+	<select id="getProductList" resultMap="productResult">
+		select p.no, p.name, p.price, i.no as image_no, i.url as image_url
+		from product p, product_image i
+		where p.no=i.product_no and p.dp_main='N' and p.is_sell='Y'
+	</select>
+
+
+	<resultMap id="productResult" type="productvo">
+		<result property="no" column="no"/>
+		<result property="name" column="name"/>
+		<result property="price" column="price"/>
+		<collection property="imageList" javaType="java.util.ArrayList" ofType="imagevo">
+			<id property="no" column="image_no"/>
+			<id property="url" column="image_url"/>
+		</collection>
+
+	</resultMap>
 </mapper>

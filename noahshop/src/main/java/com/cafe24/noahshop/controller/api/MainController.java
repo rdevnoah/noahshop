@@ -1,16 +1,14 @@
 package com.cafe24.noahshop.controller.api;
 
+import com.cafe24.noahshop.dto.JSONResult;
+import com.cafe24.noahshop.service.MainService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cafe24.noahshop.dto.JSONResult;
-import com.cafe24.noahshop.service.ProductService;
-
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import java.util.Map;
 
 /**
  * 
@@ -33,8 +31,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping({ "/", "" })
 public class MainController {
-	
-	private ProductService productService;
+
+	@Autowired
+	private MainService mainService;
 	
 	@ApiOperation(value="get main page", notes = "메인화면 가져오기")
 	@GetMapping
@@ -44,7 +43,7 @@ public class MainController {
 		// 주문횟수랭킹상품목록
 		// 등록일기준 상품목록
 		// 카테고리목록
-		//productService.getMain();
-		return JSONResult.success("success");
+		Map<String, Object> map = mainService.getMain();
+		return JSONResult.success(map);
 	}
 }

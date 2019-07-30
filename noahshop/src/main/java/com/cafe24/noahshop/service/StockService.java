@@ -1,5 +1,6 @@
 package com.cafe24.noahshop.service;
 
+import com.cafe24.noahshop.exception.StockException;
 import com.cafe24.noahshop.vo.OrderVo;
 
 /**
@@ -13,16 +14,13 @@ import com.cafe24.noahshop.vo.OrderVo;
  *
  * Date             AUTHOR           NOTE
  * -------------    -------------    --------------------------------
- * 2019-07-29       rdevnoah         Initialize
- * 2019-07-29       rdevnoah         addMemberOrder complete
+ * 2019-07-30       rdevnoah         Initialize
+ * 2019-07-30       rdevnoah         checkStock 구현 완료
  *
  * </pre>
- * @since : 2019-07-29
+ * @since : 2019-07-30
  */
-public interface OrderService {
-    OrderVo addOrder(OrderVo vo);
+public interface StockService {
 
-    String orderCodeGenerator(String date);
-
-
+    void checkStock(OrderVo vo) throws StockException;
 }

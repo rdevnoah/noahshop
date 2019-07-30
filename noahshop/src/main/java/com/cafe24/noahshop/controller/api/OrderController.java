@@ -1,8 +1,10 @@
 package com.cafe24.noahshop.controller.api;
 
 import com.cafe24.noahshop.dto.JSONResult;
+import com.cafe24.noahshop.exception.StockException;
 import com.cafe24.noahshop.service.MemberService;
 import com.cafe24.noahshop.service.OrderService;
+import com.cafe24.noahshop.service.StockService;
 import com.cafe24.noahshop.vo.MemberVo;
 import com.cafe24.noahshop.vo.OrderVo;
 import io.swagger.annotations.ApiImplicitParam;
@@ -35,6 +37,8 @@ import java.util.List;
  * -------------    -------------    --------------------------------
  * Jul 11, 2019     rdevnoah         Initialize
  * Jul 12, 2019     rdevnoah         test add, get, delete
+ * 2019-07-29       rdevnoah         orderform, addOrder 완료
+ * 2019-07-30       rdevnoah         재고처리 및 exception 처리 완료
  * </pre>
  */
 @RestController("orderAPIController")
@@ -46,6 +50,9 @@ public class OrderController {
 
 	@Autowired
 	private MemberService memberService;
+
+	@Autowired
+	private StockService stockService;
 	
 	@ApiOperation(value="show order form", notes = "회원 주문정보입력창 이동")
 	@ApiImplicitParams({
@@ -77,7 +84,16 @@ public class OrderController {
 		}
 
 
-		vo = orderService.addMemberOrder(vo);
+		//재고 서비스를 통해 재고 있는지 확인 없으면 error message 리턴
+
+		try{
+			stockService.checkStock(vo);
+		}catch(StockException e){
+			return JSONResult.fail(e.getMessage());
+		}
+
+
+		vo = orderService.addOrder(vo);
 
 
 			

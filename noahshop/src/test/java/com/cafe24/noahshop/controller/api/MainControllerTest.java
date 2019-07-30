@@ -45,13 +45,13 @@ public class MainControllerTest {
 
 		resultActions.andExpect(status().isOk())
 					 .andDo(print())
-					 .andExpect(jsonPath("$.data", is("success")));
+					 .andExpect(jsonPath("$.result", is("success")));
 		
 		resultActions = mockMvc.perform(get("").contentType(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk())
 					 .andDo(print())
-					 .andExpect(jsonPath("$.data", is("success")));
+					 .andExpect(jsonPath("$.result", is("success")));
 		
 		
 		

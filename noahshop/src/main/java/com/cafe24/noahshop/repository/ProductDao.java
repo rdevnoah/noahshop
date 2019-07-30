@@ -2,6 +2,8 @@ package com.cafe24.noahshop.repository;
 
 import com.cafe24.noahshop.vo.ProductVo;
 
+import java.util.List;
+
 /**
  * @author : rdevnoah
  * @version : 1.0
@@ -14,7 +16,9 @@ import com.cafe24.noahshop.vo.ProductVo;
  * Date             AUTHOR           NOTE
  * -------------    -------------    --------------------------------
  * 2019-07-25       rdevnoah         Initialize
- * 2019-07-25       rdevnoah         상품
+ * 2019-07-29       rdevnoah         상품 상세정보가져오기 완료
+ * 2019-07-30       rdevnoah         메인 상품 리스트 가져오기 완료
+ * 2019-07-30       rdevnoah         상품 리스트 가져오기 완료
  *
  * </pre>
  * @since : 2019-07-25
@@ -22,5 +26,9 @@ import com.cafe24.noahshop.vo.ProductVo;
 public interface ProductDao {
     ProductVo getProductByNo(Long no);
 
+
+    List<ProductVo> getMainProduct();
+
+    List<ProductVo> getProductList();
 
 }

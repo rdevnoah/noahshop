@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="stock">
+
+	<select id="checkStockFromOrder" parameterType="ordervo" resultType="int">
+		select (stock - #{quantity })
+		from product_detail
+		where no=#{productDetailNo }
+	</select>
+
+	<update id="updateStockFromOrder" parameterType="ordervo">
+		update product_detail set stock=stock-#{quantity }
+		where no=#{productDetailNo }
+	</update>
+
+</mapper>

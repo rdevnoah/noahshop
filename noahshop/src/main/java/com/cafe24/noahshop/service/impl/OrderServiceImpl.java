@@ -1,11 +1,13 @@
 package com.cafe24.noahshop.service.impl;
 
 import com.cafe24.noahshop.repository.OrderDao;
+import com.cafe24.noahshop.repository.StockDao;
 import com.cafe24.noahshop.service.OrderService;
 import com.cafe24.noahshop.vo.DeliveryVo;
 import com.cafe24.noahshop.vo.OrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -13,10 +15,16 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderDao orderDao;
 
-    @Override
-    public OrderVo addMemberOrder(OrderVo vo) {
+    @Autowired
+    private StockDao stockDao;
 
-        //code Generate
+    @Transactional
+    @Override
+    public OrderVo addOrder(OrderVo vo) {
+
+        // 재고 확인을 통해 재고에서 구매량 뺀 값이 0보다 작으면 return error. (throw transaction?)
+
+        //todo: code Generate
 
         vo.setOrderCode(orderCodeGenerator(vo.getBuyerTel()));
         //1. order 테이블 insert
@@ -35,6 +43,9 @@ public class OrderServiceImpl implements OrderService {
         deliveryVo.setTel(vo.getBuyerTel());
 
         deliveryVo = orderDao.addDelivery(deliveryVo);
+
+        stockDao.updateStock(vo);
+
         return vo;
     }
 

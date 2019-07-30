@@ -80,6 +80,15 @@ public class OrderControllerTest {
 		resultActions.andExpect(status().isOk())
 					 .andDo(print());
 
+		//test 재고 초과 주문
+		vo.setQuantity(120);
+
+		resultActions = mockMvc.perform(put("/api/order").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isOk())
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("fail")));
+
 
 		// 비회원 - no:null, member_no:null, order_no:null, order_date:null, address:대구 광역시 수성구 시지동 청구전원아파트 102동 701호, isMember='N', password:"qlalfqjsgh2@", payment:카드결제,
 		// buyerName:김자감, email:zzagam2@gmail.com, status: 결제대기, buyerTel: 010-1111-1111

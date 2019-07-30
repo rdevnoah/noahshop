@@ -17,10 +17,12 @@ public class ProductVo {
 	private String isSell;
 	private List<OptionStockVo> optionStockVo;
 
+	private List<ImageVo> imageList;
+
 	public ProductVo() {
 	}
 
-	public ProductVo(Long no, @NotEmpty String code, String name, int price, String description, Long categoryNo, String regDate, String dpMain, String isSell, List<OptionStockVo> optionStockVo) {
+	public ProductVo(Long no, @NotEmpty String code, String name, int price, String description, Long categoryNo, String regDate, String dpMain, String isSell, List<OptionStockVo> optionStockVo, List<ImageVo> imageList) {
 		this.no = no;
 		this.code = code;
 		this.name = name;
@@ -31,6 +33,7 @@ public class ProductVo {
 		this.dpMain = dpMain;
 		this.isSell = isSell;
 		this.optionStockVo = optionStockVo;
+		this.imageList = imageList;
 	}
 
 	public Long getNo() {
@@ -113,19 +116,11 @@ public class ProductVo {
 		this.optionStockVo = optionStockVo;
 	}
 
-	@Override
-	public String toString() {
-		return "ProductVo{" +
-				"no=" + no +
-				", code='" + code + '\'' +
-				", name='" + name + '\'' +
-				", price=" + price +
-				", description='" + description + '\'' +
-				", categoryNo=" + categoryNo +
-				", regDate='" + regDate + '\'' +
-				", dpMain='" + dpMain + '\'' +
-				", isSell='" + isSell + '\'' +
-				", optionStockVo=" + optionStockVo +
-				'}';
+	public List<ImageVo> getImageList() {
+		return imageList;
+	}
+
+	public void setImageList(List<ImageVo> imageList) {
+		this.imageList = imageList;
 	}
 }

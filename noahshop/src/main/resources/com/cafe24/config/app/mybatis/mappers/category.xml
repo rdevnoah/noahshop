@@ -15,6 +15,21 @@
 		<selectKey resultType="long" keyProperty="no" order="AFTER">
 			select currval('category_child_no_seq')
 		</selectKey>
-
 	</insert>
+
+	<select id="getCategoryList" resultMap="categoryResult">
+		select cp.no, cp.name, cc.no as child_no, cc.name as child_name
+		from category_parent cp, category_child cc
+		where cp.no=cc.category_parent_no
+	</select>
+
+	<resultMap id="categoryResult" type="categoryvo">
+		<result property="no" column="no"/>
+		<result property="name" column="name"/>
+		<collection property="childList" javaType="java.util.ArrayList" ofType="categoryvo">
+			<id property="no" column="child_no"/>
+			<id property="name" column="child_name"/>
+		</collection>
+
+	</resultMap>
 </mapper>
