@@ -1,5 +1,6 @@
 package com.cafe24.noahshop.repository;
 
+import com.cafe24.noahshop.dto.ProductAddDto;
 import com.cafe24.noahshop.vo.ProductDetailVo;
 import com.cafe24.noahshop.vo.ProductVo;
 
@@ -20,6 +21,7 @@ import java.util.Map;
  * 2019-07-23       rdevnoah         Initialize
  * 2019-07-23       rdevnoah         add product, add image, add product Detail 구현완료
  * 2019-07-30       rdevnoah         getList, getProductByNo, getProductDetailByNo 구현완료
+ * 2019-07-31       rdevnoah         getDetailForModify 구현완료
  *
  * </pre>
  * @since : 2019-07-23
@@ -36,4 +38,6 @@ public interface AdminProductDao {
     ProductVo getProductByNo(Long no);
 
     List<ProductDetailVo> getProductDetailByNo(Long no);
+
+    ProductAddDto getProductDetailForModify(Long no);
 }

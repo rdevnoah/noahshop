@@ -36,6 +36,8 @@ import java.util.Map;
  * Jul 12, 2019     rdevnoah         test add, delete, modify
  * Jul 23, 2019     rdevnoah         product add test 완료
  * Jul 30, 2019     rdevnoah         getList, getDetail 구현완료
+ * Jul 31, 2019     rdevnoah         getDetailForModify 구현완료
+ *
  * </pre>
  */
 @RestController("adminProductAPIController")
@@ -106,6 +108,15 @@ public class AdminProductController {
 		Map<String, Object> map = adminProductService.getDetailByNo(no);
 
 		return JSONResult.success(map);
+	}
+
+	@ApiOperation(value = "get product's detail for modify form", notes = "수정하기 위해 상품 정보 가져오기")
+	@ApiImplicitParam(name="no", value="상품번호", required = true, dataType = "long", defaultValue = "")
+	@GetMapping("/modifyform/{no}")
+	public JSONResult modifyForm(@PathVariable(value = "no") Long no) {
+
+		ProductAddDto dto = adminProductService.getProductDetailForModify(no);
+		return JSONResult.success(dto);
 	}
 
 

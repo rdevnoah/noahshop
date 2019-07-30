@@ -52,7 +52,16 @@ public class AdminProductControllerTest {
 					 .andExpect(jsonPath("$.result", is("success")));
 		
 	}
-	
+
+	@Test
+	public void testModifyForm() throws Exception{
+		ResultActions resultActions = mockMvc.perform(get("/api/admin/product/modifyform/{no}", 1L).contentType(MediaType.APPLICATION_JSON));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+	}
+
 	@Test
 	@Rollback(true)
 	public void testAdd() throws Exception {

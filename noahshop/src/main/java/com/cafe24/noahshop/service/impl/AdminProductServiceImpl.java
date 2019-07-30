@@ -115,6 +115,12 @@ public class AdminProductServiceImpl implements AdminProductService {
         return map;
     }
 
+    @Override
+    public ProductAddDto getProductDetailForModify(Long no) {
+        ProductAddDto dto = adminProductDao.getProductDetailForModify(no);
+        return dto;
+    }
+
 
     /**
      * 상품 코드 generator (고유한 값으로 generate)

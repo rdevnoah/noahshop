@@ -1,5 +1,6 @@
 package com.cafe24.noahshop.repository.impl;
 
+import com.cafe24.noahshop.dto.ProductAddDto;
 import com.cafe24.noahshop.repository.AdminProductDao;
 import com.cafe24.noahshop.vo.ProductDetailVo;
 import com.cafe24.noahshop.vo.ProductVo;
@@ -66,5 +67,11 @@ public class AdminProductDaoImpl implements AdminProductDao {
     @Override
     public List<ProductDetailVo> getProductDetailByNo(Long no) {
         return sqlSession.selectList("adminProduct.getProductDetailByNo", no);
+    }
+
+    @Override
+    public ProductAddDto getProductDetailForModify(Long no) {
+
+        return sqlSession.selectOne("adminProduct.getProductDetailForModify", no);
     }
 }

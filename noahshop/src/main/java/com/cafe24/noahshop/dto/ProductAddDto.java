@@ -18,6 +18,7 @@ public class ProductAddDto {
 
     private Long categoryNo;
 
+
     private List<OptionStockVo> optionStockVoList;
 
     public ProductAddDto() {

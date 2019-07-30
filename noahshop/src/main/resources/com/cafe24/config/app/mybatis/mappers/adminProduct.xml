@@ -61,6 +61,43 @@
 			and p.no=#{no }
 	</select>
 
+
+	<select id="getProductDetailForModify" parameterType="long" resultMap="productModifyResult">
+
+
+		select a.name,
+	   		   a.price,
+	   		   a.description,
+	   		   a.dpMain,
+	   		   a.isSell,
+	   		   a.imageUrl,
+	   		   a.imageNo,
+	   		   a.stock,
+	   		   a.productDetailNo,
+	   		   a.optionChild1No,
+	   		   a.optionChild2No,
+	   		   (select name from option_child where no=a.optionChild1No) as optionChild1Name,
+	   		   (select name from option_child where no=a.optionChild2No) as optionChild2Name
+		from   (select p.name as name,
+			   		   p.price as price,
+			   		   p.description as description,
+			   		   p.dp_main as dpMain,
+			   		   p.is_sell as isSell,
+			   		   i.url as imageUrl,
+			   		   i.no as imageNo,
+			   		   pd.stock as stock,
+			   		   pd.no as productDetailNo,
+			   		   pd.option_child1_no as optionChild1No,
+			   		   pd.option_child2_no as optionChild2No
+				from product p, product_detail pd, option_child oc, product_image i
+				where p.no=pd.product_no
+					and pd.option_child1_no=oc.no
+					and i.product_no=p.no
+					and p.no=#{no }) a
+	</select>
+
+
+
 	<resultMap id="productResult" type="productvo">
 		<result property="no" column="no"/>
 		<result property="categoryNo" column="categoryNo"/>
@@ -71,6 +108,26 @@
 		<result property="name" column="name"/>
 		<result property="isSell" column="isSell"/>
 		<collection property="imageList" javaType="java.util.ArrayList" ofType="imagevo">
+			<id property="no" column="imageNo"/>
+			<id property="url" column="imageUrl"/>
+		</collection>
+	</resultMap>
+
+	<resultMap id="productModifyResult" type="productadddto">
+		<result property="name" column="name"/>
+		<result property="price" column="price"/>
+		<result property="description" column="description"/>
+		<result property="dpMain" column="dpMain"/>
+		<result property="isSell" column="isSell"/>
+		<collection property="optionStockVoList" javaType="java.util.ArrayList" ofType="optionstockvo">
+			<id property="productDetailNo" column="productDetailNo"/>
+			<id property="optionChild1No" column="optionChild1No"/>
+			<id property="optionChild2No" column="optionChild2No"/>
+			<id property="optionChild1Name" column="optionChild1Name"/>
+			<id property="optionChild2Name" column="optionChild2Name"/>
+			<id property="stock" column="stock"/>
+		</collection>
+		<collection property="image" javaType="java.util.ArrayList" ofType="imagevo">
 			<id property="no" column="imageNo"/>
 			<id property="url" column="imageUrl"/>
 		</collection>
