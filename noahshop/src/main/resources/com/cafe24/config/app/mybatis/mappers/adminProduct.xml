@@ -27,4 +27,54 @@
 		</foreach>
 
 	</insert>
+
+	<select id="getList" resultType="productvo">
+		select p.no, p.name, p.price, i.no as image_no, i.url as image_url
+		from product p, product_image i
+		where p.no=i.product_no
+		order by p.reg_date
+	</select>
+
+
+	<select id="getProductByNo" parameterType="long" resultMap="productResult">
+		select p.no,
+			p.category_no as categoryNo,
+			p.code as code,
+			p.price as price,
+			p.description as description,
+			p.dp_main as dpMain,
+			p.name as name,
+			p.is_sell as isSell,
+			i.no as imageNo,
+			i.url as imageUrl
+		from product p, product_image i
+		where p.no=#{no }
+	</select>
+
+	<select id="getProductDetailByNo" parameterType="long" resultType="productdetailvo">
+		select pd.no,
+			   pd.stock,
+			   pd.option_child1_no as optionChildNo1,
+			   pd.option_child2_no as optionChildNo2
+		from product p, product_detail pd
+		where p.no=pd.product_no
+			and p.no=#{no }
+	</select>
+
+	<resultMap id="productResult" type="productvo">
+		<result property="no" column="no"/>
+		<result property="categoryNo" column="categoryNo"/>
+		<result property="code" column="code"/>
+		<result property="price" column="price"/>
+		<result property="description" column="description"/>
+		<result property="dpMain" column="dpMain"/>
+		<result property="name" column="name"/>
+		<result property="isSell" column="isSell"/>
+		<collection property="imageList" javaType="java.util.ArrayList" ofType="imagevo">
+			<id property="no" column="imageNo"/>
+			<id property="url" column="imageUrl"/>
+		</collection>
+	</resultMap>
+
+
 </mapper>

@@ -51,4 +51,20 @@ public class AdminProductDaoImpl implements AdminProductDao {
         map.put("list", details);
         return sqlSession.insert("adminProduct.insertProductDetail", map) != 0;
     }
+
+    @Override
+    public List<ProductVo> getList() {
+
+        return sqlSession.selectList("adminProduct.getList");
+    }
+
+    @Override
+    public ProductVo getProductByNo(Long no) {
+        return sqlSession.selectOne("adminProduct.getProductByNo", no);
+    }
+
+    @Override
+    public List<ProductDetailVo> getProductDetailByNo(Long no) {
+        return sqlSession.selectList("adminProduct.getProductDetailByNo", no);
+    }
 }

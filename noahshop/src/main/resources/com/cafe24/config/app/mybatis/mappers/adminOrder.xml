@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminOrder">
+	<select id="getList" resultType="ordervo">
+		select
+			o.no,
+			o.member_no as memberNo,
+			o.order_code as orderCode,
+			o.order_date as orderDate,
+			o.address,
+			o.is_member as isMember,
+			o.password,
+			o.payment,
+			o.price,
+			o.buyer_name as buyerName,
+			o.email,
+			o.status,
+			o.buyer_tel as buyerTel,
+			d.status as deliveryStatus
+		from "order" o, delivery d
+		where o.no=d.no
+		order by order_date
+	</select>
+
+</mapper>

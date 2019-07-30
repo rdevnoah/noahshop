@@ -105,6 +105,25 @@ public class AdminProductControllerTest {
 
 
 	}
+
+	@Test
+	public void testGetList() throws Exception{
+		ResultActions resultActions = mockMvc.perform(get("/api/admin/product/list").contentType(MediaType.APPLICATION_JSON));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+	}
+
+	@Test
+	public void testGetDetailByNo() throws Exception{
+		ResultActions resultActions = mockMvc.perform(get("/api/admin/product/detail/{no}", 1L).contentType(MediaType.APPLICATION_JSON));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+	}
+
 	
 	@Test
 	public void testDelete() throws Exception {

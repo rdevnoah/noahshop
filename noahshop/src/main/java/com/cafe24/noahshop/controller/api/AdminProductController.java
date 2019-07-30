@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @title Cafe24 Personal-ShoppingMall
@@ -34,6 +35,7 @@ import java.util.List;
  * Jul 12, 2019     rdevnoah         Initialize
  * Jul 12, 2019     rdevnoah         test add, delete, modify
  * Jul 23, 2019     rdevnoah         product add test 완료
+ * Jul 30, 2019     rdevnoah         getList, getDetail 구현완료
  * </pre>
  */
 @RestController("adminProductAPIController")
@@ -85,7 +87,29 @@ public class AdminProductController {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(dto));
 	}
-	
+
+	@ApiOperation(value = "get product list by admin", notes = "관리자 상품 리스트")
+	@GetMapping("/list")
+	public JSONResult getProductList() {
+
+		List<ProductVo> list = adminProductService.getList();
+		// delete 처리
+		return JSONResult.success(list);
+	}
+
+
+	@ApiOperation(value = "get product's detail info by no", notes = "관리자 상품 상세정보 가져오기")
+	@ApiImplicitParam(name="no", value="상품번호", required = true, dataType = "long", defaultValue = "")
+	@GetMapping("/detail/{no}")
+	public JSONResult getDetailByNo(@PathVariable(value = "no") Long no) {
+
+		Map<String, Object> map = adminProductService.getDetailByNo(no);
+
+		return JSONResult.success(map);
+	}
+
+
+
 	@ApiOperation(value = "delete product by admin", notes = "관리자 상품 삭제")
 	@ApiImplicitParam(name="no", value="상품번호", required = true, dataType = "long", defaultValue = "")
 	@DeleteMapping("/{no}")

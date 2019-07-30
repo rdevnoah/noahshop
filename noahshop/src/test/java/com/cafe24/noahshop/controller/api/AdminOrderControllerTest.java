@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -23,40 +22,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class MainControllerTest {
-	
-	private MockMvc mockMvc;
-	
-	@Autowired
-	private WebApplicationContext wac;
-	
-	@Before
-	public void setUp() {
-		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-	}
-	
-	@Test
-	public void testDI() {
-		assertNotNull(wac);
-		assertNotNull(mockMvc);
-	}
-	
-	@Test
-	public void testgetMain() throws Exception {
-		ResultActions resultActions = mockMvc.perform(get("/").contentType(MediaType.APPLICATION_JSON));
+public class AdminOrderControllerTest {
+    private MockMvc mockMvc;
 
-		resultActions.andExpect(status().isOk())
-					 .andDo(print())
-					 .andExpect(jsonPath("$.result", is("success")));
-		
-		resultActions = mockMvc.perform(get("").contentType(MediaType.APPLICATION_JSON));
+    @Autowired
+    private WebApplicationContext wac;
 
-		resultActions.andExpect(status().isOk())
-					 .andDo(print())
-					 .andExpect(jsonPath("$.result", is("success")));
-		
-		
-		
-	}
-	
+    @Before
+    public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
+
+    @Test
+    public void testgetList() throws Exception {
+        ResultActions resultActions = mockMvc.perform(get("/api/admin/order/list").contentType(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.result", is("success")));
+
+    }
 }

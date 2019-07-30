@@ -15,24 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author : rdevnoah
- * @version : 1.0
- * @title Cafe24 Personal-ShoppingMall
- * @packagename : com.cafe24.noahshop.service.impl
- * @see <pre>
- *
- * == Modification Information ==
- *
- * Date             AUTHOR           NOTE
- * -------------    -------------    --------------------------------
- * 2019-07-23       rdevnoah         Initialize
- * 2019-07-23       rdevnoah         add product (option, no option 구현 완료)
- *
- *
- * </pre>
- * @since : 2019-07-23
- */
+
 @Service
 public class AdminProductServiceImpl implements AdminProductService {
 
@@ -108,6 +91,28 @@ public class AdminProductServiceImpl implements AdminProductService {
 
 
         return result;
+    }
+
+    @Override
+    public List<ProductVo> getList() {
+        return adminProductDao.getList();
+    }
+
+    @Override
+    public Map<String, Object> getDetailByNo(Long no) {
+        Map<String, Object> map = new HashMap<>();
+
+        // 상품정보
+        ProductVo productVo = adminProductDao.getProductByNo(no);
+        map.put("productVo", productVo);
+        // 상품상세정보
+        List<ProductDetailVo> list = adminProductDao.getProductDetailByNo(no);
+        map.put("productDetailList", list);
+
+        // 상품의 옵션정보
+        //todo: 옵션의 이름 가져오기
+
+        return map;
     }
 
 
