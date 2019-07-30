@@ -56,6 +56,11 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     @Override
+    public void updateMember(Map<String, Object> map) {
+        sqlSession.update("member.updateMember", map);
+    }
+
+    @Override
 	public String getKeyByNo(Long no) {
 		return sqlSession.selectOne("member.getKeyByNo", no);
 	}

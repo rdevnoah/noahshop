@@ -42,7 +42,8 @@ import java.util.Set;
  * Jul 11, 2019     rdevnoah         Initialize
  * Jul 12, 2019     rdevnoah         test modify, login, logout
  * Jul 16, 2019     rdevnoah         join(service, repositogy) test, checkIdTest()
- * Jul 30, 2019     rdevnoah         join(service, repositogy) test, checkIdTest()
+ * Jul 30, 2019     rdevnoah         getOrderListByNo 구현완료
+ * Jul 30, 2019     rdevnoah         modifyform, modify 구현완료
  *      </pre>
  */
 @RestController("userAPIController")
@@ -123,17 +124,17 @@ public class MemberController {
 	}
 
 	@ApiOperation(value = "get modify form", notes = "회원정보수정 폼 가져오기")
-	@GetMapping("/modifyform")
-	public JSONResult modifyForm(HttpServletRequest request) {
+	@GetMapping("/modifyform/{no}")
+	public JSONResult modifyForm(@PathVariable(value = "no") Long no) {
+		MemberVo vo = memberService.getMemberByNo(no);
 
-		// 세션에 저장된 인증 사용자의 정보 DB에서 가져오기
-		return JSONResult.success("return:modifyForm");
+		return JSONResult.success(vo);
 	}
 
 	@ApiOperation(value = "modify member info", notes = "회원정보 수정")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "vo", value = "수정할 회원정보", required = true, dataType = "MemberVo", defaultValue = "") })
-	@PostMapping
+	@PutMapping("/modify")
 	public ResponseEntity<JSONResult> modify(@RequestBody @Valid MemberVo vo, BindingResult result) {
 		if (result.hasErrors()) {
 			// 에러 메세지 확인
@@ -143,6 +144,8 @@ public class MemberController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
 			}
 		}
+
+		memberService.updateMember(vo);
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(vo));
 	}

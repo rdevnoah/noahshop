@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -124,29 +123,17 @@ public class OrderControllerTest {
 	}
 
 	@Test
-	public void testGetOrder() throws Exception {
-		
-		MockHttpSession mockSession = new MockHttpSession();
-		
-		// 회원
-		ResultActions resultActions = mockMvc.perform(get("/api/order").contentType(MediaType.APPLICATION_JSON).session(mockSession));
+	public void testGetDetailByNo() throws Exception {
+		ResultActions resultActions = mockMvc.perform(get("/api/order/detail/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk())
 					 .andDo(print())
-					 .andExpect(jsonPath("$.result", is(("success"))));
-		
-		
-		//비회원
-		resultActions = mockMvc.perform(get("/api/order").contentType(MediaType.APPLICATION_JSON));
-
-		resultActions.andExpect(status().isOk())
-					 .andDo(print())
-					 .andExpect(jsonPath("$.result", is(("fail"))));
+					 .andExpect(jsonPath("$.result", is("success")));
 	}
 	
 	@Test
 	public void testDeleteOrder() throws Exception {
-		
+
 		ResultActions resultActions = mockMvc.perform(delete("/api/order/delete/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk())

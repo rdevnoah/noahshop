@@ -24,6 +24,7 @@ import java.util.Map;
  * Jul 16, 2019     rdevnoah         insert test
  * Jul 16, 2019     rdevnoah         test data ENCRYPT, DECRYPT
  * Jul 30, 2019     rdevnoah         getOrderListById 구현완료
+ * Jul 30, 2019     rdevnoah         getOrderListById 구현완료
  * </pre>
  */
 public interface MemberDao {
@@ -42,4 +43,6 @@ public interface MemberDao {
 	public String checkId(String id);
 
     List<OrderVo> getOrderListById(Long no);
+
+	void updateMember(Map<String, Object> map);
 }

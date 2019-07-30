@@ -15,8 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -99,22 +97,13 @@ public class OrderController {
 			
 		return JSONResult.success(vo);
 	}
-	
-	@ApiOperation(value = "get Order", notes = "주문내역 가져외-회원:모든 주문, 비회원:로그인+주문조회정보입력페이지 이동")
-	@GetMapping
-	public JSONResult getOrder(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		
-		//비회원인 경우 
-		if (session == null) {
-			
-			// 비회원 주문조회 포함한 로그인 페이지 이동
-			
-			return JSONResult.fail("unidentified User: goto enter order password page");
-		}
-		
-		
-		return JSONResult.success("return:order");
+
+	@GetMapping("/detail/{no}")
+	public JSONResult getDetailByNo(@PathVariable(value = "no") Long no){
+		// 가져와야 하는 것들
+		// 주문 상세정보, 배송 상세정보
+		// 주문한 상품 이미지,
+		return JSONResult.success(no);
 	}
 	
 	@ApiOperation(value = "delete order", notes = "결제대기인 상품 주문 취소")

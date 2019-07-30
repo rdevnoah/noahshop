@@ -58,4 +58,13 @@ public class MemberServiceImpl implements MemberService {
 		return orderList;
     }
 
+    @Override
+    public void updateMember(MemberVo vo) {
+		Map<String, Object> map = new HashMap<>();
+		String key = memberDao.getKeyByNo(vo.getNo());
+		map.put("key", key);
+		map.put("vo", vo);
+        memberDao.updateMember(map);
+    }
+
 }

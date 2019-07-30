@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminMember">
+	<select id="getMemberList" resultType="membervo">
+		select no
+			, convert_from(decrypt(decode(m.id,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as id
+			, m.password
+			, convert_from(decrypt(decode(m.name,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as name
+			, convert_from(decrypt(decode(m.tel,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as tel
+			, convert_from(decrypt(decode(m.address,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as address
+			, convert_from(decrypt(decode(m.email,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as email
+			, m.join_date as joinDate
+			, role
+		from member m, key k
+		where m.no=k.member_no
+	</select>
+
+	<select id="searchMemberById" parameterType="string" resultType="membervo">
+		select a.no, a.id, a.name, a.tel, a.address, a.email, a.joinDate, a.role
+		from (select no
+				, convert_from(decrypt(decode(m.id,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as id
+				, convert_from(decrypt(decode(m.name,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as name
+				, convert_from(decrypt(decode(m.tel,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as tel
+				, convert_from(decrypt(decode(m.address,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as address
+				, convert_from(decrypt(decode(m.email,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as email
+				, m.join_date as joinDate
+				, role
+			from member m, key k
+			where m.no=k.member_no ) a
+		where id::text like concat('%', #{id }, '%')
+	</select>
+</mapper>

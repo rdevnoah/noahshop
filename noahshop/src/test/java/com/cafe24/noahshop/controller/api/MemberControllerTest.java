@@ -8,12 +8,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -25,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
+//@Transactional
 public class MemberControllerTest {
 
 	private MockMvc mockMvc;
@@ -39,7 +37,7 @@ public class MemberControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 	}
 
-	@Rollback(true)
+//	@Rollback(true)
 	@Test
 	public void testJoin() throws Exception {
 
@@ -160,7 +158,7 @@ public class MemberControllerTest {
 
 	@Test
 	public void testModifyForm() throws Exception {
-		ResultActions resultActions = mockMvc.perform(get("/api/user/modifyform").contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/api/user/modifyform/{no}", 1L).contentType(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk())
 					 .andDo(print())
@@ -168,33 +166,33 @@ public class MemberControllerTest {
 	}
 
 	@Test
-	public void testmodify() throws Exception {
+	public void testModify() throws Exception {
 		MemberVo vo = new MemberVo();
+		vo.setNo(1L);
 		vo.setId("zzagam2");
-		vo.setAddress("수원시 팔달구 우만동");
-		vo.setName("김영호");
+		vo.setAddress("미국 플로리다주");
+		vo.setName("김똥개");
 		vo.setPassword("qntlfwkd1!");
 		vo.setEmail("test@test.com");
 		vo.setTel("010-1111-1111");
 
-		ResultActions resultActions = mockMvc.perform(post("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-		
-		resultActions.andDo(print())
-					 .andExpect(status().isOk())
-					 .andExpect(jsonPath("$.result", is("success")))
-					 .andExpect(jsonPath("$.data.tel", is("010-1111-1111")))
-					 .andExpect(jsonPath("$.data.email", is("test@test.com")));
+		ResultActions resultActions = mockMvc.perform(put("/api/user/modify").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isOk())
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")));
 		
 		// invalid
 		vo.setTel(null);
 
-		resultActions = mockMvc.perform(post("/api/user").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions = mockMvc.perform(put("/api/user/modify").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andDo(print())
 					 .andExpect(status().isBadRequest())
 					 .andExpect(jsonPath("$.result", is("fail")));
 		
 	}
+
 
 	@Test
 	public void testLoginForm() throws Exception {
@@ -245,15 +243,6 @@ public class MemberControllerTest {
 		 * "$.result", is("fail")));
 		 */
 
-	}
-	
-	@Test
-	public void testLogout() throws Exception {
-		ResultActions resultActions = mockMvc.perform(get("/api/user/logout").contentType(MediaType.APPLICATION_JSON));
-		
-		resultActions.andExpect(status().isOk())
-					 .andDo(print())
-					 .andExpect(jsonPath("$.result", is("success")));
 	}
 
 	

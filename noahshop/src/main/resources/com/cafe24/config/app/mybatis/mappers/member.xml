@@ -64,6 +64,14 @@
 			from member where no=#{no }
 		]]>
 	</select>
+
+	<update id="updateMember" parameterType="map">
+			update member
+			set password=#{vo.password }
+				, address = encode(encrypt(convert_to(#{vo.address },'utf8'),convert_to(#{key },'utf8'), 'aes'),'hex')
+				, tel = encode(encrypt(convert_to(#{vo.tel },'utf8'),convert_to(#{key},'utf8'), 'aes'), 'hex')
+			where no=#{vo.no }
+	</update>
 	
 	<select id="getKeyByNo" parameterType="long" resultType="string">
 		<![CDATA[

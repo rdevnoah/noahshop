@@ -117,11 +117,11 @@ public class MemberVo {
         this.email = email;
     }
 
-    public String getRegDate() {
+    public String getJoinDate() {
         return joinDate;
     }
 
-    public void setRegDate(String joinDate) {
+    public void setJoinDate(String joinDate) {
         this.joinDate= joinDate;
     }
 

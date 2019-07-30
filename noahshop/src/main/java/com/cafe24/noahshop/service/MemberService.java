@@ -21,6 +21,7 @@ import java.util.List;
  * Jul 16, 2019     rdevnoah         insert test
  * Jul 16, 2019     rdevnoah         insert test (encrypt, decrypt)
  * Jul 30, 2019     rdevnoah         getOrderListById 구현완료
+ * Jul 30, 2019     rdevnoah         updateMember 구현완료
  * </pre>
  */
 public interface MemberService {
@@ -29,4 +30,6 @@ public interface MemberService {
 	MemberVo getMemberByNo(Long no);
 
     List<OrderVo> getOrderListById(Long no);
+
+    void updateMember(MemberVo vo);
 }
