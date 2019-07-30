@@ -42,4 +42,13 @@ public class AdminOrderControllerTest {
                 .andExpect(jsonPath("$.result", is("success")));
 
     }
+
+    @Test
+    public void testgetDetail() throws Exception{
+        ResultActions resultActions = mockMvc.perform(get("/api/admin/order/detail/{no}", 19L).contentType(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.result", is("success")));
+    }
 }

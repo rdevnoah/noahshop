@@ -23,4 +23,22 @@
 		order by order_date
 	</select>
 
+	<select id="getDetailByNo" parameterType="long" resultType="orderproductdetaildto">
+		select a.order_no as orderNo,
+				a.product_detail_no as productDetailNo,
+				a.quantity as quantity,
+				a.option_child1_no as optionChildNo1,
+				a.option_child2_no as optionChildNo2,
+				(select name from option_child where no=a.option_child1_no) as optionChildName1,
+				(select name from option_child where no=a.option_child2_no) as optionChildName2,
+				a.name as productName
+		from
+			(select op.order_no, op.product_detail_no , op.quantity, pd.option_child1_no, pd.option_child2_no, p.name
+			 from order_product op, product_detail pd, product p, option_child oc
+			 where op.product_detail_no=pd."no"
+				and pd.product_no=p."no"
+				and pd.option_child1_no=oc."no"
+				and op.order_no=#{no }) a
+	</select>
+
 </mapper>

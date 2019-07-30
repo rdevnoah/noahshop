@@ -3,6 +3,7 @@
 <configuration>
 	<typeAliases>
 		<package name="com.cafe24.noahshop.vo"/>
+		<package name="com.cafe24.noahshop.dto"/>
     </typeAliases>	
     
 	<mappers>

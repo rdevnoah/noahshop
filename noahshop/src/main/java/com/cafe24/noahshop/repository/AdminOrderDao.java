@@ -1,5 +1,6 @@
 package com.cafe24.noahshop.repository;
 
+import com.cafe24.noahshop.dto.OrderProductDetailDto;
 import com.cafe24.noahshop.vo.OrderVo;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * -------------    -------------    --------------------------------
  * 2019-07-30       rdevnoah         Initialize
  * 2019-07-30       rdevnoah         getOrderList 구현완료
+ * 2019-07-30       rdevnoah         getDetailByNo 구현완료
  *
  * </pre>
  * @since : 2019-07-30
@@ -24,4 +26,5 @@ import java.util.List;
 public interface AdminOrderDao {
     List<OrderVo> getOrderList();
 
+    List<OrderProductDetailDto> getDetailByNo(Long no);
 }
