@@ -79,6 +79,20 @@
 		]]>
 	</select>
 
+	<select id="getMemberByIdAndPassword" parameterType="membervo" resultType="membervo">
+		select m.no,
+			   convert_from(decrypt(decode(m.id,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as id,
+			   convert_from(decrypt(decode(name,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as name,
+			   convert_from(decrypt(decode(tel,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as tel,
+			   convert_from(decrypt(decode(address,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as address,
+			   convert_from(decrypt(decode(email,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as email,
+			   join_date as joinDate,
+			   role
+		from member m,
+			 (select encode(encrypt(convert_to(#{id },'utf8'),convert_to(a.key,'utf8'), 'aes'),'hex') as id from (select key from key) a) b,
+			 key k
+		where m.id=b.id and k.member_no=m.no and m."password"=#{password }
+	</select>
 
 	<select id="getOrderListById" parameterType="long" resultType="ordervo">
 		select o.no, o.order_code as orderCode, o.address, o.payment, o.price, o.status, d.status as deliveryStatus

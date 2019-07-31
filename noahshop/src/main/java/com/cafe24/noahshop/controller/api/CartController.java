@@ -2,6 +2,8 @@ package com.cafe24.noahshop.controller.api;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.cafe24.noahshop.vo.CartVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,25 +43,22 @@ import io.swagger.annotations.ApiOperation;
 @RestController("cartAPIController")
 @RequestMapping("/api/cart")
 public class CartController {
-	
+
+	@Autowired
 	private CartService cartService;
 	
 	
-	@ApiOperation(value="add cart to session", notes = "장바구니정보 세션저장 (회원 DB저장)")
+	@ApiOperation(value="add cart to Redis", notes = "회원 장바구니 정보 Redis 저장")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name="vo", value="상품상세정보", required=true, dataType="ProductVo", defaultValue="")
+		@ApiImplicitParam(name="vo", value="상품상세정보", required=true, dataType="CartVo", defaultValue="")
 	})
 	@PutMapping
-	public JSONResult addCart(@RequestBody ProductVo vo) {
-		//회원 비회원 여부 확인
-		
-		//고유 세션값 가져오기
-		
-		//세션에 정보 저장
-		
-		//회원은 RDB에 저장 (추후 Redis)
-		//cartService.addCart(vo, sessionid);
-		return JSONResult.success("return:addCart");
+	public JSONResult addCart(@RequestBody CartVo vo) {
+
+		cartService.addCart(vo);
+
+
+		return JSONResult.success(vo);
 	}
 	
 	@ApiOperation(value="get Cart From session", notes = "세션에 저장된 카트정보를 통해 상품리스트 가져오기")

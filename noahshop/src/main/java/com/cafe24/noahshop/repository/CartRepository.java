@@ -1,13 +1,14 @@
-package com.cafe24.noahshop.service;
+package com.cafe24.noahshop.repository;
 
 import com.cafe24.noahshop.vo.CartVo;
-import com.cafe24.noahshop.vo.ProductVo;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author : rdevnoah
  * @version : 1.0
  * @title Cafe24 Personal-ShoppingMall
- * @packagename : com.cafe24.noahshop.service
+ * @packagename : com.cafe24.noahshop.repository
  * @see <pre>
  *
  * == Modification Information ==
@@ -15,16 +16,10 @@ import com.cafe24.noahshop.vo.ProductVo;
  * Date             AUTHOR           NOTE
  * -------------    -------------    --------------------------------
  * 2019-07-31       rdevnoah         Initialize
- * 2019-07-31       rdevnoah         addCart 구현 완료
- * 2019-07-31       rdevnoah         fetchCartByNo 구현 완료
  *
  * </pre>
  * @since : 2019-07-31
  */
-public interface CartService {
-
-
-	boolean addCart(CartVo vo);
-
-    String fetchCartByNo(Long no);
+@Repository
+public interface CartRepository extends CrudRepository<CartVo, String> {
 }

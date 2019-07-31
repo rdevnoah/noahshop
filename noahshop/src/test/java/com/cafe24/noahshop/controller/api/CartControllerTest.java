@@ -1,5 +1,6 @@
 package com.cafe24.noahshop.controller.api;
 
+import com.cafe24.noahshop.vo.CartVo;
 import com.cafe24.noahshop.vo.ProductVo;
 import com.google.gson.Gson;
 import org.junit.Before;
@@ -7,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,6 +30,9 @@ public class CartControllerTest {
 	private MockMvc mockMvc;
 
 	@Autowired
+	private StringRedisTemplate redisTemplate;
+
+	@Autowired
 	private WebApplicationContext wac;
 
 	@Before
@@ -35,14 +41,25 @@ public class CartControllerTest {
 	}
 
 	@Test
+	public void testRedis(){
+		System.out.println(redisTemplate);
+	}
+
+	@Test
 	public void testadd() throws Exception {
 
-		ProductVo vo = new ProductVo();
+		CartVo vo = new CartVo();
+		vo.setMemberNo(1L);
+
+		String productInfo = "6,19:";
+		vo.setProductInfo(productInfo);
 
 		ResultActions resultActions = mockMvc.perform(put("/api/cart").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk())
-					 .andDo(print());
+					 .andDo(print())
+					 .andExpect(jsonPath("$.result", is("success")));
+
 	}
 
 	@Test

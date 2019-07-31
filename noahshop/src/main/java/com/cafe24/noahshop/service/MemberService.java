@@ -23,6 +23,7 @@ import java.util.List;
  * Jul 30, 2019     rdevnoah         getOrderListById 구현완료
  * Jul 30, 2019     rdevnoah         updateMember 구현완료
  * Jul 31, 2019     rdevnoah         getOrderByNoUser 구현완료
+ * Jul 31, 2019     rdevnoah         getMemberByIdAndPassword 구현완료
  * </pre>
  */
 public interface MemberService {
@@ -35,4 +36,7 @@ public interface MemberService {
     void updateMember(MemberVo vo);
 
 	OrderVo getOrderByNoUser(String code, String password);
+
+    MemberVo getMemberByIdAndPassword(MemberVo vo);
+
 }

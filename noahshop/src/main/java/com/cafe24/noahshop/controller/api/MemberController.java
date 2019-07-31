@@ -1,6 +1,7 @@
 package com.cafe24.noahshop.controller.api;
 
 import com.cafe24.noahshop.dto.JSONResult;
+import com.cafe24.noahshop.service.CartService;
 import com.cafe24.noahshop.service.MemberService;
 import com.cafe24.noahshop.vo.MemberVo;
 import com.cafe24.noahshop.vo.OrderVo;
@@ -21,7 +22,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -45,6 +48,7 @@ import java.util.Set;
  * Jul 30, 2019     rdevnoah         getOrderListByNo 구현완료
  * Jul 30, 2019     rdevnoah         modifyform, modify 구현완료
  * Jul 31, 2019     rdevnoah         비회원 주문내역 완료
+ * Jul 31, 2019     rdevnoah         회원 로그인 및 장바구니 fetch 완료
  *      </pre>
  */
 @RestController("userAPIController")
@@ -53,6 +57,9 @@ public class MemberController {
 
 	@Autowired
 	private MessageSource messageSource;
+
+	@Autowired
+	private CartService cartService;
 
 	@Autowired
 	private MemberService memberService;
@@ -180,11 +187,21 @@ public class MemberController {
 			}
 		}
 
+		Map<String, Object> result = new HashMap<>();
+		MemberVo resultVo = memberService.getMemberByIdAndPassword(vo);
+		if (resultVo == null){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("아이디 혹은 비밀번호를 다시 입력하세요"));
+		}
+		result.put("authVo", resultVo);
+		String cartString = cartService.fetchCartByNo(resultVo.getNo());
+		result.put("cart", cartString);
+
 		// login service logic
+
 
 		// MemberVo authUser = new MemberVo();
 
-		return ResponseEntity.ok().body(JSONResult.success(vo));
+		return ResponseEntity.ok().body(JSONResult.success(result));
 	}
 
 	@ApiOperation(value = "get order List by Member_id", notes = "회원 주문내역 보기")

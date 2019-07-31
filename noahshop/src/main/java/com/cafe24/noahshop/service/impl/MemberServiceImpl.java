@@ -75,4 +75,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.getOrderByNoMember(map);
 	}
 
+    @Override
+    public MemberVo getMemberByIdAndPassword(MemberVo vo) {
+
+		return memberDao.getMemberByIdAndPassword(vo);
+    }
+
 }

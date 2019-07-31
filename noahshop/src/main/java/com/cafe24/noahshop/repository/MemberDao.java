@@ -26,6 +26,8 @@ import java.util.Map;
  * Jul 30, 2019     rdevnoah         getOrderListById 구현완료
  * Jul 30, 2019     rdevnoah         getOrderListById 구현완료
  * Jul 31, 2019     rdevnoah         getOrderByNoUser 구현완료
+ * Jul 31, 2019     rdevnoah         getMemberByIdAndPassword 구현완료
+ *
  * </pre>
  */
 public interface MemberDao {
@@ -48,4 +50,6 @@ public interface MemberDao {
 	void updateMember(Map<String, Object> map);
 
     OrderVo getOrderByNoMember(Map<String, Object> map);
+
+    MemberVo getMemberByIdAndPassword(MemberVo vo);
 }

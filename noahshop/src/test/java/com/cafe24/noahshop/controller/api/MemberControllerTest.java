@@ -134,6 +134,9 @@ public class MemberControllerTest {
 		
 	}
 
+
+
+
 	@Test
 	public void testGetOrderList() throws Exception {
 		ResultActions resultActions = mockMvc.perform(get("/api/user/orderlist/{no}", 1L).contentType(MediaType.APPLICATION_JSON));
@@ -226,8 +229,8 @@ public class MemberControllerTest {
 	public void testLogin() throws Exception {
 
 		// valid data test
-		String id = "zzagam2";
-		String password = "qntlfwkd1!";
+		String id = "user2";
+		String password = "qlalfqjsgh1!";
 		// 임시로 tel을 null validator 추가해준 test
 		
 		MemberVo vo = new MemberVo();
@@ -238,14 +241,27 @@ public class MemberControllerTest {
 
 		resultActions.andExpect(status().isOk())
 					 .andDo(print())
-					 .andExpect(jsonPath("$.result", is("success")))
-					 .andExpect(jsonPath("$.data.id", is("zzagam2")));
+					 .andExpect(jsonPath("$.result", is("success")));
+
+
+		// valid but not exist user test
+		id = "hoho";
+		password = "qlalfqjsgh4!";
+		vo = new MemberVo();
+		vo.setId(id);
+		vo.setPassword(password);
+
+		resultActions = mockMvc.perform(post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isBadRequest())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("fail")));
 
 		// invalid data test
 		
 		
 		vo.setId("zzagam2");
-		vo.setPassword("qntlfwkd11");
+		vo.setPassword("qlalfqjsgh1");
 
 		resultActions = mockMvc.perform(post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
@@ -253,14 +269,6 @@ public class MemberControllerTest {
 					 .andDo(print())
 					 .andExpect(jsonPath("$.result", is("fail")));
 
-		/*
-		 * id = "zz"; password = "aa"; resultActions =
-		 * mockMvc.perform(post("/api/user/login").param("id", id).param("password",
-		 * password) .contentType(MediaType.APPLICATION_JSON));
-		 * 
-		 * resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath(
-		 * "$.result", is("fail")));
-		 */
 
 	}
 
