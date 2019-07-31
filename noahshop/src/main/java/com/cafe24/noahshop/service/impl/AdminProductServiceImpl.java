@@ -130,6 +130,26 @@ public class AdminProductServiceImpl implements AdminProductService {
         return adminProductDao.updateProductStock(dto);
     }
 
+    @Override
+    public List<ProductVo> getDpMainList() {
+
+        return adminProductDao.getDpMainProductList();
+    }
+
+    @Override
+    public boolean addDpMainProduct(List<Long> noList) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("noList", noList);
+        return adminProductDao.addDpMainProduct(map);
+    }
+
+    @Override
+    public boolean deleteDpMainProduct(List<Long> noList) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("noList", noList);
+        return adminProductDao.deleteDpMainProduct(map);
+    }
+
 
     /**
      * 상품 코드 generator (고유한 값으로 generate)

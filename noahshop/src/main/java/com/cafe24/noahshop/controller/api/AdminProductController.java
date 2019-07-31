@@ -40,6 +40,9 @@ import java.util.Map;
  * Jul 30, 2019     rdevnoah         getList, getDetail 구현완료
  * Jul 31, 2019     rdevnoah         getDetailForModify 구현완료
  * Jul 31, 2019     rdevnoah         modify(재고수량변경) 구현완료
+ * Jul 31, 2019     rdevnoah         getDpMainProductList 구현완료
+ * Jul 31, 2019     rdevnoah         addDpMainProduct구현완료
+ * Jul 31, 2019     rdevnoah         deleteDpMainProduct구현완료
  *
  * </pre>
  */
@@ -142,5 +145,32 @@ public class AdminProductController {
 
 
 		return JSONResult.success(dto);
+	}
+
+	@ApiOperation(value = "get DP Main Products list", notes = "메인진열된 상품리스트 가져오기")
+	@GetMapping("/dpmain")
+	public JSONResult getDpMainProduct(){
+		List<ProductVo> list = adminProductService.getDpMainList();
+		return JSONResult.success(list);
+	}
+
+	@ApiOperation(value = "add DP Main Products list", notes = "메인진열 상품 추가하기")
+	@ApiImplicitParam(name="noList", value = "추가 할 상품 번호 리스트", required = true, dataType = "List", defaultValue = "")
+	@PutMapping("/dpmain")
+	public JSONResult addDpMainProduct(@RequestBody List<Long> noList){
+		adminProductService.addDpMainProduct(noList);
+
+
+		return JSONResult.success(noList);
+	}
+
+	@ApiOperation(value = "delete DP Main Products list", notes = "메인진열 상품 제거하기")
+	@ApiImplicitParam(name="noList", value = "추가할 상품 번호 리스트", required = true, dataType = "List", defaultValue = "")
+	@DeleteMapping("/dpmain")
+	public JSONResult deleteDpMainProduct(@RequestBody List<Long> noList){
+		adminProductService.deleteDpMainProduct(noList);
+
+
+		return JSONResult.success(noList);
 	}
 }

@@ -40,7 +40,7 @@
 	</insert>
 
 	<select id="getList" resultType="productvo">
-		select p.no, p.name, p.price, i.no as image_no, i.url as image_url
+		select p.no, p.name, p.price, i.no as imageNo, i.url as imageUrl
 		from product p, product_image i
 		where p.no=i.product_no
 		order by p.reg_date
@@ -107,6 +107,24 @@
 					and p.no=#{no }) a
 	</select>
 
+
+	<select id="getDpMainProductsList" resultMap="productResult">
+		select p.no, p.name, p.price, i.no as imageNo, i.url as imageUrl
+		from product p, product_image i
+		where p.no=i.product_no and p.dp_main='Y'
+	</select>
+
+	<update id="addDpMainProduct" parameterType="map">
+		<foreach collection="noList" item="item" index="index" separator=";">
+			update product set dp_main='Y'::dp_main where no=#{item }
+		</foreach>
+	</update>
+
+	<update id="deleteDpMainProduct" parameterType="map">
+		<foreach collection="noList" item="item" index="index" separator=";">
+			update product set dp_main='N'::dp_main where no=#{item }
+		</foreach>
+	</update>
 
 
 	<resultMap id="productResult" type="productvo">

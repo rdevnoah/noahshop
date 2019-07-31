@@ -59,7 +59,16 @@ public class AdminProductControllerTest {
 
 	@Test
 	public void testModifyForm() throws Exception{
-		ResultActions resultActions = mockMvc.perform(get("/api/admin/product/modifyform/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
+		//옵션 존재 상품
+		ResultActions resultActions = mockMvc.perform(get("/api/admin/product/modifyform/{no}", 1L).contentType(MediaType.APPLICATION_JSON));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+
+
+		//옵션 없는 단일상품
+		resultActions = mockMvc.perform(get("/api/admin/product/modifyform/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk())
 				.andDo(print())
@@ -187,6 +196,9 @@ public class AdminProductControllerTest {
 
 		//옵션없는상품
 		dto = adminProductDao.getProductDetailForModify(2L);
+		options = dto.getOptionStockVoList();
+		updated = new ArrayList<>();
+
 		for (int i=0 ; i<options.size() ; i++){
 			OptionStockVo vo = options.get(i);
 			vo.setStock(3000);
@@ -194,6 +206,64 @@ public class AdminProductControllerTest {
 
 		}
 
+		dto.setOptionStockVoList(updated);
 
+		resultActions = mockMvc.perform(post("/api/admin/product").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(dto)));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+	}
+
+	@Test
+	public void testGetDpMainProductList() throws Exception {
+		ResultActions resultActions = mockMvc.perform(get("/api/admin/product/dpmain").contentType(MediaType.APPLICATION_JSON));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+
+	}
+
+	@Rollback(true)
+	@Test
+	public void testAddDpMainProduct() throws Exception{
+		List<Long> noList = new ArrayList<>();
+		noList.add(1L);
+
+		// add
+		ResultActions resultActions = mockMvc.perform(put("/api/admin/product/dpmain").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(noList)));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+
+
+		//check
+		resultActions = mockMvc.perform(get("/api/admin/product/dpmain").contentType(MediaType.APPLICATION_JSON));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+	}
+
+	@Rollback(true)
+	@Test
+	public void testDeleteDpMainProduct() throws Exception{
+		List<Long> noList = new ArrayList<>();
+		noList.add(9L);
+
+		ResultActions resultActions = mockMvc.perform(delete("/api/admin/product/dpmain").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(noList)));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+
+		//check
+		resultActions = mockMvc.perform(get("/api/admin/product/dpmain").contentType(MediaType.APPLICATION_JSON));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
 	}
 }

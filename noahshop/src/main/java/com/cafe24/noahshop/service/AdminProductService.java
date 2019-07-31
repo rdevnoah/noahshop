@@ -22,6 +22,9 @@ import java.util.Map;
  * 2019-07-30       rdevnoah         getList, getDetail 구현완료
  * 2019-07-31       rdevnoah         getDetailForModify 구현완료
  * 2019-07-31       rdevnoah         modify (재고수량변경) 구현완료
+ * 2019-07-31       rdevnoah         getDpMainProductList 구현완료
+ * 2019-07-31       rdevnoah         addDpMainProduct 구현완료
+ * 2019-07-31       rdevnoah         deleteDpMainProduct 구현완료
  *
  * </pre>
  * @since : 2019-07-23
@@ -38,4 +41,10 @@ public interface AdminProductService {
     ProductAddDto getProductDetailForModify(Long no);
 
     boolean updateProductStock(ProductAddDto dto);
+
+    List<ProductVo> getDpMainList();
+
+    boolean addDpMainProduct(List<Long> noList);
+
+    boolean deleteDpMainProduct(List<Long> noList);
 }

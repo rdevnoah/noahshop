@@ -80,4 +80,19 @@ public class AdminProductDaoImpl implements AdminProductDao {
 
         return sqlSession.update("adminProduct.updateProductStock", dto) != 0;
     }
+
+    @Override
+    public List<ProductVo> getDpMainProductList() {
+        return sqlSession.selectList("adminProduct.getDpMainProductsList");
+    }
+
+    @Override
+    public boolean addDpMainProduct(Map<String, Object> map) {
+        return sqlSession.update("adminProduct.addDpMainProduct", map) != 0;
+    }
+
+    @Override
+    public boolean deleteDpMainProduct(Map<String, Object> map) {
+        return sqlSession.update("adminProduct.deleteDpMainProduct", map) !=0;
+    }
 }
