@@ -61,6 +61,12 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     @Override
+    public OrderVo getOrderByNoMember(Map<String, Object> map) {
+
+		return sqlSession.selectOne("member.getOrderByNoMember", map);
+    }
+
+    @Override
 	public String getKeyByNo(Long no) {
 		return sqlSession.selectOne("member.getKeyByNo", no);
 	}

@@ -14,7 +14,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -138,6 +141,19 @@ public class MemberControllerTest {
 		resultActions.andExpect(status().isOk())
 					 .andDo(print())
 					 .andExpect(jsonPath("$.result", is("success")));
+	}
+
+
+	@Test
+	public void testGetOrderByNoUser() throws Exception {
+
+		ResultActions resultActions = mockMvc.perform(get("/api/user/order/nomember").contentType(MediaType.APPLICATION_JSON)
+														.param("code", "sampleordercode3")
+														.param("password", "비밀번호1"));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
 	}
 
 	@Test

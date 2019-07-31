@@ -86,4 +86,11 @@
 		where o.no=d.no and o.member_no=#{no }
 	</select>
 
+
+	<select id="getOrderByNoMember" parameterType="map" resultType="ordervo">
+		select o.no, o.order_code as orderCode, o.address, o.payment, o.price, o.status, d.status as deliveryStatus
+		from "order" o, delivery d
+		where o.no=d.no and o.order_code=#{code } and o.password=#{password }
+	</select>
+
 </mapper>

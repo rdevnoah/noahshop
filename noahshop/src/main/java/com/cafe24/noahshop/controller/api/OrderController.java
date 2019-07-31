@@ -103,6 +103,7 @@ public class OrderController {
 		// 가져와야 하는 것들
 		// 주문 상세정보, 배송 상세정보
 		// 주문한 상품 이미지,
+		//Todo:주문내역상세보기
 		return JSONResult.success(no);
 	}
 	

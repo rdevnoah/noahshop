@@ -6,23 +6,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-/**
- * @author : rdevnoah
- * @version : 1.0
- * @title Cafe24 Personal-ShoppingMall
- * @packagename : com.cafe24.noahshop.repository.impl
- * @see <pre>
- *
- * == Modification Information ==
- *
- * Date             AUTHOR           NOTE
- * -------------    -------------    --------------------------------
- * 2019-07-18       rdevnoah         Initialize
- * 2019-07-18       rdevnoah         add add category implement
- *
- * </pre>
- * @since : 2019-07-18
- */
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
 @Repository
 public class AdminCategoryDaoImpl implements AdminCategoryDao {
 
@@ -39,5 +27,32 @@ public class AdminCategoryDaoImpl implements AdminCategoryDao {
     public CategoryVo addChildCategory(CategoryVo vo) {
         sqlSession.insert("category.insertChild", vo);
         return vo;
+    }
+
+    @Override
+    public List<CategoryVo> getList() {
+        return sqlSession.selectList("category.getList");
+    }
+
+    @Override
+    public boolean deleteChild(Long no) {
+        return sqlSession.delete("category.deleteChild", no) != 0;
+    }
+
+    @Override
+    public List<Long> getChildCategoryByParentNo(Long no) {
+        return sqlSession.selectList("category.getChildCategoryByParentNo", no);
+    }
+
+    @Override
+    public boolean deleteChildList(Long no) {
+        sqlSession.delete("category.deleteChildCategoryByParentNo", no);
+        return true;
+    }
+
+    @Override
+    public boolean deleteParent(Long no) {
+        sqlSession.delete("category.deleteParent", no);
+        return true;
     }
 }

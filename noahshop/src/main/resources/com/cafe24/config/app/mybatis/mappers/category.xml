@@ -17,11 +17,39 @@
 		</selectKey>
 	</insert>
 
+	<select id="getList" resultMap="categoryResult">
+		select cp.no, cp.name, cc.no as child_no, cc.name as child_name
+		from category_parent cp, category_child cc
+		where cp.no=cc.category_parent_no
+	</select>
+
 	<select id="getCategoryList" resultMap="categoryResult">
 		select cp.no, cp.name, cc.no as child_no, cc.name as child_name
 		from category_parent cp, category_child cc
 		where cp.no=cc.category_parent_no
 	</select>
+
+	<delete id="deleteChild" parameterType="long">
+		delete from category_child
+		where no=#{no }
+	</delete>
+
+	<delete id="deleteParent" parameterType="long">
+		delete from category_parent
+		where no=#{no }
+	</delete>
+
+	<delete id="deleteChildCategoryByParentNo" parameterType="long">
+		delete from category_child
+		where category_parent_no=#{no }
+	</delete>
+
+	<select id="getChildCategoryByParentNo" parameterType="long" resultType="long">
+		select no from category_child
+		where category_parent_no=#{no }
+
+	</select>
+
 
 	<resultMap id="categoryResult" type="categoryvo">
 		<result property="no" column="no"/>
@@ -30,6 +58,5 @@
 			<id property="no" column="child_no"/>
 			<id property="name" column="child_name"/>
 		</collection>
-
 	</resultMap>
 </mapper>

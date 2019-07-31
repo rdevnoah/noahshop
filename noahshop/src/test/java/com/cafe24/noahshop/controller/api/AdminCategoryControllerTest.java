@@ -36,14 +36,6 @@ public class AdminCategoryControllerTest {
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 	}
-	
-	@Test
-	public void testAddCategoryForm() throws Exception {
-		ResultActions resultActions = mockMvc.perform(get("/api/admin/category/addform").contentType(MediaType.APPLICATION_JSON));
-		resultActions.andExpect(status().isOk())
-					 .andDo(print())
-					 .andExpect(jsonPath("$.result", is("success")));
-	}
 
 	@Rollback(true)
 	@Test
@@ -72,22 +64,44 @@ public class AdminCategoryControllerTest {
 					 .andExpect(jsonPath("$.result", is("success")))
 					 .andExpect(jsonPath("$.data.name", is("나시")));
 	}
-	
+
 	@Test
-	public void testModify() throws Exception {
-		CategoryVo vo = new CategoryVo();
-		vo.setName("상의입니다.");
-		ResultActions resultActions = mockMvc.perform(post("/api/admin/category").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+	public void testGetList() throws Exception{
+
+		ResultActions resultActions = mockMvc.perform(get("/api/admin/category").contentType(MediaType.APPLICATION_JSON));
 		resultActions.andExpect(status().isOk())
-					 .andDo(print())
-					 .andExpect(jsonPath("$.data.name", is("상의입니다.")));
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
 	}
-	
+
+
+	@Rollback(true)
 	@Test
-	public void testDelete() throws Exception {
-		ResultActions resultActions = mockMvc.perform(delete("/api/admin/category/{no}", 2L).contentType(MediaType.APPLICATION_JSON));
+	public void testDeleteChildCategory() throws Exception {
+		ResultActions resultActions = mockMvc.perform(delete("/api/admin/category/child/{no}", 1L).contentType(MediaType.APPLICATION_JSON));
 		resultActions.andExpect(status().isOk())
 					 .andDo(print())
-					 .andExpect(jsonPath("$.data", is(2)));
+					 .andExpect(jsonPath("$.result", is("success")));
+
+		resultActions = mockMvc.perform(get("/api/admin/category").contentType(MediaType.APPLICATION_JSON));
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+
+	}
+
+	@Rollback(true)
+	@Test
+	public void testDeleteParentCategory() throws Exception {
+		ResultActions resultActions = mockMvc.perform(delete("/api/admin/category/parent/{no}", 1L).contentType(MediaType.APPLICATION_JSON));
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+
+		resultActions = mockMvc.perform(get("/api/admin/category").contentType(MediaType.APPLICATION_JSON));
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+
 	}
 }

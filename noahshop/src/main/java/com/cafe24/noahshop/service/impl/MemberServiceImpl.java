@@ -67,4 +67,12 @@ public class MemberServiceImpl implements MemberService {
         memberDao.updateMember(map);
     }
 
+	@Override
+	public OrderVo getOrderByNoUser(String code, String password) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("code", code);
+		map.put("password", password);
+		return memberDao.getOrderByNoMember(map);
+	}
+
 }

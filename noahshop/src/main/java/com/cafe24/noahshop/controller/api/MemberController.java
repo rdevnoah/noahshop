@@ -44,6 +44,7 @@ import java.util.Set;
  * Jul 16, 2019     rdevnoah         join(service, repositogy) test, checkIdTest()
  * Jul 30, 2019     rdevnoah         getOrderListByNo 구현완료
  * Jul 30, 2019     rdevnoah         modifyform, modify 구현완료
+ * Jul 31, 2019     rdevnoah         비회원 주문내역 완료
  *      </pre>
  */
 @RestController("userAPIController")
@@ -196,6 +197,19 @@ public class MemberController {
 		List<OrderVo> orderList = memberService.getOrderListById(no);
 
 		return JSONResult.success(orderList);
+	}
+
+	@ApiOperation(value = "get order by no member", notes = "비회원 주문내역 보기")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "code", value = "주문코드번호", required = true, dataType = "String", defaultValue = ""),
+			@ApiImplicitParam(name = "password", value = "주문비밀번호", required = true, dataType = "String", defaultValue = "")
+	})
+	@GetMapping("/order/nomember")
+	public JSONResult getOrderByNoMember(String code, String password){
+
+		OrderVo vo = memberService.getOrderByNoUser(code, password);
+
+		return JSONResult.success(vo);
 	}
 
 }

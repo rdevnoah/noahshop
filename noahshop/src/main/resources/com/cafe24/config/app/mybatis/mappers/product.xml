@@ -28,6 +28,26 @@
 		where p.no=i.product_no and p.is_sell='Y' and p.category_no=#{categoryNo }
 	</select>
 
+	<select id="getCountByCategoryNo" parameterType="long" resultType="int">
+		select count(*)
+		from product
+		where category_no=#{no }
+	</select>
+
+	<update id="updateCategoryNoForDelete" parameterType="long">
+		update product
+		set category_no=-1
+		where category_no=#{no }
+	</update>
+
+	<update id="updateCategoryNoForDeleteParentCategory" parameterType="map">
+		<foreach collection="noList" item="item" index="index" separator=";">
+			update product
+			set category_no=-1
+			where category_no=#{item }
+		</foreach>
+
+	</update>
 
 	<resultMap id="productResult" type="productvo">
 		<result property="no" column="no"/>

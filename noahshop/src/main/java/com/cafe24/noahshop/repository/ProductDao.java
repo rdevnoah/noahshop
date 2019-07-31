@@ -20,6 +20,7 @@ import java.util.List;
  * 2019-07-30       rdevnoah         메인 상품 리스트 가져오기 완료
  * 2019-07-30       rdevnoah         상품 리스트 가져오기 완료
  * 2019-07-30       rdevnoah         카테고리 번호 별 상품 리스트 가져오기 완료
+ * 2019-07-31       rdevnoah         category 삭제하기 위해 미지정으로 cagetory_no 변경
  *
  * </pre>
  * @since : 2019-07-25
@@ -33,4 +34,10 @@ public interface ProductDao {
     List<ProductVo> getProductList();
 
     List<ProductVo> getProductListByCategoryNo(Long categoryNo);
+
+    int getCountByCategoryNo(Long no);
+
+    boolean updateCategoryNoForDeleteCategory(Long no);
+
+    boolean updateCategoryNoForDeleteParentCategory(List<Long> childNo);
 }

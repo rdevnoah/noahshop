@@ -32,6 +32,7 @@ import java.util.List;
  * Jul 12, 2019     rdevnoah         test add, modify, delete
  * Jul 12, 2019     rdevnoah         add implement test
  * Jul 18, 2019     rdevnoah         add implement complete
+ * Jul 31, 2019     rdevnoah         deleteChild, deleteParent 구현완료
  * </pre>
  */
 @RestController("adminCategoryAPIController")
@@ -41,18 +42,20 @@ public class AdminCategoryController {
 	@Autowired
 	private AdminCategoryService adminCategoryService;
 	
-	@ApiOperation(value="get add Category Form", notes = "카테고리 등록 폼 가져오기")
-	@GetMapping("/addform")
-	public JSONResult addForm() {
-		return JSONResult.success("result:addform");
+	@ApiOperation(value="get Category List", notes = "카테고리 리스트 가져오기")
+	@GetMapping
+	public JSONResult getList() {
+		List<CategoryVo> list = adminCategoryService.getList();
+
+		return JSONResult.success(list);
 	}
-	
+
+
+
 	@ApiOperation(value = "add parent category", notes = "상위 카테고리 등록")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="vo", value="카테고리", required=true, dataType="CategoryVo", defaultValue="")
 	})
-
-
 	@PutMapping
 	public JSONResult add(@RequestBody @Valid CategoryVo vo, BindingResult result) {
 		
@@ -92,29 +95,33 @@ public class AdminCategoryController {
 		return JSONResult.success(vo);
 	}
 
-	@ApiOperation(value = "modify category", notes = "카테고리 정보 변경")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name="vo", value="변경할 카테고리 정보", required=true, dataType="CategoryVo", defaultValue="")
-	})
-	@PostMapping
-	public JSONResult modify(@RequestBody CategoryVo vo) {
-		
-		// modify
-		return JSONResult.success(vo);
-	}
-	
-	@ApiOperation(value = "delete category", notes = "카테고리 삭제")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name="no", value="삭제할 카테고리 번호", required=true, dataType="long", defaultValue="")
-	})
-	@DeleteMapping("/{no}")
-	public JSONResult delete(@PathVariable(value = "no") Long no) {
 
-		//delete
-		
+	@ApiOperation(value = "delete child category", notes = "카테고리 삭제")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="no", value="삭제할 child 카테고리 번호", required=true, dataType="long", defaultValue="")
+	})
+	@DeleteMapping("/child/{no}")
+	public JSONResult deleteChild(@PathVariable(value = "no") Long no) {
+
+		adminCategoryService.deleteChild(no);
+
 		//카테고리 상품 미지정 카테고리로 이동
 		
-		return JSONResult.success(no);
+		return JSONResult.success("success");
+	}
+
+	@ApiOperation(value = "delete parent category", notes = "카테고리 삭제")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name="no", value="삭제할 parent 카테고리 번호", required=true, dataType="long", defaultValue="")
+	})
+	@DeleteMapping("/parent/{no}")
+	public JSONResult deleteParent(@PathVariable(value = "no") Long no) {
+
+		adminCategoryService.deleteParent(no);
+
+		//카테고리 상품 미지정 카테고리로 이동
+
+		return JSONResult.success("success");
 	}
 	
 }
