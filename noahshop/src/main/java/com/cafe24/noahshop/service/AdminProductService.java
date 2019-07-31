@@ -21,7 +21,7 @@ import java.util.Map;
  * 2019-07-23       rdevnoah         add product (option, no option 구현 완료)
  * 2019-07-30       rdevnoah         getList, getDetail 구현완료
  * 2019-07-31       rdevnoah         getDetailForModify 구현완료
- *
+ * 2019-07-31       rdevnoah         modify (재고수량변경) 구현완료
  *
  * </pre>
  * @since : 2019-07-23
@@ -36,4 +36,6 @@ public interface AdminProductService {
     Map<String, Object> getDetailByNo(Long no);
 
     ProductAddDto getProductDetailForModify(Long no);
+
+    boolean updateProductStock(ProductAddDto dto);
 }

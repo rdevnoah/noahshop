@@ -19,6 +19,17 @@
 
 	</insert>
 
+	<update id="updateProductStock" parameterType="productadddto">
+		<foreach collection="optionStockVoList" item="item" index="index" separator=";">
+		update product_detail
+		set
+			stock=#{item.stock }
+			where no=#{item.productDetailNo }
+		</foreach>
+
+	</update>
+
+
 	<insert id="insertProductDetail" parameterType="map">
 		insert into product_detail
 		values
@@ -63,9 +74,9 @@
 
 
 	<select id="getProductDetailForModify" parameterType="long" resultMap="productModifyResult">
+		select
 
-
-		select a.name,
+			   a.name,
 	   		   a.price,
 	   		   a.description,
 	   		   a.dpMain,
@@ -119,6 +130,7 @@
 		<result property="description" column="description"/>
 		<result property="dpMain" column="dpMain"/>
 		<result property="isSell" column="isSell"/>
+		<result property="categoryNo" column="categoryNo" />
 		<collection property="optionStockVoList" javaType="java.util.ArrayList" ofType="optionstockvo">
 			<id property="productDetailNo" column="productDetailNo"/>
 			<id property="optionChild1No" column="optionChild1No"/>

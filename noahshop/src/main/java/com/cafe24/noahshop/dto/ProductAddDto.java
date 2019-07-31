@@ -7,6 +7,8 @@ import com.cafe24.noahshop.vo.ProductImageVo;
 import java.util.List;
 
 public class ProductAddDto {
+
+    private String no;
     private String name;
     private int price;
     private String description; //html 문서 내용
@@ -18,6 +20,8 @@ public class ProductAddDto {
 
     private Long categoryNo;
 
+    private Integer noOptionStock;
+
 
     private List<OptionStockVo> optionStockVoList;
 
@@ -25,8 +29,8 @@ public class ProductAddDto {
     }
 
 
-
-    public ProductAddDto(String name, int price, String description, List<ProductImageVo> image, String dpMain, String isSell, Long categoryNo, List<OptionStockVo> optionStockVoList) {
+    public ProductAddDto(String no, String name, int price, String description, List<ProductImageVo> image, String dpMain, String isSell, Long categoryNo, Integer noOptionStock, List<OptionStockVo> optionStockVoList) {
+        this.no = no;
         this.name = name;
         this.price = price;
         this.description = description;
@@ -34,16 +38,16 @@ public class ProductAddDto {
         this.dpMain = dpMain;
         this.isSell = isSell;
         this.categoryNo = categoryNo;
+        this.noOptionStock = noOptionStock;
         this.optionStockVoList = optionStockVoList;
     }
 
-
-    public Long getCategoryNo() {
-        return categoryNo;
+    public String getNo() {
+        return no;
     }
 
-    public void setCategoryNo(Long categoryNo) {
-        this.categoryNo = categoryNo;
+    public void setNo(String no) {
+        this.no = no;
     }
 
     public String getName() {
@@ -94,6 +98,22 @@ public class ProductAddDto {
         this.isSell = isSell;
     }
 
+    public Long getCategoryNo() {
+        return categoryNo;
+    }
+
+    public void setCategoryNo(Long categoryNo) {
+        this.categoryNo = categoryNo;
+    }
+
+    public Integer getNoOptionStock() {
+        return noOptionStock;
+    }
+
+    public void setNoOptionStock(Integer noOptionStock) {
+        this.noOptionStock = noOptionStock;
+    }
+
     public List<OptionStockVo> getOptionStockVoList() {
         return optionStockVoList;
     }
@@ -101,5 +121,4 @@ public class ProductAddDto {
     public void setOptionStockVoList(List<OptionStockVo> optionStockVoList) {
         this.optionStockVoList = optionStockVoList;
     }
-
 }

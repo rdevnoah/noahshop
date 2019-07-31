@@ -9,18 +9,26 @@ public class OptionStockVo {
     private Long optionChild2No;
     private String optionChild1Name;
     private String optionChild2Name;
-    private int Stock;
+    private Integer stock;
 
     public OptionStockVo() {
     }
 
-    public OptionStockVo(Long productDetailNo, Long optionChild1No, Long optionChild2No, String optionChild1Name, String optionChild2Name, int stock) {
+    public OptionStockVo(Long productDetailNo, Long optionChild1No, Long optionChild2No, String optionChild1Name, String optionChild2Name, Integer stock) {
         this.productDetailNo = productDetailNo;
         this.optionChild1No = optionChild1No;
         this.optionChild2No = optionChild2No;
         this.optionChild1Name = optionChild1Name;
         this.optionChild2Name = optionChild2Name;
-        Stock = stock;
+        this.stock = stock;
+    }
+
+    public Long getProductDetailNo() {
+        return productDetailNo;
+    }
+
+    public void setProductDetailNo(Long productDetailNo) {
+        this.productDetailNo = productDetailNo;
     }
 
     public Long getOptionChild1No() {
@@ -39,14 +47,6 @@ public class OptionStockVo {
         this.optionChild2No = optionChild2No;
     }
 
-    public int getStock() {
-        return Stock;
-    }
-
-    public void setStock(int stock) {
-        Stock = stock;
-    }
-
     public String getOptionChild1Name() {
         return optionChild1Name;
     }
@@ -63,11 +63,11 @@ public class OptionStockVo {
         this.optionChild2Name = optionChild2Name;
     }
 
-    public Long getProductDetailNo() {
-        return productDetailNo;
+    public Integer getStock() {
+        return stock;
     }
 
-    public void setProductDetailNo(Long productDetailNo) {
-        this.productDetailNo = productDetailNo;
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }

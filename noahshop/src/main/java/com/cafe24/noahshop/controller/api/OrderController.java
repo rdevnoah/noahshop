@@ -107,7 +107,7 @@ public class OrderController {
 	}
 	
 	@ApiOperation(value = "delete order", notes = "결제대기인 상품 주문 취소")
-	@ApiImplicitParam(name = "vo", value = "주문취소 하고 싶은 주문의 번호")
+	@ApiImplicitParam(name = "no", value = "주문취소 하고 싶은 주문의 번호")
 	@DeleteMapping("/delete/{no}")
 	public JSONResult deleteOrder(@PathVariable(value = "no") Long no) {
 		

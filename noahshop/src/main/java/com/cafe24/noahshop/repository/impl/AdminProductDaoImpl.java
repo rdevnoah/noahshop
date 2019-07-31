@@ -74,4 +74,10 @@ public class AdminProductDaoImpl implements AdminProductDao {
 
         return sqlSession.selectOne("adminProduct.getProductDetailForModify", no);
     }
+
+    @Override
+    public boolean updateProductStock(ProductAddDto dto) {
+
+        return sqlSession.update("adminProduct.updateProductStock", dto) != 0;
+    }
 }

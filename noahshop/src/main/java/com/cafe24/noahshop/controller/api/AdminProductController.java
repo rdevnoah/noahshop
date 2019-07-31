@@ -3,6 +3,7 @@ package com.cafe24.noahshop.controller.api;
 import com.cafe24.noahshop.dto.JSONResult;
 import com.cafe24.noahshop.dto.ProductAddDto;
 import com.cafe24.noahshop.service.AdminProductService;
+import com.cafe24.noahshop.vo.OptionStockVo;
 import com.cafe24.noahshop.vo.ProductVo;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +39,7 @@ import java.util.Map;
  * Jul 23, 2019     rdevnoah         product add test 완료
  * Jul 30, 2019     rdevnoah         getList, getDetail 구현완료
  * Jul 31, 2019     rdevnoah         getDetailForModify 구현완료
+ * Jul 31, 2019     rdevnoah         modify(재고수량변경) 구현완료
  *
  * </pre>
  */
@@ -78,7 +81,7 @@ public class AdminProductController {
 
 		//받은 상품정보 저장하기
 
-		if ("N".equals(dto.getIsSell())){
+		if (dto.getNoOptionStock() != null){
 			adminProductService.addProductNoOption(dto);
 
 		}else{
@@ -131,11 +134,13 @@ public class AdminProductController {
 	}
 	
 	@PostMapping
-	@ApiOperation(value = "modify product info by admin", notes = "상품정보 변경 : 수량, 이름, 카테고리 etc")
-	@ApiImplicitParam(name="vo", value = "변경할 상품 정보", required = true, dataType = "ProductVo", defaultValue = "")
-	public JSONResult modify(@RequestBody ProductVo vo) {
-		//modify : 수량, 이름, 카테고리 etc
-		
-		return JSONResult.success(vo);
+	@ApiOperation(value = "modify product info by admin", notes = "상품정보 변경 : 수량")
+	@ApiImplicitParam(name="dto", value = "변경할 상품 정보", required = true, dataType = "ProductAddDto", defaultValue = "")
+	public JSONResult modify(@RequestBody ProductAddDto dto) {
+		//modify : 수량
+		adminProductService.updateProductStock(dto);
+
+
+		return JSONResult.success(dto);
 	}
 }

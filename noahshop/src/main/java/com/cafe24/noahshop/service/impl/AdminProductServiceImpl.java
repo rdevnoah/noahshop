@@ -48,6 +48,10 @@ public class AdminProductServiceImpl implements AdminProductService {
         map.put("images", images);
         // 기본 상품 이미지 등록
         boolean result = adminProductDao.addImage(map);
+
+        List<ProductDetailVo> details = new ArrayList<>();
+        details.add(new ProductDetailVo(null, dto.getNoOptionStock(), -1L, -1L, productNo));
+        adminProductDao.addProductDetail(details);
         return result;
     }
 
@@ -119,6 +123,11 @@ public class AdminProductServiceImpl implements AdminProductService {
     public ProductAddDto getProductDetailForModify(Long no) {
         ProductAddDto dto = adminProductDao.getProductDetailForModify(no);
         return dto;
+    }
+
+    @Override
+    public boolean updateProductStock(ProductAddDto dto) {
+        return adminProductDao.updateProductStock(dto);
     }
 
 

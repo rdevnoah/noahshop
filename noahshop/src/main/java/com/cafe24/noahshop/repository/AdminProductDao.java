@@ -22,6 +22,7 @@ import java.util.Map;
  * 2019-07-23       rdevnoah         add product, add image, add product Detail 구현완료
  * 2019-07-30       rdevnoah         getList, getProductByNo, getProductDetailByNo 구현완료
  * 2019-07-31       rdevnoah         getDetailForModify 구현완료
+ * 2019-07-31       rdevnoah         modify (재고수량변경) 구현완료
  *
  * </pre>
  * @since : 2019-07-23
@@ -40,4 +41,6 @@ public interface AdminProductDao {
     List<ProductDetailVo> getProductDetailByNo(Long no);
 
     ProductAddDto getProductDetailForModify(Long no);
+
+    boolean updateProductStock(ProductAddDto dto);
 }
