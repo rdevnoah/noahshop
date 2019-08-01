@@ -16,11 +16,13 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 
     @Override
     public List<MemberVo> getMemberList() {
+
         return adminMemberDao.getMemberList();
     }
 
     @Override
     public  List<MemberVo> searchMemberById(String id) {
+
         return adminMemberDao.searchMemberById(id);
     }
 }

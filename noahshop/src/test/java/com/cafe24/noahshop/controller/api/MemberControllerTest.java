@@ -243,7 +243,6 @@ public class MemberControllerTest {
 					 .andDo(print())
 					 .andExpect(jsonPath("$.result", is("success")));
 
-
 		// valid but not exist user test
 		id = "hoho";
 		password = "qlalfqjsgh4!";

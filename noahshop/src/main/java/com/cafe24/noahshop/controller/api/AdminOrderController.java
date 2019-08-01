@@ -47,7 +47,7 @@ public class AdminOrderController {
         return JSONResult.success(list);
     }
 
-    @ApiOperation(value = "get detail order by no", notes = "관리자 주문 리스트")
+    @ApiOperation(value = "get detail order by no", notes = "관리자 주문 상세정보")
     @ApiImplicitParams({
             @ApiImplicitParam(name="no", value="상품번호", required=true, dataType="Long", defaultValue="")
     })

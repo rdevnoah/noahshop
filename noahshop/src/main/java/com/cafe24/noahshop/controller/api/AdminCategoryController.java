@@ -32,6 +32,7 @@ import java.util.List;
  * Jul 12, 2019     rdevnoah         test add, modify, delete
  * Jul 12, 2019     rdevnoah         add implement test
  * Jul 18, 2019     rdevnoah         add implement complete
+ * Jul 30, 2019     rdevnoah         addParent, addChild 구현완료
  * Jul 31, 2019     rdevnoah         deleteChild, deleteParent 구현완료
  * </pre>
  */
@@ -105,8 +106,6 @@ public class AdminCategoryController {
 
 		adminCategoryService.deleteChild(no);
 
-		//카테고리 상품 미지정 카테고리로 이동
-		
 		return JSONResult.success("success");
 	}
 

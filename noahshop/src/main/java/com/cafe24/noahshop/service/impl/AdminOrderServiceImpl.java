@@ -19,6 +19,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 
     @Override
     public List<OrderVo> getOrderList() {
+
         return adminOrderDao.getOrderList();
     }
 

@@ -77,7 +77,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberVo getMemberByIdAndPassword(MemberVo vo) {
-
 		return memberDao.getMemberByIdAndPassword(vo);
     }
 

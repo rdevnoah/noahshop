@@ -54,9 +54,6 @@ public class MainControllerTest {
 		resultActions.andExpect(status().isOk())
 					 .andDo(print())
 					 .andExpect(jsonPath("$.result", is("success")));
-		
-		
-		
 	}
 	
 }

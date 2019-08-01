@@ -22,11 +22,7 @@ public class AdminProductServiceImpl implements AdminProductService {
     @Autowired
     private AdminProductDao adminProductDao;
 
-    /**
-     * 판매 하지 않지만 상품 등록하는 서비스
-     * @param dto
-     * @return
-     */
+
     @Override
     public boolean addProductNoOption(ProductAddDto dto) {
 
@@ -52,15 +48,10 @@ public class AdminProductServiceImpl implements AdminProductService {
         List<ProductDetailVo> details = new ArrayList<>();
         details.add(new ProductDetailVo(null, dto.getNoOptionStock(), -1L, -1L, productNo));
         adminProductDao.addProductDetail(details);
+
         return result;
     }
 
-
-    /**
-     * option까지 포함한 product add service
-     * @param dto
-     * @return
-     */
     @Override
     public boolean addProduct(ProductAddDto dto) {
         // 기본 상품정보 add data set
@@ -91,14 +82,12 @@ public class AdminProductServiceImpl implements AdminProductService {
 
         adminProductDao.addProductDetail(details);
 
-
-
-
         return result;
     }
 
     @Override
     public List<ProductVo> getList() {
+
         return adminProductDao.getList();
     }
 
@@ -127,6 +116,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 
     @Override
     public boolean updateProductStock(ProductAddDto dto) {
+
         return adminProductDao.updateProductStock(dto);
     }
 

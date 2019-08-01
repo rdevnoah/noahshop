@@ -40,6 +40,8 @@ public class AdminCategoryControllerTest {
 	@Rollback(true)
 	@Test
 	public void testAdd() throws Exception {
+
+		// check parent Category Add
 		CategoryVo vo = new CategoryVo();
 		vo.setName("TOP");
 		ResultActions resultActions = mockMvc.perform(put("/api/admin/category").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));

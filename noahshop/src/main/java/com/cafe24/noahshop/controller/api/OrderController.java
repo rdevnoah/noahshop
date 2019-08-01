@@ -81,20 +81,15 @@ public class OrderController {
 			}
 		}
 
-
 		//재고 서비스를 통해 재고 있는지 확인 없으면 error message 리턴
-
 		try{
 			stockService.checkStock(vo);
 		}catch(StockException e){
 			return JSONResult.fail(e.getMessage());
 		}
 
-
 		vo = orderService.addOrder(vo);
 
-
-			
 		return JSONResult.success(vo);
 	}
 

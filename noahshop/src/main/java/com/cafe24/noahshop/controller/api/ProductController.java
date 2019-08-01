@@ -49,8 +49,6 @@ public class ProductController {
 	public JSONResult getDetail(@PathVariable Long no) {
 
 		//상품상세정보
-
-
 		Map<String, Object> map = productService.getProductDetail(no);
 
 		return JSONResult.success(map);

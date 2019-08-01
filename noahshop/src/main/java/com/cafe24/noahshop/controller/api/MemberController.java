@@ -196,11 +196,6 @@ public class MemberController {
 		String cartString = cartService.fetchCartByNo(resultVo.getNo());
 		result.put("cart", cartString);
 
-		// login service logic
-
-
-		// MemberVo authUser = new MemberVo();
-
 		return ResponseEntity.ok().body(JSONResult.success(result));
 	}
 

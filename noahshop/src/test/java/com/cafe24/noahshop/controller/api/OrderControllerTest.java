@@ -58,7 +58,6 @@ public class OrderControllerTest {
 		// buyerName:null, email:zzagam2@gmail.com, status: 결제대기, buyerTel: 010-4532-3018
 		// order_Product - order_no=null, poduct_detail_no=1, quantity:3
 
-
 		OrderVo vo = new OrderVo();
 
 		vo.setMemberNo(1L);

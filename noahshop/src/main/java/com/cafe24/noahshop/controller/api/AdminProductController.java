@@ -91,7 +91,7 @@ public class AdminProductController {
 			adminProductService.addProduct(dto);
 		}
 
-		//add service
+
 		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(dto));
 	}

@@ -38,11 +38,6 @@ public class MainController {
 	@ApiOperation(value="get main page", notes = "메인화면 가져오기")
 	@GetMapping
 	public JSONResult main() {
-		// --------- 한 service에서 다른 repository에서 가져와서 한번에 도착
-		// 진열상품목록 get
-		// 주문횟수랭킹상품목록
-		// 등록일기준 상품목록
-		// 카테고리목록
 		Map<String, Object> map = mainService.getMain();
 		return JSONResult.success(map);
 	}

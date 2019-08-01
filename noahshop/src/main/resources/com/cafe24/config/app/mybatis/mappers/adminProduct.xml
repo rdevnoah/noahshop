@@ -4,7 +4,7 @@
 <mapper namespace="adminProduct">
 	<insert id="insertProduct" parameterType="productVo">
 		insert into product(no, category_no, code, name, price, description, reg_date, dp_main, is_sell)
-		values( nextval('product_no_seq'), #{categoryNo }, #{code }, #{name }, #{price }, #{description }, now(), 'N', 'N')
+		values( nextval('product_no_seq'), #{categoryNo }, #{code }, #{name }, #{price }, #{description }, now(), #{dpMain }::dp_main, #{isSell }::is_sell)
 		<selectKey resultType="long" keyProperty="no" order="AFTER">
 			select currval('product_no_seq')
 		</selectKey>
@@ -16,7 +16,6 @@
 		<foreach collection="images" item="item" index="index" separator=",">
 			(nextval('product_image_no_seq'), #{no}, #{item.url})
 		</foreach>
-
 	</insert>
 
 	<update id="updateProductStock" parameterType="productadddto">
