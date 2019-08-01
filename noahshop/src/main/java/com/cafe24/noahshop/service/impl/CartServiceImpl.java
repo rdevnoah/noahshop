@@ -15,9 +15,6 @@ import java.util.Optional;
 public class CartServiceImpl implements CartService {
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
-
-    @Autowired
     private CartRepository cartRepository;
 
     @Override
