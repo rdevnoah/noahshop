@@ -1,6 +1,5 @@
-/target/
-/.classpath
-/.project
 /.settings/
+.project
 /.idea/
-*.iml
+logfile
+dump.rdb

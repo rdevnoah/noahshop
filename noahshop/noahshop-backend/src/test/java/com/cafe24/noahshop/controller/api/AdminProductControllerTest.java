@@ -1,11 +1,17 @@
 package com.cafe24.noahshop.controller.api;
 
-import com.cafe24.noahshop.dto.ProductAddDto;
-import com.cafe24.noahshop.repository.AdminProductDao;
-import com.cafe24.noahshop.vo.OptionStockVo;
-import com.cafe24.noahshop.vo.ProductImageVo;
-import com.cafe24.noahshop.vo.ProductVo;
-import com.google.gson.Gson;
+import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,14 +26,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.cafe24.noahshop.dto.ProductAddDto;
+import com.cafe24.noahshop.repository.AdminProductDao;
+import com.cafe24.noahshop.vo.OptionStockVo;
+import com.cafe24.noahshop.vo.ProductImageVo;
+import com.google.gson.Gson;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
