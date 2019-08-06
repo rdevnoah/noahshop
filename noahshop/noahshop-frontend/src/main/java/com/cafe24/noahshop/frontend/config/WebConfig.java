@@ -10,7 +10,7 @@ import com.cafe24.noahshop.frontend.config.web.MVCConfig;
 
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan({"com.example.pjmall.frontend.controller", "com.example.pjmall.frontend.exception"})
+@ComponentScan({"com.cafe24.noahshop.frontend.controller"})
 @Import({ MVCConfig.class })
 public class WebConfig {
 }

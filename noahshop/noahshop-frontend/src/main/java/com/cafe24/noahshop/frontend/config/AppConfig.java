@@ -10,7 +10,7 @@ import com.cafe24.noahshop.frontend.config.app.OAuth2ClientConfig;
 
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan({"com.example.pjmall.frontend.security", "com.example.pjmall.frontend.service",  "com.example.pjmall.frontend.repository", "com.example.pjmall.frontend.aspect"})
+@ComponentScan({"com.cafe24.noahshop.frontend.security", "com.cafe24.noahshop.frontend.service",  "com.cafe24.noahshop.frontend.repository"})
 @Import({ AppSecurityConfig.class, OAuth2ClientConfig.class })
 public class AppConfig {
 }

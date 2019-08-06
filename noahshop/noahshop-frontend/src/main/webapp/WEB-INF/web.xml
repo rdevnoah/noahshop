@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
-	<display-name>pjmall-frontend</display-name>
+	<display-name>noahshop-frontend</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
@@ -19,7 +19,7 @@
 	</context-param>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>com.example.pjmall.frontend.config.AppConfig</param-value>
+		<param-value>com.cafe24.noahshop.frontend.config.AppConfig</param-value>
 	</context-param>
 
 	<!-- Context Loader Listener -->
@@ -37,7 +37,7 @@
 		</init-param>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>com.example.pjmall.frontend.config.WebConfig</param-value>
+			<param-value>com.cafe24.noahshop.frontend.config.WebConfig</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>	
 	</servlet>
