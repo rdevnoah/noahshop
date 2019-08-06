@@ -1,19 +1,19 @@
 package com.cafe24.noahshop.frontend.dto;
 
-public class JSONResult2 {
+public class ResponseJSONResult extends JSONResult{
 	private String result;  //success, fail
 	private String message; //if fail, set
 	private Object data;    //if success, set
 
-	public static JSONResult2 success(Object data) {
-		return new JSONResult2("success", null, data);
+	public static ResponseJSONResult success(Object data) {
+		return new ResponseJSONResult("success", null, data);
 	}
 
-	public static JSONResult2 fail(String message) {
-		return new JSONResult2("fail", message, null);
+	public static ResponseJSONResult fail(String message) {
+		return new ResponseJSONResult("fail", message, null);
 	}
 	
-	private JSONResult2(String result, String message, Object data) {
+	private ResponseJSONResult(String result, String message, Object data) {
 		this.result = result;
 		this.message = message;
 		this.data = data;

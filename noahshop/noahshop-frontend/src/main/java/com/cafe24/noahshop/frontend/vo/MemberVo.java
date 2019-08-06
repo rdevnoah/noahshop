@@ -1,37 +1,20 @@
-package com.cafe24.noahshop.vo;
+package com.cafe24.noahshop.frontend.vo;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import com.cafe24.noahshop.validator.constraints.ValidPassword;
-import com.cafe24.noahshop.validator.constraints.ValidTel;
-
-@JsonDeserialize
 public class MemberVo {
 
     private Long no;
 
-    @NotEmpty
-    @Length(min = 4, max = 12)
     private String id;
 
 
-    @NotEmpty
-    @ValidPassword
     private String password;
 
-    @NotEmpty
     private String name;
 
-    @NotEmpty
-    @ValidTel
     private String tel;
 
-    @NotEmpty
     private String address;
 
-    @NotEmpty
     private String email;
     private String joinDate;
     private String role;

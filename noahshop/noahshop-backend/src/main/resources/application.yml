@@ -9,7 +9,7 @@ server:
         livereload:
             enabled: true
     servlet:
-        context-path: /v1/noahshop
+        context-path: /noahshop/v1
 
 
 spring:

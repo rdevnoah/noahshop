@@ -26,9 +26,9 @@ public class OAuth2ClientConfig {
 	public OAuth2ProtectedResourceDetails resourceDetails() {
         ClientCredentialsResourceDetails resourceDetails = new ClientCredentialsResourceDetails();
         
-        resourceDetails.setAccessTokenUri("http://localhost:8888/v1/noahshop/oauth/token");
 	    resourceDetails.setClientId("noahshop");
-	    resourceDetails.setClientSecret("1234");
+		resourceDetails.setAccessTokenUri("http://localhost:8888/noahshop/v1/oauth/token");
+		resourceDetails.setClientSecret("1234");
         resourceDetails.setGrantType("client_credentials");
         resourceDetails.setScope(Arrays.asList("write", "read"));
 	    resourceDetails.setAuthenticationScheme(AuthenticationScheme.header);

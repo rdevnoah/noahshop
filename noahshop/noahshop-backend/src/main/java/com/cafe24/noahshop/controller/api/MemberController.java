@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -22,10 +24,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 
@@ -172,6 +171,7 @@ public class MemberController {
 	@PostMapping("/login")
 	public ResponseEntity<JSONResult> login(@RequestBody MemberVo vo, HttpServletRequest request) {
 
+
 		// validation
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 		Set<ConstraintViolation<MemberVo>> validatorResults = validator.validateProperty(vo, "password");
@@ -187,7 +187,7 @@ public class MemberController {
 			}
 		}
 
-		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> result = new LinkedHashMap<>();
 		MemberVo resultVo = memberService.getMemberByIdAndPassword(vo);
 		if (resultVo == null){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("아이디 혹은 비밀번호를 다시 입력하세요"));
