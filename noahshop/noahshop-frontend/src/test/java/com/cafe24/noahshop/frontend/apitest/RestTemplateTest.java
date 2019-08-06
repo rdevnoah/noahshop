@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -37,7 +38,7 @@ public class RestTemplateTest {
 
 
 	@Autowired
-	private RestTemplate restTemplate;
+	private OAuth2RestTemplate restTemplate;
 
 
 

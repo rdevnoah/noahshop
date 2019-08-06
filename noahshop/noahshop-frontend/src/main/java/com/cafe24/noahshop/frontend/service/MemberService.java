@@ -5,6 +5,7 @@ import com.cafe24.noahshop.frontend.dto.ResponseJSONResult;
 import com.cafe24.noahshop.frontend.vo.MemberVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -31,7 +32,7 @@ import java.util.Map;
 public class MemberService {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private OAuth2RestTemplate restTemplate;
 
     public final static String API_URL="http://localhost:8888/noahshop/v1";
 

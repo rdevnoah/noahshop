@@ -2,6 +2,7 @@ package com.cafe24.noahshop.frontend.service;
 
 import com.cafe24.noahshop.frontend.dto.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,7 +31,7 @@ public class MainService {
     private final static String API_URL = "http://localhost:8888/noahshop/v1";
 
     @Autowired
-    private RestTemplate restTemplate;
+    private OAuth2RestTemplate restTemplate;
 
     public Map<String, Object> getMain(){
         Map<String, Object> result = new HashMap<>();

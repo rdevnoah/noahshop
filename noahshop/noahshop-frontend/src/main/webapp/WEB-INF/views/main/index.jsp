@@ -63,6 +63,26 @@
 							<img class="d-block img-fluid" src="http://placehold.it/900x350"
 								alt="Third slide">
 						</div>
+						<div class="carousel-item">
+							<img class="d-block img-fluid" src="http://placehold.it/900x350"
+								 alt="fourth slide">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block img-fluid" src="http://placehold.it/900x350"
+								 alt="fifth slide">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block img-fluid" src="http://placehold.it/900x350"
+								 alt="sixth slide">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block img-fluid" src="http://placehold.it/900x350"
+								 alt="seventh slide">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block img-fluid" src="http://placehold.it/900x350"
+								 alt="eighth slide">
+						</div>
 					</div>
 					<a class="carousel-control-prev" href="#carouselExampleIndicators"
 						role="button" data-slide="prev"> <span

@@ -18,7 +18,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http
 			.authorizeRequests()
 			//.antMatchers("/").access("#oauth2.hasScope('read')")
-			.anyRequest().permitAll();
+			.anyRequest()
+			.access("#oauth2.hasScope('read') and #oauth2.hasScope('write')");
 	}
 
 	@Override
