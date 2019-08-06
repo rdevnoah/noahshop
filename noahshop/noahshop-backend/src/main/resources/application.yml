@@ -1,0 +1,55 @@
+# server
+server:
+    port: 8888
+
+    error:
+        whiltelabel:
+            enable: false
+    devtools:
+        livereload:
+            enabled: true
+    servlet:
+        context-path: /v1/noahshop
+
+
+spring:
+    profiles:
+      active: local
+    # datasource
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/mall
+        username: mall
+        password: mall
+        initialization-mode: always
+    # Redis Config
+    redis:
+        lettuce:
+            pool:
+                max-active: 10
+                max-idle: 10
+                min-idle: 2
+        port: 6379
+        host: localhost
+    data:
+        redis:
+            repositories:
+                enabled: true
+    # Internationaliztion(Message Source)
+    messages:
+        always-use-message-format: true
+        basename: com/cafe24/config/web/messages/messages_ko
+        encoding: UTF-8
+    # AOP
+    aop:
+        auto: true
+
+# mybatis
+mybatis:
+    config-location: classpath:com/cafe24/config/app/mybatis/configuration.xml
+
+# logging
+logging:
+    config: classpath:logback.xml
+
+# Security
