@@ -14,6 +14,34 @@
 	<link href="${pageContext.servletContext.contextPath }/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="${pageContext.servletContext.contextPath }/assets/css/shop-login.css" rel="stylesheet">
+
+    <script src="${pageContext.request.contextPath }/assets/js/jquery/jquery.js"></script>
+    <script>
+
+        <%--$(function(){--%>
+        <%--    $("#login-form").submit(function(e){--%>
+        <%--        e.preventDefault();--%>
+
+        <%--        var params = "id=" + $("#inputId").val() + "&password=" + $("#inputPassword").val();--%>
+        <%--        console.log(params);--%>
+        <%--        $.ajax({--%>
+        <%--            url: "${pageContext.request.contextPath }/user/auth",--%>
+        <%--            type: "post",--%>
+        <%--            //dataType: "json",--%>
+        <%--            data: params,--%>
+        <%--            success: function(response){--%>
+        <%--                console.log(response);--%>
+        <%--            },--%>
+        <%--            error: function(jqXHR, status, e){--%>
+        <%--                console.error(status + ":" + e);--%>
+        <%--            }--%>
+        <%--        });--%>
+
+        <%--    })--%>
+
+        <%--})--%>
+
+    </script>
 </head>
 <body>
 	<!-- Navigation -->
@@ -26,8 +54,8 @@
  		<div class="card card-container">
         	<img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
-            <form method="post" action="${pageContext.servletContext.contextPath}/user/login" class="form-signin" name="loginForm">
-                <span id="reauth-email" class="reauth-email"></span>
+            <form id="login-form" method="post" action="${pageContext.servletContext.contextPath}/user/auth" class="form-signin" name="loginForm">
+                <span id="reauth-id" class="reauth-id"></span>
                 <input type="text" id="inputId" class="form-control" placeholder="아이디" name="id" required autofocus>
                 <input type="password" id="inputPassword" class="form-control" placeholder="패스워드" name="password" required>
                 <div id="remember" class="checkbox">

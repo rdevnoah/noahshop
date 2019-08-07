@@ -1,5 +1,6 @@
 package com.cafe24.noahshop.frontend.config.app;
 
+import com.cafe24.noahshop.frontend.security.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,7 +45,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         		// ADMIN 권한
         		// .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
         		// .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
-        		.antMatchers("/admin", "/admin/**").hasRole("ADMIN")
+        		// .antMatchers("/admin", "/admin/**").hasRole("ADMIN")
         	
         		// 모두 허용
         		.anyRequest().permitAll()
@@ -52,11 +53,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         // FormLoginConfigurer
         .and()
         	.formLogin()
-        		.loginPage("/user/login")
+        		.loginPage("/user/loginform")
         		.loginProcessingUrl("/user/auth")
-        		.failureUrl("/user/login")
+        		.failureUrl("/user/loginform")
         		.successHandler(authenticationSuccessHandler())
-        		.usernameParameter("email")
+        		.usernameParameter("id")
         		.passwordParameter("password")
         
         // LogoutConfigurer
@@ -92,8 +93,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		//super.configure(auth);
 		auth
-			.userDetailsService(userDetailsService)
-			.and()
 			.authenticationProvider(authProvider());
 	}
 	
@@ -104,17 +103,26 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	// Encode the Password on Authentication
 	// BCrypt Password Encoder(with Random Salt)
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
 	}
-	
+
+
 	@Bean
-	public DaoAuthenticationProvider authProvider() {
-	    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-	    authProvider.setUserDetailsService(userDetailsService);
-	    authProvider.setPasswordEncoder(passwordEncoder());
-	    
-	    return authProvider;
-	}	
+	public CustomAuthenticationProvider authProvider(){
+		CustomAuthenticationProvider authenticationProvider = new CustomAuthenticationProvider(null); //passwordEncode 일단은 null
+		return authenticationProvider;
+	}
+
+//	@Bean
+//	public DaoAuthenticationProvider authProvider() {
+//	    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//	    authProvider.setUserDetailsService(userDetailsService);
+//	    //authProvider.setPasswordEncoder(passwordEncoder());
+//
+//
+//	    return authProvider;
+//	}
 }

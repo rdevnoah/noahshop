@@ -17,6 +17,7 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 		WebDataBinderFactory binderFactory) throws Exception {
 		
 		Object principal = null;
+
 		if(SecurityContextHolder.getContext().getAuthentication() != null){
 			principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		}

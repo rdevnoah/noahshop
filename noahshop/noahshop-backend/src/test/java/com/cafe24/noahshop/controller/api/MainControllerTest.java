@@ -90,10 +90,20 @@ public class MainControllerTest {
 		assertNotNull(wac);
 		assertNotNull(mockMvc);
 	}
-	
+
+
+	@Test
+	public void testGetMemberById() throws Exception {
+		ResultActions resultActions = mockMvc.perform(post("/api/user/login/auth").contentType(MediaType.APPLICATION_JSON));
+
+		resultActions.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")));
+	}
+
 	@Test
 	public void testgetMain() throws Exception {
-		ResultActions resultActions = mockMvc.perform(get("/").contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/").param("id", "user3").contentType(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk())
 					 .andDo(print())

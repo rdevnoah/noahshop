@@ -36,6 +36,8 @@ public class MemberVo {
     private String joinDate;
     private String role;
 
+    private String cartInfo;
+
     private String key;
 
     public MemberVo() {
@@ -53,6 +55,14 @@ public class MemberVo {
         this.email = email;
         this.joinDate = joinDate;
         this.role = role;
+    }
+
+    public String getCartInfo() {
+        return cartInfo;
+    }
+
+    public void setCartInfo(String cartInfo) {
+        this.cartInfo = cartInfo;
     }
 
     public Long getNo() {

@@ -14,6 +14,9 @@ public class SecurityUser implements UserDetails {
 
 	private String username;
 	private String password;
+
+	private String cartString;
+
 	private Collection<? extends GrantedAuthority> authorities;
 	
 	// protected String salt;
@@ -36,6 +39,14 @@ public class SecurityUser implements UserDetails {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getCartString() {
+		return cartString;
+	}
+
+	public void setCartString(String cartString) {
+		this.cartString = cartString;
 	}
 
 	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {

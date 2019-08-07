@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -28,7 +29,7 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
     	
     	SavedRequest savedRequest = requestCache.getRequest( request, response );
-        
+
         if ( savedRequest != null ) {
             requestCache.removeRequest( request, response );
             clearAuthenticationAttributes( request );
@@ -42,11 +43,16 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 			if (principal != null && principal instanceof UserDetails) {
 				securityUser = (SecurityUser) principal;
 			}
+
 		}
-		
-		
+
+		System.out.println(accept);
     	if( accept == null || accept.matches( ".*application/json.*" ) == false ) {
-    		request.getSession(true).setAttribute("loginNow", true);
+			System.out.println("into if!!!!!!!");
+    		HttpSession session = request.getSession(true);
+    		session.setAttribute("loginNow", true);
+    		session.setAttribute("cart", securityUser.getCartString());
+			System.out.println(securityUser.getName());
             getRedirectStrategy().sendRedirect( request, response, "/" );
     		return;
     	}

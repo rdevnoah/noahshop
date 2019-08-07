@@ -38,10 +38,9 @@ public class MainService {
         JSONResultMain response = restTemplate.getForObject(API_URL, JSONResultMain.class);
 
         result = response.getData();
-        System.out.println(result);
 
         return result;
     }
 
-    private static class JSONResultMain extends JSONResult<Map<String, Object>>{}
+    public static class JSONResultMain extends JSONResult<Map<String, Object>>{}
 }

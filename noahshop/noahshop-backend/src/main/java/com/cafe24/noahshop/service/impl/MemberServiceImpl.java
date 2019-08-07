@@ -1,7 +1,9 @@
 package com.cafe24.noahshop.service.impl;
 
+import com.cafe24.noahshop.repository.CartRepository;
 import com.cafe24.noahshop.repository.MemberDao;
 import com.cafe24.noahshop.service.MemberService;
+import com.cafe24.noahshop.vo.CartVo;
 import com.cafe24.noahshop.vo.MemberVo;
 import com.cafe24.noahshop.vo.OrderVo;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -19,6 +22,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao memberDao;
+
+	@Autowired
+	private CartRepository cartRepository;
 
 	@Override
 	public boolean checkId(String id) {
@@ -78,6 +84,22 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberVo getMemberByIdAndPassword(MemberVo vo) {
 		return memberDao.getMemberByIdAndPassword(vo);
+    }
+
+    @Override
+    public MemberVo getById(String id) {
+		MemberVo vo = memberDao.getById(id);
+		if (vo != null){
+
+			Optional<CartVo> cartInfo = cartRepository.findById(vo.getNo().toString());
+			String info = cartInfo.orElse(new CartVo()).getProductInfo();
+
+			vo.setCartInfo(info);
+
+
+		}
+
+        return vo;
     }
 
 }

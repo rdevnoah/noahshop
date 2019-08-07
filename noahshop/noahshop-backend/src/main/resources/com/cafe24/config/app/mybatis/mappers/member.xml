@@ -20,7 +20,24 @@
 		</selectKey>
 		
 	</insert>
-	
+
+	<select id="getById" resultType="membervo" parameterType="string">
+		select m.no,
+			   m.password,
+			   convert_from(decrypt(decode(m.id,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as id,
+			   convert_from(decrypt(decode(m.name,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as name,
+			   convert_from(decrypt(decode(m.tel,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as tel,
+			   convert_from(decrypt(decode(m.address,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as address,
+			   convert_from(decrypt(decode(m.email,'hex'), convert_to(k.key, 'utf8'),'aes'),'utf8') as email,
+			   join_date as joinDate,
+			   role
+		from member m,
+			 (select encode(encrypt(convert_to(#{_parameter },'utf8'),convert_to(a.key,'utf8'), 'aes'),'hex') as id from (select key from key) a) b,
+			 key k
+		where m.id=b.id and k.member_no=m.no
+	</select>
+
+
 	<delete id="deleteAll">
 		<![CDATA[
 			delete from member

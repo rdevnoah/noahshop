@@ -39,4 +39,5 @@ public interface MemberService {
 
     MemberVo getMemberByIdAndPassword(MemberVo vo);
 
+    MemberVo getById(String id);
 }

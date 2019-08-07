@@ -77,8 +77,9 @@ public class MemberController {
 		Boolean isExist = memberService.checkId(id);
 		if (isExist) {
 			return JSONResult.fail("이미 사용중인 아이디입니다.");
+		}else{
+			return JSONResult.success(id);
 		}
-		return JSONResult.success(id);
 	}
 
 	private boolean validId(String id) {
@@ -96,6 +97,22 @@ public class MemberController {
 
 		return JSONResult.success("form");
 	}
+
+
+	@PostMapping("/login/auth")
+	public ResponseEntity<JSONResult> loginAuth(@RequestBody MemberVo requestVo){
+		String id = requestVo.getId();
+		System.out.println("-------------------"+ id);
+
+		//TODO: 하기
+		MemberVo vo = memberService.getById(id);
+		if (vo == null){
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(JSONResult.fail("회원이 존재하지 않습니다."));
+		}
+
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(vo));
+	}
+
 
 	@ApiOperation(value = "get join success form", notes = "회원가입성 form 가져오기")
 	@GetMapping("/joinsuccess")

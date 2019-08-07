@@ -72,6 +72,12 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     @Override
+    public MemberVo getById(String id) {
+
+		return sqlSession.selectOne("member.getById", id);
+    }
+
+    @Override
 	public String getKeyByNo(Long no) {
 		return sqlSession.selectOne("member.getKeyByNo", no);
 	}

@@ -51,7 +51,15 @@ public class MemberService {
         return successBody;
     }
 
-    static class JSONResultLogin extends JSONResult<Map<String, Object>>
+    public JSONResult checkId(String id) {
+        JSONResult response = restTemplate.getForObject(API_URL+"/api/user/checkId/"+id, JSONResult.class);
+
+        System.out.println(response);
+
+        return response;
+    }
+
+    public static class JSONResultLogin extends JSONResult<Map<String, Object>>
     {};
 
 }

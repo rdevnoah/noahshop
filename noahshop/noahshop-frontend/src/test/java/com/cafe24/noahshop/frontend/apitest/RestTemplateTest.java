@@ -46,7 +46,6 @@ public class RestTemplateTest {
 	@Test
 	public void test_getForObject() {
 
-
 		MemberVo vo = new MemberVo();
 
 		JSONResult<Map<String, Object>> result = restTemplate.getForObject(API_URL, JSONResult.class);

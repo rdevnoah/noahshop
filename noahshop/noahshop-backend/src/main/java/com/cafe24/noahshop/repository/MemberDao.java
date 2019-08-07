@@ -52,4 +52,6 @@ public interface MemberDao {
     OrderVo getOrderByNoMember(Map<String, Object> map);
 
     MemberVo getMemberByIdAndPassword(MemberVo vo);
+
+    MemberVo getById(String id);
 }

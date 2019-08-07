@@ -6,10 +6,7 @@ import com.cafe24.noahshop.frontend.vo.MemberVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -47,5 +44,15 @@ public class MemberController {
 		return "redirect:/";
 	}
 
+	@GetMapping("/joinform")
+	public String joinform(){
+		return "user/joinform";
+	}
+
+	@ResponseBody
+	@GetMapping("/checkId")
+	public JSONResult checkId(@RequestParam(value="id", required = true, defaultValue = "") String id){
+		return memberService.checkId(id);
+	}
 
 }
