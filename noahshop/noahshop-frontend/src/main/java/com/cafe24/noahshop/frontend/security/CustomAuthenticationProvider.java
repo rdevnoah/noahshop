@@ -34,25 +34,23 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserDetailsService userDetailService;
+
     public CustomAuthenticationProvider(PasswordEncoder passwordEncoder){
         this.passwordEncoder = passwordEncoder;
     }
 
-
-    @Autowired
-    private UserDetailsService userDetailService;
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
 
-        System.out.println("check password############### - " + password);
-
         SecurityUser securityUser = null;
         Collection<GrantedAuthority> authorities = null;
         try{
             securityUser = (SecurityUser) userDetailService.loadUserByUsername(username);
-            System.out.println("real password############### - " + securityUser.getPassword());
+
             // 이 부분에 패스워드 인코더로 match 검사
             if (!password.equals(securityUser.getPassword())){
                 throw new BadCredentialsException("비밀번호 불일치");
@@ -64,9 +62,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException(e.getMessage());
         }
 
-        UsernamePasswordAuthenticationToken authenticate = new UsernamePasswordAuthenticationToken(username, password, authorities);
-        Object result = authenticate.getPrincipal();
-        System.out.println(result + "--------------------------result");
         return new UsernamePasswordAuthenticationToken(securityUser, securityUser.getPassword(), authorities);
     }
 

@@ -4,6 +4,9 @@ import com.cafe24.noahshop.frontend.dto.JSONResult;
 import com.cafe24.noahshop.frontend.dto.ResponseJSONResult;
 import com.cafe24.noahshop.frontend.vo.MemberVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
@@ -59,7 +62,25 @@ public class MemberService {
         return response;
     }
 
+    public JSONResult join(MemberVo vo) {
+
+        System.out.println("#####################################################");
+        ResponseEntity<JSONResultJoin> response = null;
+        JSONResultJoin successBody = null;
+        HttpEntity<MemberVo> entity = new HttpEntity<>(vo);
+        try{
+            response = restTemplate.exchange(API_URL+"/api/user", HttpMethod.PUT, entity, JSONResultJoin.class);
+            successBody = response.getBody();
+        } catch(HttpClientErrorException e){
+            System.out.println(e.getResponseBodyAsString());
+
+            return ResponseJSONResult.fail(e.getResponseBodyAsString());
+        }
+        return successBody;
+    }
+
     public static class JSONResultLogin extends JSONResult<Map<String, Object>>
     {};
+    public static class JSONResultJoin extends JSONResult<MemberVo>{};
 
 }

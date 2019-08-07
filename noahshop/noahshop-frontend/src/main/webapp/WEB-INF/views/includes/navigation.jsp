@@ -54,8 +54,8 @@
 							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/loginform">로그인<span class="sr-only">(current)</span></a>
 							</li>
-							<li class="nav-item active">
-								<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/joinform">회원가입</a>
+							<li class="nav-item">
+								<a class="nav-link active" href="${pageContext.servletContext.contextPath }/user/joinform">회원가입</a>
 							</li>
 						</sec:authorize>
 					</c:when>

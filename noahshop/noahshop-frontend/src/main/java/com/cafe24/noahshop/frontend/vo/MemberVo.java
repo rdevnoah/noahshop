@@ -3,30 +3,27 @@ package com.cafe24.noahshop.frontend.vo;
 public class MemberVo {
 
     private Long no;
-
     private String id;
-
-
     private String password;
-
     private String name;
-
     private String tel;
-
     private String address;
+
 
     private String email;
     private String joinDate;
     private String role;
 
-    private String key;
-
     private String cartInfo;
+
+    private String key;
 
     public MemberVo() {
     }
 
-    public MemberVo(Long no, String id, String password, String name, String tel, String address, String email, String joinDate, String role, String key, String cartInfo) {
+    public MemberVo(Long no, String id, String password, String name, String tel, String address, String email,
+                    String joinDate, String role) {
+        super();
         this.no = no;
         this.id = id;
         this.password = password;
@@ -36,12 +33,26 @@ public class MemberVo {
         this.email = email;
         this.joinDate = joinDate;
         this.role = role;
-        this.key = key;
+    }
+
+    public String getCartInfo() {
+        return cartInfo;
+    }
+
+    public void setCartInfo(String cartInfo) {
         this.cartInfo = cartInfo;
     }
 
     public Long getNo() {
         return no;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public void setNo(Long no) {
@@ -101,7 +112,7 @@ public class MemberVo {
     }
 
     public void setJoinDate(String joinDate) {
-        this.joinDate = joinDate;
+        this.joinDate= joinDate;
     }
 
     public String getRole() {
@@ -110,21 +121,5 @@ public class MemberVo {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getCartInfo() {
-        return cartInfo;
-    }
-
-    public void setCartInfo(String cartInfo) {
-        this.cartInfo = cartInfo;
     }
 }
