@@ -71,7 +71,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         // ExceptionHandlingConfigurer
         .and()
         	.exceptionHandling()
-        		.accessDeniedPage("/views/error/404.jsp")
+        		.accessDeniedPage("/views/error/401.jsp")
         
         // RememberMeConfigurer
         .and()

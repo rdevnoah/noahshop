@@ -15,7 +15,7 @@ import com.cafe24.noahshop.validator.PasswordValidator;
 @Target(FIELD)
 @Constraint(validatedBy = PasswordValidator.class)
 public @interface ValidPassword {
-	String message() default "8자 이상 16자 이하로 특수문자를 반드시 포함해야합니다.";
+	String message() default "비밀번호는 8자 이상 16자 이하로 특수문자를 반드시 포함해야합니다.";
 
 	Class<?>[] groups() default {};
 

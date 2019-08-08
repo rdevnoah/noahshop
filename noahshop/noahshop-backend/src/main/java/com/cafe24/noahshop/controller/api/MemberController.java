@@ -102,8 +102,6 @@ public class MemberController {
 	@PostMapping("/login/auth")
 	public ResponseEntity<JSONResult> loginAuth(@RequestBody MemberVo requestVo){
 		String id = requestVo.getId();
-		System.out.println("-------------------"+ id);
-
 		//TODO: 하기
 		MemberVo vo = memberService.getById(id);
 		if (vo == null){

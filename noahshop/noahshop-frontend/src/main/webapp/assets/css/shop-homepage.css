@@ -6,3 +6,10 @@
 body {
   padding-top: 56px;
 }
+
+.menu-title {
+  font-size: 20px;
+  border-bottom: 2px solid gray;
+  margin-bottom: 18px;
+  padding-bottom: 11px;
+}

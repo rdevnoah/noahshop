@@ -48,7 +48,6 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 
 		System.out.println(accept);
     	if( accept == null || accept.matches( ".*application/json.*" ) == false ) {
-			System.out.println("into if!!!!!!!");
     		HttpSession session = request.getSession(true);
     		session.setAttribute("loginNow", true);
     		session.setAttribute("cart", securityUser.getCartString());

@@ -57,7 +57,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			securityUser.setAuthorities(Arrays.asList(new SimpleGrantedAuthority(responseVo.getRole())));
 			securityUser.setCartString(responseVo.getCartInfo());
 		}
-		System.out.println("userDetails!!!!!!!!!! ====  " + securityUser.getPassword());
 		return securityUser;
 
 	}

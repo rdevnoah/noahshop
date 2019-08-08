@@ -15,6 +15,7 @@
     <link href="${pageContext.servletContext.contextPath }/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="${pageContext.servletContext.contextPath }/assets/css/shop-admin.css" rel="stylesheet">
+    <link href="${pageContext.servletContext.contextPath }/assets/css/shop-register-product.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath }/assets/js/jquery/jquery.js"></script>
     <script>
         var sel_file;
@@ -90,13 +91,7 @@
         }
 
     </script>
-    <style>
-        .register-table{
-            text-align: left;
 
-        }
-        
-    </style>
 </head>
 <body>
 
@@ -116,97 +111,151 @@
         <!-- /navigation -->
 
         <div class="container-fluid">
-            <h1>상품등록폼</h1>
-            <form method="post" action="${pageContext.servletContext.contextPath}/admin/product/add" enctype="multipart/form-data">
-                <div>카테고리 선택</div>
-                <div>
-                    <c:forEach items="${requestScope.map.categoryList}" var="parentCategory">
-                        <div>${parentCategory.name }</div>
-                        <div>
-                            <c:forEach items="${parentCategory.childList }" var="childCategory">
-                                <input type="radio" name="categoryNo" value="${childCategory.no} ">${childCategory.name}
+            <div class="register-div">
+                <h1>상품등록폼</h1>
+                <form method="post" action="${pageContext.servletContext.contextPath}/admin/product/add" enctype="multipart/form-data">
+
+                    <div class="category-div menu-p">
+                        <div class="menu-c1">카테고리 선택</div>
+                        <div class="menu-c2">
+                            <c:forEach items="${requestScope.map.categoryList}" var="parentCategory">
+                                <div>${parentCategory.name }</div>
+                                <div>
+                                    <c:forEach items="${parentCategory.childList }" var="childCategory">
+                                        <input type="radio" name="categoryNo" value="${childCategory.no} "> ${childCategory.name}
+                                    </c:forEach>
+                                </div>
                             </c:forEach>
                         </div>
-                    </c:forEach>
-                </div>
-                <div> 상품명 : <input type="text" name="name"> </div>
+                    </div>
+                    <div class="name-div menu-p">
+                        <div class="menu-c1">
+                            상품명
+                        </div>
+                        <div class="menu-c2">
+                            <input class="text-box" type="text" name="name">
+                        </div>
 
-
-                <div>이미지 등록 </div>
-                <div><img id="preView" src=""></div></tr>
-                <div><input id="chosenImg" type="file" name="multipartFile"></div>
-
-                <div>옵션등록</div>
-                <div>
-                    <input type="radio" name="isOption" value="Y"> 옵션있음
-                    <input type="radio" name="isOption" value="N"> 옵션없음
-                </div>
-                <div id="isOption" style="display:none;">
-                    <div>
-                        ${requestScope.map.optionList[1].name}
+                    </div>
+                    <div class="image-div menu-p">
+                        <div class="menu-c1">이미지 등록 </div>
+                        <div class="menu-c2">
+                            <div>
+                                <img class="img-preview" id="preView" src="http://placehold.it/250">
+                            </div>
+                            <div>
+                                <input id="chosenImg" type="file" name="multipartFile">
+                            </div>
+                        </div>
                     </div>
 
-                    <div>
-                        <c:forEach items="${requestScope.map.optionList[1].childList}" var="childOption">
-                            <label>
-                                <input type="radio" name="optionNo1" value="${childOption.no}">
-                                <label>${childOption.name}</label>
-                            </label>
-                        </c:forEach>
+                    <div class="option-div menu-p">
+                        <div class="menu-c1">옵션등록</div>
+                        <div class="menu-c2">
+                            <div>
+                                <input type="radio" name="isOption" value="Y"> 옵션있음
+                                <input type="radio" name="isOption" value="N"> 옵션없음
+                            </div>
+                            <div id="isOption" style="display:none;">
+                                <div>
+                                    ${requestScope.map.optionList[1].name}
+                                </div>
+
+                                <div>
+                                    <c:forEach items="${requestScope.map.optionList[1].childList}" var="childOption">
+                                        <label>
+                                            <input type="radio" name="optionNo1" value="${childOption.no}">
+                                            <label>${childOption.name}</label>
+                                        </label>
+                                    </c:forEach>
+                                </div>
+                                <div>
+                                    ${requestScope.map.optionList[2].name}
+                                </div>
+
+
+                                <div>
+                                    <c:forEach items="${requestScope.map.optionList[2].childList}" var="childOption">
+                                        <label>
+                                            <input type="radio" name="optionNo2" value="${childOption.no}">
+                                            <label>${childOption.name}</label>
+                                        </label>
+                                    </c:forEach>
+                                </div>
+                                <div>
+                                    수량
+                                </div>
+                                <div>
+                                    <input class="text-box" id="isOptionStock" type="number">
+                                </div>
+                                <label><button class="btn btn-lg btn-primary btn-block" type="button" id="add-option-btn">추가</button></label>
+                            </div>
+                        </div>
+                        <div id="isNotOptionStock">
+                            <div>
+                                수량
+                            </div>
+                            <div>
+                                <input class="text-box" type="number" name="noOptionStock">
+                            </div>
+                        </div>
+
+                        <div id="optionResult">
+                        </div>
+                    </div>
+
+                    <div class="price-div menu-p">
+                        <div class="menu-c1">
+                            가격
+                        </div>
+                        <div class="menu-c2">
+                            <input class="text-box" type="number" name="price" value="">
+                        </div>
+                    </div>
+                    <div class="description-div menu-p">
+                        <div class="menu-c1">
+                            상품설명
+                        </div>
+                        <div class="menu-c2">
+                            <textarea class="text-area" name="description"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="dpMain-div menu-p">
+                        <div class="menu-c1">
+                            메인진열여부
+                        </div>
+                        <div class="menu-c2">
+                            <div>
+                                <input type="radio" name="dpMain" value="Y"> Y
+                                <input type="radio" name="dpMain" value="N"> N
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="isSell-div menu-p">
+                        <div class="menu-c1">
+                            판매여부</div>
+                        <div class="menu-c2">
+                            <div>
+                                <input type="radio" name="isSell" value="Y"> Y
+                                <input type="radio" name="isSell" value="N"> N
+                            </div>
+                        </div>
                     </div>
                     <div>
-                        ${requestScope.map.optionList[2].name}
+                        <div>
+                            <button class="btn btn-lg btn-primary btn-block btn-join" type="submit">등록</button>
+                        </div>
                     </div>
 
-
-                    <div>
-                        <c:forEach items="${requestScope.map.optionList[2].childList}" var="childOption">
-                            <label>
-                                <input type="radio" name="optionNo2" value="${childOption.no}">
-                                <label>${childOption.name}</label>
-                            </label>
-                        </c:forEach>
-                    </div>
-                    <div>수량 : <input id="isOptionStock" type="number"></div>
-                    <label><button type="button" id="add-option-btn">추가</button></label>
-                </div>
-
-                <div id="isNotOptionStock">
-                    수량 : <input type="number" name="noOptionStock">
-                </div>
-
-                <div id="optionResult">
-<%--                    <label>XS</label>--%>
-<%--                    <input type='hidden' name='optionStockVoList[0].optionChild1No' value='xxxx'>--%>
-<%--                    <label>/</label>--%>
-<%--                    <label>BLACK</label>--%>
-<%--                    <input type='hidden' name='optionStockVoList[0].optionChild2No' value='xxxx'>--%>
-<%--                    <label>/</label>--%>
-<%--                    <label>1000</label>--%>
-<%--                    <input type='hidden' name='optionStockVoList[0].stock' value='xxxx'>--%>
-                </div>
-
-                <div>
-                    가격 : <input type="number" name="price" value="">
-                </div>
-
-
-                <div>상품설명 : <textarea name="description"></textarea></div>
-
-
-                <div>메인진열여부 : Y <input type="radio" name="dpMain" value="Y">    N<input type="radio" name="dpMain" value="N"></div>
-
-
-                <div>판매여부 : Y <input type="radio" name="isSell" value="Y">    N<input type="radio" name="isSell" value="N"></div>
-
-                <div><button class="btn btn-lg btn-primary btn-block btn-join" type="submit">등록</button></div>
-
-            </table>
-            </form>
+                </table>
+                </form>
 
 
 
 
+            </div>
         </div>
     </div>
     <!-- /#page-content-wrapper -->

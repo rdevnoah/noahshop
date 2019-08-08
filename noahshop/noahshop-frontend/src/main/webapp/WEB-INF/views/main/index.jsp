@@ -14,6 +14,7 @@
 	<link href="${pageContext.servletContext.contextPath }/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="${pageContext.servletContext.contextPath }/assets/css/shop-homepage.css" rel="stylesheet">
+
 </head>
 <body>
 	<!-- Navigation -->
@@ -28,9 +29,12 @@
 			<div class="col-lg-3">
 				<h1 class="my-4">Noahshop</h1>
 				<div class="list-group">
-					<a href="#" class="list-group-item">Category 1</a> <a href="#"
-						class="list-group-item">Category 2</a> <a href="#"
-						class="list-group-item">Category 3</a>
+					<c:forEach items="${requestScope.main.categoryList}" var="parentCategory">
+						<a href="#" class="list-group-item">${parentCategory.name }</a>
+						<c:forEach items="${parentCategory.childList}" var="childCategory">
+							<a href="#" class="list-group-item">&nbsp; &nbsp; &nbsp; &nbsp; ${childCategory.name }</a>
+						</c:forEach>
+					</c:forEach>
 				</div>
 			</div>
 			<!-- /.col-lg-3 -->
@@ -39,16 +43,11 @@
 				<div id="carouselExampleIndicators" class="carousel slide my-4"
 					data-ride="carousel">
 					<ol class="carousel-indicators">
-						<li data-target="#carouselExampleIndicators" data-slide-to="0"
-							class="active"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
 						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
 						<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
+
+
 					</ol>
 					<div class="carousel-inner" role="listbox">
 						<div class="carousel-item active">
@@ -63,26 +62,7 @@
 							<img class="d-block img-fluid" src="http://placehold.it/900x350"
 								alt="Third slide">
 						</div>
-						<div class="carousel-item">
-							<img class="d-block img-fluid" src="http://placehold.it/900x350"
-								 alt="fourth slide">
-						</div>
-						<div class="carousel-item">
-							<img class="d-block img-fluid" src="http://placehold.it/900x350"
-								 alt="fifth slide">
-						</div>
-						<div class="carousel-item">
-							<img class="d-block img-fluid" src="http://placehold.it/900x350"
-								 alt="sixth slide">
-						</div>
-						<div class="carousel-item">
-							<img class="d-block img-fluid" src="http://placehold.it/900x350"
-								 alt="seventh slide">
-						</div>
-						<div class="carousel-item">
-							<img class="d-block img-fluid" src="http://placehold.it/900x350"
-								 alt="eighth slide">
-						</div>
+
 					</div>
 					<a class="carousel-control-prev" href="#carouselExampleIndicators"
 						role="button" data-slide="prev"> <span
@@ -94,7 +74,7 @@
 						class="sr-only">Next</span>
 					</a>
 				</div>
-				<div class="row"> Best Items </div>
+				<div class="row menu-title">Best Items</div>
 				<div class="row">
 					<c:forEach items="${requestScope.main.mainProductList }" var="product">
 						<div class="col-lg-4 col-md-6 mb-4">
@@ -108,15 +88,18 @@
 									<h5>₩ ${product.price}</h5>
 								</div>
 								<div class="card-footer">
-									<small class="text-muted">&#9733; &#9733; &#9733;
-										&#9733; &#9734;</small>
+									<small class="text-muted">
+										<c:forEach items="${product.optionStockVo }" var="optionChild">
+											${optionChild.optionChild1Name }
+										</c:forEach>
+									</small>
 								</div>
 							</div>
 						</div>
 					</c:forEach>
 
 				</div>
-				<div class="row"> All Items</div>
+				<div class="row menu-title">All Items</div>
 				<div class="row">
 					<c:forEach items="${requestScope.main.productList }" var="product">
 						<div class="col-lg-4 col-md-6 mb-4">
@@ -130,8 +113,11 @@
 									<h5>₩ ${product.price}</h5>
 								</div>
 								<div class="card-footer">
-									<small class="text-muted">&#9733; &#9733; &#9733;
-										&#9733; &#9734;</small>
+									<small class="text-muted">
+										<c:forEach items="${product.optionStockVo }" var="optionChild">
+											${optionChild.optionChild1Name }
+										</c:forEach>
+									</small>
 								</div>
 							</div>
 						</div>

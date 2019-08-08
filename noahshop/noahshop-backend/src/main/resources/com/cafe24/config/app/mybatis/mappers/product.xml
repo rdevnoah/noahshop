@@ -10,16 +10,25 @@
 
 
 	<select id="getMainProduct" resultMap="productResult">
-		select p.no, p.name, p.price, i.no as image_no, i.url as image_url
-		from product p, product_image i
-		where p.no=i.product_no and p.dp_main='Y' and p.is_sell='Y'
+		select p.no, p.name, p.price, i.no as image_no, i.url as image_url, oc.name as optionChild1Name
+		from product p, product_image i, product_detail pd, option_child oc
+		where p.no=i.product_no
+			and p.dp_main='Y'
+			and p.is_sell='Y'
+			and pd.product_no=p.no
+			and pd.option_child1_no=oc.no
+			order by oc.no
 	</select>
 
 	<select id="getProductList" resultMap="productResult">
-		select p.no, p.name, p.price, i.no as image_no, i.url as image_url
-		from product p, product_image i
-		where p.no=i.product_no and p.dp_main='N' and p.is_sell='Y'
-		order by p.reg_date
+		select p.no, p.name, p.price, i.no as image_no, i.url as image_url, oc.name as optionChild1Name
+		from product p, product_image i, product_detail pd, option_child oc
+		where p.no=i.product_no
+			and p.dp_main='N'
+			and p.is_sell='Y'
+			and pd.product_no=p.no
+			and pd.option_child1_no=oc.no
+			order by oc.no
 	</select>
 
 	<select id="getProductListByCategoryNo" resultMap="productResult">
@@ -56,6 +65,9 @@
 		<collection property="imageList" javaType="java.util.ArrayList" ofType="imagevo">
 			<id property="no" column="image_no"/>
 			<id property="url" column="image_url"/>
+		</collection>
+		<collection property="optionStockVo" javaType="java.util.ArrayList" ofType="optionStockVo">
+			<id property="optionChild1Name" column="optionChild1Name"/>
 		</collection>
 	</resultMap>
 </mapper>

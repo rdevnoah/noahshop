@@ -37,7 +37,6 @@ public class AdminController {
 
     @RequestMapping({"","/"})
     public String main(){
-
         return "admin/index";
     }
 
@@ -64,10 +63,7 @@ public class AdminController {
 
     @RequestMapping("/product/add")
     public String addProduct(ProductAddDto dto){
-        System.out.println(dto);
         adminService.addProductService(dto);
-
-        System.out.println("------------------------------------------------------------");
         return "redirect:/admin/product/addform";
     }
 }
