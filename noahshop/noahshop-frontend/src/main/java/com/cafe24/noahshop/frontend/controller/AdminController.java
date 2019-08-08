@@ -64,6 +64,6 @@ public class AdminController {
     @RequestMapping("/product/add")
     public String addProduct(ProductAddDto dto){
         adminService.addProductService(dto);
-        return "redirect:/admin/product/addform";
+        return "redirect:/admin/product/list";
     }
 }
