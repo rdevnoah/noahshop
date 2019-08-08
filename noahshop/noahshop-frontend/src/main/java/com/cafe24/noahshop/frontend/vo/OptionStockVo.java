@@ -70,4 +70,16 @@ public class OptionStockVo {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
+
+    @Override
+    public String toString() {
+        return "OptionStockVo{" +
+                "productDetailNo=" + productDetailNo +
+                ", optionChild1No=" + optionChild1No +
+                ", optionChild2No=" + optionChild2No +
+                ", optionChild1Name='" + optionChild1Name + '\'' +
+                ", optionChild2Name='" + optionChild2Name + '\'' +
+                ", stock=" + stock +
+                '}';
+    }
 }

@@ -1,8 +1,8 @@
-package com.cafe24.noahshop.dto;
+package com.cafe24.noahshop.frontend.dto;
 
 
-import com.cafe24.noahshop.vo.OptionStockVo;
-import com.cafe24.noahshop.vo.ProductImageVo;
+import com.cafe24.noahshop.frontend.vo.OptionStockVo;
+import com.cafe24.noahshop.frontend.vo.ProductImageVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -131,5 +131,22 @@ public class ProductAddDto {
 
     public void setMultipartFile(MultipartFile multipartFile) {
         this.multipartFile = multipartFile;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductAddDto{" +
+                "no='" + no + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", image=" + image +
+                ", dpMain='" + dpMain + '\'' +
+                ", isSell='" + isSell + '\'' +
+                ", categoryNo=" + categoryNo +
+                ", noOptionStock=" + noOptionStock +
+                ", optionStockVoList=" + optionStockVoList +
+                ", multipartFile=" + multipartFile +
+                '}';
     }
 }

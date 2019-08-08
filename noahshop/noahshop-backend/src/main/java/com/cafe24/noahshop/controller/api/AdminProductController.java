@@ -57,10 +57,10 @@ public class AdminProductController {
 	@ApiOperation(value = "get add product form", notes = "상품등록 폼 가져오기")
 	@GetMapping("/addform")
 	public JSONResult addform() {
-		//get add form
 
+		Map<String, Object> map = adminProductService.getAddForm();
 
-		return JSONResult.success("return:addform");
+		return JSONResult.success(map);
 	}
 	
 	@ApiOperation(value = "add product by admin", notes = "관리자 상품 등록")
@@ -69,7 +69,7 @@ public class AdminProductController {
 	})
 	@PutMapping
 	public ResponseEntity<JSONResult> add(@RequestBody @Valid ProductAddDto dto, BindingResult result) {
-		
+
 		//validation
 		if (result.hasErrors()) {
 			// 에러 메세지 확인
@@ -99,9 +99,7 @@ public class AdminProductController {
 	@ApiOperation(value = "get product list by admin", notes = "관리자 상품 리스트")
 	@GetMapping("/list")
 	public JSONResult getProductList() {
-
 		List<ProductVo> list = adminProductService.getList();
-		// delete 처리
 		return JSONResult.success(list);
 	}
 

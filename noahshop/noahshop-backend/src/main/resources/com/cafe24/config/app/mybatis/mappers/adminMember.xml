@@ -14,6 +14,7 @@
 			, role
 		from member m, key k
 		where m.no=k.member_no
+		order by m.join_date
 	</select>
 
 	<select id="searchMemberById" parameterType="string" resultType="membervo">

@@ -13,7 +13,7 @@
 				, encode(encrypt(convert_to(#{address },'utf8'),convert_to(#{key },'utf8'), 'aes'),'hex')
 				, encode(encrypt(convert_to(#{email },'utf8'),convert_to(#{key },'utf8'), 'aes'),'hex')
 				, now()
-				, 'USER')
+				, 'ROLE_USER')
 		]]>
 		<selectKey resultType="long" keyProperty="no" order="AFTER">
 			select currval('member_no_seq')

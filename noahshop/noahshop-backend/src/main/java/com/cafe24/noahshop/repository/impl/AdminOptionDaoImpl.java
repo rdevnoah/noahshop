@@ -1,10 +1,13 @@
 package com.cafe24.noahshop.repository.impl;
 
 import com.cafe24.noahshop.repository.AdminOptionDao;
+import com.cafe24.noahshop.vo.OptionDto;
 import com.cafe24.noahshop.vo.OptionVo;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  *
@@ -39,5 +42,10 @@ public class AdminOptionDaoImpl implements AdminOptionDao {
     public OptionVo addChildOption(OptionVo vo) {
         sqlSession.insert("option.insertChild", vo);
         return vo;
+    }
+
+    @Override
+    public List<OptionDto> getOptionListForAddProduct() {
+        return sqlSession.selectList("option.getOptionListForProductAdd");
     }
 }

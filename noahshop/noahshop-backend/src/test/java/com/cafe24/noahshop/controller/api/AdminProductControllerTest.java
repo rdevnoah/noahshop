@@ -60,6 +60,8 @@ public class AdminProductControllerTest {
 		
 	}
 
+
+
 	@Test
 	public void testModifyForm() throws Exception{
 		//옵션 존재 상품
@@ -76,6 +78,8 @@ public class AdminProductControllerTest {
 		resultActions.andExpect(status().isOk())
 				.andDo(print())
 				.andExpect(jsonPath("$.result", is("success")));
+
+
 	}
 
 	@Test
@@ -149,6 +153,21 @@ public class AdminProductControllerTest {
 		resultActions.andExpect(status().isOk())
 				.andDo(print())
 				.andExpect(jsonPath("$.result", is("success")));
+
+
+		String a = "asdf";
+
+		String childInnerHtml = "<select name=''><option value=''>하위 카테고리</option>\n" +
+				"                <option value=''>-----------</option>\n" +
+				"                <c:forEach items='${requestScope.map.categoryList }' var='parentCategory'>\n" +
+				"                    <c:forEach items='${parentCategory.childList }' var='childCategory'>\n" +
+				"                        <c:if test='${childCategory.parentNo =="+ a + "'>\n" +
+				"                            <option value='${childCategory.no}'>${childCategory.name }</option>\n" +
+				"                        </c:if>\n" +
+				"                    </c:forEach>\n" +
+				"                </c:forEach>\n" +
+				"            </select>";
+
 	}
 
 	

@@ -61,7 +61,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         } catch(BadCredentialsException e){
             throw new BadCredentialsException(e.getMessage());
         }
-
+        System.out.println(securityUser.getAuthorities());
         return new UsernamePasswordAuthenticationToken(securityUser, securityUser.getPassword(), authorities);
     }
 

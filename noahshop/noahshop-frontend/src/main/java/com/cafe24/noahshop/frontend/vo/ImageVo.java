@@ -43,4 +43,12 @@ public class ImageVo {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "ImageVo{" +
+                "no=" + no +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

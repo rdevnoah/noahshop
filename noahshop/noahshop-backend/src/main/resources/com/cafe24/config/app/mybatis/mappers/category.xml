@@ -18,7 +18,7 @@
 	</insert>
 
 	<select id="getList" resultMap="categoryResult">
-		select cp.no, cp.name, cc.no as child_no, cc.name as child_name
+		select cp.no, cp.name, cc.no as child_no, cc.name as child_name, cc.category_parent_no as parent_no
 		from category_parent cp, category_child cc
 		where cp.no=cc.category_parent_no
 	</select>
@@ -57,6 +57,7 @@
 		<collection property="childList" javaType="java.util.ArrayList" ofType="categoryvo">
 			<id property="no" column="child_no"/>
 			<id property="name" column="child_name"/>
+			<id property="parentNo" column="parent_no"/>
 		</collection>
 	</resultMap>
 </mapper>

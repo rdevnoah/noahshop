@@ -38,8 +38,8 @@
 
 	</insert>
 
-	<select id="getList" resultType="productvo">
-		select p.no, p.name, p.price, i.no as imageNo, i.url as imageUrl
+	<select id="getList" resultMap="productResult">
+		select p.no, p.name, p.price, p.code, p.dp_main as dpMain, p.reg_date as regDate, p.is_sell as isSell, i.no as imageNo, i.url as imageUrl
 		from product p, product_image i
 		where p.no=i.product_no
 		order by p.reg_date
@@ -135,6 +135,7 @@
 		<result property="dpMain" column="dpMain"/>
 		<result property="name" column="name"/>
 		<result property="isSell" column="isSell"/>
+		<result property="regDate" column="regDate"/>
 		<collection property="imageList" javaType="java.util.ArrayList" ofType="imagevo">
 			<id property="no" column="imageNo"/>
 			<id property="url" column="imageUrl"/>

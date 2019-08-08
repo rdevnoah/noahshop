@@ -1,14 +1,15 @@
 package com.cafe24.noahshop.service.impl;
 
+import com.cafe24.noahshop.controller.api.AdminOptionController;
 import com.cafe24.noahshop.dto.ProductAddDto;
+import com.cafe24.noahshop.repository.AdminCategoryDao;
+import com.cafe24.noahshop.repository.AdminOptionDao;
 import com.cafe24.noahshop.repository.AdminProductDao;
 import com.cafe24.noahshop.service.AdminProductService;
-import com.cafe24.noahshop.vo.OptionStockVo;
-import com.cafe24.noahshop.vo.ProductDetailVo;
-import com.cafe24.noahshop.vo.ProductImageVo;
-import com.cafe24.noahshop.vo.ProductVo;
+import com.cafe24.noahshop.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,12 @@ public class AdminProductServiceImpl implements AdminProductService {
 
     @Autowired
     private AdminProductDao adminProductDao;
+
+    @Autowired
+    private AdminCategoryDao adminCategoryDao;
+
+    @Autowired
+    private AdminOptionDao adminOptionDao;
 
 
     @Override
@@ -138,6 +145,18 @@ public class AdminProductServiceImpl implements AdminProductService {
         Map<String, Object> map = new HashMap<>();
         map.put("noList", noList);
         return adminProductDao.deleteDpMainProduct(map);
+    }
+
+    @Transactional
+    @Override
+    public Map<String, Object> getAddForm() {
+        Map<String, Object> map = new HashMap<>();
+        List<OptionDto> optionList = adminOptionDao.getOptionListForAddProduct();
+        map.put("optionList", optionList);
+        List<CategoryVo> categoryList = adminCategoryDao.getList();
+        map.put("categoryList", categoryList);
+
+        return map;
     }
 
 

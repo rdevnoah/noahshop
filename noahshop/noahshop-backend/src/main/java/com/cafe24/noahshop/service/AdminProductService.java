@@ -47,4 +47,7 @@ public interface AdminProductService {
     boolean addDpMainProduct(List<Long> noList);
 
     boolean deleteDpMainProduct(List<Long> noList);
+
+    Map<String, Object> getAddForm();
+
 }

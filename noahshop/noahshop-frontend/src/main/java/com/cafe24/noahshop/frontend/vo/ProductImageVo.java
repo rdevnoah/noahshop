@@ -28,4 +28,12 @@ public class ProductImageVo {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "ProductImageVo{" +
+                "no=" + no +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

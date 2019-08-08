@@ -37,5 +37,20 @@
     </select>
 
 
+    <select id="getOptionListForProductAdd" resultMap="optionResult">
+        select op.no, op.name, oc.no as childNo, oc.name as childName
+        from option_parent op, option_child oc
+        where op.no = oc.option_parent_no
+    </select>
+
+    <resultMap id="optionResult" type="optiondto">
+        <result property="no" column="no"/>
+        <result property="name" column="name"/>
+        <collection property="childList" javaType="java.util.ArrayList" ofType="optiondto">
+            <id property="no" column="childNo"/>
+            <id property="name" column="childName"/>
+        </collection>
+    </resultMap>
+
 
 </mapper>
