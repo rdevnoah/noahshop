@@ -5,6 +5,7 @@ import com.cafe24.noahshop.repository.OptionDao;
 import com.cafe24.noahshop.repository.ProductDao;
 import com.cafe24.noahshop.service.ProductService;
 import com.cafe24.noahshop.vo.CategoryVo;
+import com.cafe24.noahshop.vo.ImageVo;
 import com.cafe24.noahshop.vo.OptionVo;
 import com.cafe24.noahshop.vo.ProductVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,11 @@ public class ProductServiceImpl implements ProductService {
 
         map.put("optionList", optionList);
 
+        // get ImageList
+        List<ImageVo> imageList = productDao.getProductImageListByNo(no);
 
-        //Todo: getImage in getProductDetail();
+        map.put("imageList", imageList);
+
         return map;
     }
 
@@ -72,6 +76,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductVo> searchByKeywordInCategory(String keyword, Long categoryNo) {
         return null;
+    }
+
+    @Override
+    public List<OptionVo> getOption2(Long productNo, Long option1No) {
+        List<OptionVo> list = productDao.getOption2(productNo, option1No);
+        return list;
     }
 
 

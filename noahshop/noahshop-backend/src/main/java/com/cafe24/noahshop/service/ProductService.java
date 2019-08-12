@@ -1,5 +1,6 @@
 package com.cafe24.noahshop.service;
 
+import com.cafe24.noahshop.vo.OptionVo;
 import com.cafe24.noahshop.vo.ProductVo;
 
 import java.util.List;
@@ -32,4 +33,5 @@ public interface ProductService {
 
 	List<ProductVo> searchByKeywordInCategory(String keyword, Long categoryNo);
 
+    List<OptionVo> getOption2(Long productNo, Long option1No);
 }

@@ -14,6 +14,51 @@
 	<link href="${pageContext.servletContext.contextPath }/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="${pageContext.servletContext.contextPath }/assets/css/shop-item.css" rel="stylesheet">
+	<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery.js"></script>
+	<script>
+		$(function(){
+			$('#option1').change(function(){
+				var $optionNo = $('#option1').val();
+				var productNo = ${requestScope.productDetail.productDetail.no };
+				$('#option2').html("<option>----------</option>");
+				var list = null;
+				var innerhtml="";
+				/* ajax 통신 */
+				$.ajax({
+					url: "${pageContext.servletContext.contextPath }/product/getOption2?productNo="+productNo+"&option1No="+$optionNo,
+					type: "get",
+					dataType: "json",
+					data: "",
+					success: function(response){
+						if(response.result == "success"){
+
+							list = response.data;
+							console.log(list);
+
+							for (var i=0 ; i < list.length; i++) {
+								innerhtml += "<option value=" + list[i].no + ">" + list[i].name + "</option>";
+							}
+							console.log(innerhtml);
+							$('#option2').append(innerhtml);
+							return;
+						}
+
+						if(response.result == "fail"){
+							//fail code
+							return;
+						}
+					},
+					error: function(xhr, error){
+						console.error("error:" + error)
+					}
+				});
+			});
+		});
+
+
+
+	</script>
+
 </head>
 
 <body>
@@ -42,24 +87,43 @@
 
 				<div class="card mt-4">
 					<img class="card-img-top img-fluid"
-						src="http://placehold.it/900x400" alt="">
+						 src="${pageContext.request.contextPath}/assets/noahshop/images/${requestScope.productDetail.imageList[0].url}">
 					<div class="card-body">
-						<h3 class="card-title">Product Name</h3>
-						<h4>$24.99</h4>
-						<p class="card-text">
-							Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque
-							facere, soluta. Totam id dolores, sint aperiam sequi pariatur
-							praesentium animi perspiciatis molestias iure, ducimus!
-						</p>
-						<span class="text-warning">&#9733; &#9733; &#9733; &#9733;
-							&#9734;</span> 4.0 stars
+						<h3 class="card-title">${requestScope.productDetail.productDetail.name}</h3>
+						<h4>${requestScope.productDetail.productDetail.price}</h4>
+						<form>
+							<div>
+								SIZE :
+								<select id="option1" name="">
+									<option>----------</option>
+									<c:forEach items="${requestScope.productDetail.optionList }" var="option">
+										<c:if test="${option.parentName == 'SIZE' }">
+											<option value="${option.no }">${option.name }</option>
+										</c:if>
+									</c:forEach>
+								</select id="option2">
+							</div>
+							<div>
+								COLOR :
+								<select id="option2" name="">
+									<option>----------</option>
+								</select>
+							</div>
+							<div>
+								수량 :
+								<input type="number" name="">
+							</div>
+						</form>
 					</div>
+					<p class="card-text">
+						${requestScope.productDetail.productDetail.description}
+					</p>
+
 				</div>
 				<!-- /.card -->
 
 				<div class="card card-outline-secondary my-4">
-					<div class="card-header">Product Reviews</div>
+					<div class="card-header">리뷰들.</div>
 					<div class="card-body">
 						<p>
 							Lorem ipsum dolor sit amet, consectetur adipisicing elit.

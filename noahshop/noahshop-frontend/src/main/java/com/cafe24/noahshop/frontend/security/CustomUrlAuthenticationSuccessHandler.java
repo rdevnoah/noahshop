@@ -46,10 +46,9 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 
 		}
 
-		System.out.println(accept);
     	if( accept == null || accept.matches( ".*application/json.*" ) == false ) {
     		HttpSession session = request.getSession(true);
-    		session.setAttribute("loginNow", true);
+    		session.setAttribute("authUser", securityUser);
     		session.setAttribute("cart", securityUser.getCartString());
 			System.out.println(securityUser.getName());
             getRedirectStrategy().sendRedirect( request, response, "/" );

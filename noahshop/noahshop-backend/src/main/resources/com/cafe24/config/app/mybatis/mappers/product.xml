@@ -37,6 +37,24 @@
 		where p.no=i.product_no and p.is_sell='Y' and p.category_no=#{categoryNo }
 	</select>
 
+	<select id="getImageListByNo" parameterType="long" resultType="imageVo">
+		select no, url
+		from product_image
+		where product_no=#{no }
+
+	</select>
+
+    <select id="getOption2" parameterType="map" resultType="optionvo">
+        select oc.no, oc.name
+        from product_detail pd, option_child oc
+        where pd.option_child2_no=oc.no
+	        and pd.option_child1_no=#{option1No }
+	        and pd.product_no=#{productNo }
+	        and pd.stock > 0
+    </select>
+
+
+
 	<select id="getCountByCategoryNo" parameterType="long" resultType="int">
 		select count(*)
 		from product
@@ -62,6 +80,8 @@
 		<result property="no" column="no"/>
 		<result property="name" column="name"/>
 		<result property="price" column="price"/>
+		<result property="description" column="description"/>
+		<result property="code" column="code"/>
 		<collection property="imageList" javaType="java.util.ArrayList" ofType="imagevo">
 			<id property="no" column="image_no"/>
 			<id property="url" column="image_url"/>
@@ -70,4 +90,6 @@
 			<id property="optionChild1Name" column="optionChild1Name"/>
 		</collection>
 	</resultMap>
+
+
 </mapper>

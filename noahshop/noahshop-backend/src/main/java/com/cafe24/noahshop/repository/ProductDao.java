@@ -1,5 +1,7 @@
 package com.cafe24.noahshop.repository;
 
+import com.cafe24.noahshop.vo.ImageVo;
+import com.cafe24.noahshop.vo.OptionVo;
 import com.cafe24.noahshop.vo.ProductVo;
 
 import java.util.List;
@@ -40,4 +42,8 @@ public interface ProductDao {
     boolean updateCategoryNoForDeleteCategory(Long no);
 
     boolean updateCategoryNoForDeleteParentCategory(List<Long> childNo);
+
+    List<ImageVo> getProductImageListByNo(Long no);
+
+    List<OptionVo> getOption2(Long productNo, Long option1No);
 }

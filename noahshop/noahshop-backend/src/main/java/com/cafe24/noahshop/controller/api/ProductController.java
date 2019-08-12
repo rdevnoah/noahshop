@@ -2,6 +2,7 @@ package com.cafe24.noahshop.controller.api;
 
 import com.cafe24.noahshop.dto.JSONResult;
 import com.cafe24.noahshop.service.ProductService;
+import com.cafe24.noahshop.vo.OptionVo;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -90,5 +92,11 @@ public class ProductController {
 		// 카테고리 내 키워드 포함 List
 		//productService.searchByKeywordInCategory(keyword, categoryNo);
 		return JSONResult.success("return:categorySearch");
+	}
+
+	@GetMapping("/getOption2")
+	public JSONResult getOption2(Long productNo, Long option1No){
+		List<OptionVo> list = productService.getOption2(productNo, option1No);
+		return JSONResult.success(list);
 	}
 }
