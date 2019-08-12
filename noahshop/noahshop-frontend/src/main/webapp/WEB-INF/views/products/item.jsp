@@ -53,6 +53,24 @@
 					}
 				});
 			});
+
+			$('#add-btn').click(function(){
+				var option1 = $('#option1').val();
+				var option1Name = $('#option1 option:selected').text();
+				var option2 = $('#option2').val();
+				var option2Name = $('#option2 option:selected').text();
+				var amount = $('#order-amount').val();
+				console.log(option1Name + ":" + option2Name + ":" + amount);
+
+				var innerhtml = "";
+
+				innerhtml += "옵션1 : <input type='text' name='' value='"+ option1Name +"' readOnly=true>" +
+						"/ 옵션2 : <input type='text' name='' value='"+ option2Name +"' readOnly=true>" +
+						"/ 수량 : <input type='number' name='' value='"+ amount +"' readOnly=true>" +
+						"<button type='button' value=''>삭제</button><br>"
+				$('#order-area').append(innerhtml);
+
+			});
 		});
 
 
@@ -111,16 +129,37 @@
 							</div>
 							<div>
 								수량 :
-								<input type="number" name="">
+								<input id='order-amount' type="number" name="">
+								<button id="add-btn" type="button">추가</button>
+							</div>
+							<%-- Todo: 장바구니, 주문 버튼 --%>
+							<div id="order-area">
+
+
 							</div>
 						</form>
 					</div>
 					<p class="card-text">
-						${requestScope.productDetail.productDetail.description}
+
 					</p>
 
 				</div>
 				<!-- /.card -->
+
+
+
+				<div class="card card-outline-secondary my-4">
+					<div class="card-header">상세설명</div>
+					<div class="card-body">
+						<p class="card-text">
+							${requestScope.productDetail.productDetail.description}
+						</p>
+
+					</div>
+				</div>
+
+
+
 
 				<div class="card card-outline-secondary my-4">
 					<div class="card-header">리뷰들.</div>

@@ -59,6 +59,8 @@ public class OrderController {
 	@PostMapping("/orderform/{no}")
 	public JSONResult orderform(@PathVariable(value = "no") Long no) {
 
+		//Todo: 주문할 상품 정보 가져오기. 만약 비회원일 경우 비회원창 띄우는 것은 프론트에서.
+
 		//회원정보 가져오기
 		MemberVo vo = memberService.getMemberByNo(no);
 		return JSONResult.success(vo);
