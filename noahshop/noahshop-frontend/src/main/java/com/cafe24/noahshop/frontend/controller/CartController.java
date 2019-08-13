@@ -49,10 +49,6 @@ public class CartController {
 
         String parsingCart = parsingCartInfo(vo);
 
-
-
-        // 쿠키 혹은 세션에 담기 (JSESSIONID)
-
         // 1. 회원
         // 회원 전용 쿠키 발급
         HttpSession session = request.getSession(false);
@@ -66,8 +62,8 @@ public class CartController {
             cartService.addMemberCart(cartVo);
 
             Cookie[] cookies = request.getCookies();
-            String cartInfo = getCartCookieValue(cookies, "memberCartInfo");
-            Cookie cartCookie = new Cookie("memberCartInfo", cartInfo + parsingCart);
+            String cartInfo = getCartCookieValue(cookies, authUser.getName());
+            Cookie cartCookie = new Cookie(authUser.getName(), cartInfo + parsingCart);
             response.addCookie(cartCookie);
             return "redirect:/";
         }
@@ -90,7 +86,8 @@ public class CartController {
         HttpSession session = request.getSession(false);
 
         if (session != null && session.getAttribute("authUser") != null){
-            cartInfo = getCartCookieValue(cookies, "memberCartInfo");
+            SecurityUser authUser = (SecurityUser) session.getAttribute("authUser");
+            cartInfo = getCartCookieValue(cookies, authUser.getName());
         } else{
             cartInfo = getCartCookieValue(cookies, "noMemberCartInfo");
         }

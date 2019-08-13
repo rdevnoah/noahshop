@@ -54,22 +54,23 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 
 			Cookie[] cookies = request.getCookies();
 
-
+			Cookie cartCookie = null;
 			for (int i=0 ; i<cookies.length ; i++){
-				if (cookies[i].getName().equals("memberCartInfo")){
-					Cookie cartCookie = cookies[i];
-					cartCookie.setMaxAge(0);
-					cartCookie.setValue(null);
-					response.addCookie(cartCookie);
-
-					cartCookie = new Cookie("memberCartInfo", securityUser.getCartString());
-					response.addCookie(cartCookie);
-					getRedirectStrategy().sendRedirect( request, response, "/" );
-					return;
+				if (cookies[i].getName().equals(securityUser.getName())){
+					cartCookie = cookies[i];
+					cartCookie.setValue(securityUser.getCartString());
+					break;
 				}
 			}
+			if (cartCookie == null){
+				cartCookie = new Cookie(securityUser.getName(), securityUser.getCartString());
+			}
 
-			Cookie cartCookie = new Cookie("memberCartInfo", securityUser.getCartString());
+			response.addCookie(cartCookie);
+
+			// 이곳에 구현.
+
+
 
             getRedirectStrategy().sendRedirect( request, response, "/" );
     		return;
