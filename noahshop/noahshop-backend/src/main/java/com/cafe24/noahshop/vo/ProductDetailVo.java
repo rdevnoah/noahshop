@@ -57,4 +57,15 @@ public class ProductDetailVo {
     public void setProductNo(Long productNo) {
         this.productNo = productNo;
     }
+
+    @Override
+    public String toString() {
+        return "ProductDetailVo{" +
+                "no=" + no +
+                ", stock=" + stock +
+                ", optionChildNo1=" + optionChildNo1 +
+                ", optionChildNo2=" + optionChildNo2 +
+                ", productNo=" + productNo +
+                '}';
+    }
 }

@@ -1,7 +1,10 @@
 package com.cafe24.noahshop.service;
 
 import com.cafe24.noahshop.vo.CartVo;
+import com.cafe24.noahshop.vo.ProductDetailVo;
 import com.cafe24.noahshop.vo.ProductVo;
+
+import java.util.List;
 
 /**
  * @author : rdevnoah
@@ -27,4 +30,6 @@ public interface CartService {
 	boolean addCart(CartVo vo);
 
     String fetchCartByNo(Long no);
+
+    List<ProductVo> getCartListByProductDetailVo(List<ProductDetailVo> list);
 }

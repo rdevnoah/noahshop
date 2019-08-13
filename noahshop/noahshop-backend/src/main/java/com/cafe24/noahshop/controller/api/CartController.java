@@ -3,15 +3,9 @@ package com.cafe24.noahshop.controller.api;
 import javax.servlet.http.HttpServletRequest;
 
 import com.cafe24.noahshop.vo.CartVo;
+import com.cafe24.noahshop.vo.ProductDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cafe24.noahshop.dto.JSONResult;
 import com.cafe24.noahshop.service.CartService;
@@ -20,6 +14,8 @@ import com.cafe24.noahshop.vo.ProductVo;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+
+import java.util.List;
 
 /**
  * 
@@ -47,7 +43,20 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
-	
+
+	@PostMapping("/list")
+	public JSONResult getCartList(@RequestBody List<ProductDetailVo> cartList){
+
+		System.out.println(cartList);
+
+	    List<ProductVo> result = cartService.getCartListByProductDetailVo(cartList);
+
+		System.out.println("################" + result);
+
+	    return JSONResult.success(result);
+	}
+
+
 	@ApiOperation(value="add cart to Redis", notes = "회원 장바구니 정보 Redis 저장")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="vo", value="상품상세정보", required=true, dataType="CartVo", defaultValue="")

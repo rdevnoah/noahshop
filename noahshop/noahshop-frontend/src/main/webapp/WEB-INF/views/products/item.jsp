@@ -17,6 +17,26 @@
 	<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery.js"></script>
 	<script>
 		$(function(){
+			var count=0;
+
+			var detailList = new Array();
+			var nolist = new Array();
+
+			<c:forEach items="${requestScope.productDetail.details}" var="product">
+				var json=new Object();
+				json.no="${product.no}";
+				json.option1No="${product.optionChildNo1}";
+				json.option2No="${product.optionChildNo2}";
+				detailList.push(json);
+			</c:forEach>
+
+			//console.log(detailList.length);
+			// for (var i=0 ; i<detailList.length ; i++){
+			// 	console.log(detailList[i].no);
+			// }
+
+
+
 			$('#option1').change(function(){
 				var $optionNo = $('#option1').val();
 				var productNo = ${requestScope.productDetail.productDetail.no };
@@ -61,14 +81,29 @@
 				var option2Name = $('#option2 option:selected').text();
 				var amount = $('#order-amount').val();
 				console.log(option1Name + ":" + option2Name + ":" + amount);
+				var detailNo = "";
+
+
+				for (var i=0 ; i<detailList.length ; i++){
+					if (detailList[i].option1No == option1 && detailList[i].option2No==option2){
+						detailNo = detailList[i].no;
+					}
+				}
+
+				console.log(nolist);
+
 
 				var innerhtml = "";
 
-				innerhtml += "옵션1 : <input type='text' name='' value='"+ option1Name +"' readOnly=true>" +
-						"/ 옵션2 : <input type='text' name='' value='"+ option2Name +"' readOnly=true>" +
-						"/ 수량 : <input type='number' name='' value='"+ amount +"' readOnly=true>" +
+				innerhtml += "옵션1 : <input type='text' name='productList["+count+"].optionChild1Name' value='"+ option1Name +"' readOnly=true>" +
+						"<input type='hidden' name='productList["+count+"].optionChildNo1' value='"+ option1 +"'>" +
+						"/ 옵션2 : <input type='text' name='productList["+count+"].optionChild2Name' value='"+ option2Name +"' readOnly=true>" +
+						"<input type='hidden' name='productList["+count+"].optionChildNo2' value='"+ option2 +"'>" +
+						"<input type='hidden' name='productList["+count+"].no' value='"+ detailNo +"'>" +
+						"/ 수량 : <input type='number' name='productList["+count+"].stock' value='"+ amount +"' readOnly=true>" +
 						"<button type='button' value=''>삭제</button><br>"
 				$('#order-area').append(innerhtml);
+				count++;
 
 			});
 		});
@@ -109,10 +144,10 @@
 					<div class="card-body">
 						<h3 class="card-title">${requestScope.productDetail.productDetail.name}</h3>
 						<h4>${requestScope.productDetail.productDetail.price}</h4>
-						<form>
+						<form action="${pageContext.servletContext.contextPath }/cart/add">
 							<div>
 								SIZE :
-								<select id="option1" name="">
+								<select id="option1">
 									<option>----------</option>
 									<c:forEach items="${requestScope.productDetail.optionList }" var="option">
 										<c:if test="${option.parentName == 'SIZE' }">
@@ -137,6 +172,9 @@
 
 
 							</div>
+							<input type="hidden" name="no" value="${requestScope.productDetail.productDetail.no}">
+							<button type="submit">Add Cart</button>
+							<button type="submit">Order</button>
 						</form>
 					</div>
 					<p class="card-text">

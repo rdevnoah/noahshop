@@ -25,6 +25,9 @@
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cart">장바구니</a>
+						</li>
 						<sec:authorize access="isAuthenticated()">
 							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃<span class="sr-only">(current)</span></a>
@@ -49,6 +52,9 @@
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cart">장바구니</a>
+						</li>
 						<sec:authorize access="isAuthenticated()">
 							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃<span class="sr-only">(current)</span></a>
@@ -72,6 +78,9 @@
 					<c:otherwise>
 						<li class="nav-item">
 							<a class="nav-link active" href="${pageContext.servletContext.contextPath }">홈</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cart">장바구니</a>
 						</li>
 						<sec:authorize access="isAuthenticated()">
 							<li class="nav-item">

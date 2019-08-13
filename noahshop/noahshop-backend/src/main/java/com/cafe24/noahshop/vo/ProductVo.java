@@ -123,4 +123,21 @@ public class ProductVo {
 	public void setImageList(List<ImageVo> imageList) {
 		this.imageList = imageList;
 	}
+
+	@Override
+	public String toString() {
+		return "ProductVo{" +
+				"no=" + no +
+				", code='" + code + '\'' +
+				", name='" + name + '\'' +
+				", price=" + price +
+				", description='" + description + '\'' +
+				", categoryNo=" + categoryNo +
+				", regDate='" + regDate + '\'' +
+				", dpMain='" + dpMain + '\'' +
+				", isSell='" + isSell + '\'' +
+				", optionStockVo=" + optionStockVo +
+				", imageList=" + imageList +
+				'}';
+	}
 }

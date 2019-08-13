@@ -3,6 +3,7 @@ package com.cafe24.noahshop.repository.impl;
 import com.cafe24.noahshop.repository.ProductDao;
 import com.cafe24.noahshop.vo.ImageVo;
 import com.cafe24.noahshop.vo.OptionVo;
+import com.cafe24.noahshop.vo.ProductDetailVo;
 import com.cafe24.noahshop.vo.ProductVo;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +72,26 @@ public class ProductDaoImpl implements ProductDao {
         map.put("option1No", option1No);
         return sqlSession.selectList("product.getOption2", map);
 
+    }
+
+    @Override
+    public List<ProductDetailVo> getProductDetailByProductNo(Long no) {
+        List<ProductDetailVo> list = sqlSession.selectList("product.getProductDetailByProductNo", no);
+        return list;
+    }
+
+    @Override
+    public List<ProductVo> getCartListByProductDetailVo(List<ProductDetailVo> list) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("productDetail", list);
+        List<ProductVo> result = sqlSession.selectList("product.getCartListByProductDetailVo", map);
+
+        System.out.println("!!!!!!!!!!!!!!!!!!!!" + list.size());
+        System.out.println("!!!!!!!!!!!!!!!!!!!!" + result.size());
+
+        for (int i=0 ; i<list.size() ; i++){
+            result.get(i).getOptionStockVo().get(0).setStock(list.get(i).getStock());
+        }
+        return result;
     }
 }

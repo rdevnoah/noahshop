@@ -60,6 +60,7 @@ public class OrderController {
 	public JSONResult orderform(@PathVariable(value = "no") Long no) {
 
 		//Todo: 주문할 상품 정보 가져오기. 만약 비회원일 경우 비회원창 띄우는 것은 프론트에서.
+		// 상품 jsp에서 상품정보 (옵션1, 옵션2, 수량, 입력받는 dto 선언. )
 
 		//회원정보 가져오기
 		MemberVo vo = memberService.getMemberByNo(no);

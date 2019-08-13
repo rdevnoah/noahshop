@@ -53,7 +53,12 @@
 	        and pd.stock > 0
     </select>
 
+	<select id="getProductDetailByProductNo" parameterType="long" resultType="productdetailvo">
+		select no, stock, option_child1_no as optionChildNo1, option_child2_no as optionChildNo2, product_no as productNo
+		from product_detail
+		where product_no=#{no}
 
+	</select>
 
 	<select id="getCountByCategoryNo" parameterType="long" resultType="int">
 		select count(*)
@@ -76,6 +81,18 @@
 
 	</update>
 
+
+	<select id="getCartListByProductDetailVo" parameterType="map" resultMap="productResult">
+		select p.no, p.code, p.name, p.price, pd.no as productDetailNo, pd.stock, pd.option_child1_no as optionChild1No, pd.option_child2_no as optionChild2No
+		from product p, product_detail pd
+		where p.no=pd.product_no and(
+		<foreach collection="productDetail" item="item" index="index" separator="or">
+			pd.no=#{item.no }
+		</foreach>
+			)
+	</select>
+
+
 	<resultMap id="productResult" type="productvo">
 		<result property="no" column="no"/>
 		<result property="name" column="name"/>
@@ -87,7 +104,10 @@
 			<id property="url" column="image_url"/>
 		</collection>
 		<collection property="optionStockVo" javaType="java.util.ArrayList" ofType="optionStockVo">
-			<id property="optionChild1Name" column="optionChild1Name"/>
+			<id property="productDetailNo" column="productDetailNo"/>
+			<id property="optionChild1No" column="optionChild1No"/>
+			<id property="optionChild2No" column="optionChild2No"/>
+
 		</collection>
 	</resultMap>
 

@@ -90,13 +90,13 @@ public class MemberServiceImpl implements MemberService {
     public MemberVo getById(String id) {
 		MemberVo vo = memberDao.getById(id);
 		if (vo != null){
+			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + vo.getNo().toString());
 
 			Optional<CartVo> cartInfo = cartRepository.findById(vo.getNo().toString());
 			String info = cartInfo.orElse(new CartVo()).getProductInfo();
 
+			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + info);
 			vo.setCartInfo(info);
-
-
 		}
 
         return vo;

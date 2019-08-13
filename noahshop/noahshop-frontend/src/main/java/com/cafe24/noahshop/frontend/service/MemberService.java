@@ -64,7 +64,6 @@ public class MemberService {
 
     public JSONResult join(MemberVo vo) {
 
-        System.out.println("#####################################################");
         ResponseEntity<JSONResultJoin> response = null;
         JSONResultJoin successBody = null;
         HttpEntity<MemberVo> entity = new HttpEntity<>(vo);

@@ -4,10 +4,7 @@ import com.cafe24.noahshop.repository.CategoryDao;
 import com.cafe24.noahshop.repository.OptionDao;
 import com.cafe24.noahshop.repository.ProductDao;
 import com.cafe24.noahshop.service.ProductService;
-import com.cafe24.noahshop.vo.CategoryVo;
-import com.cafe24.noahshop.vo.ImageVo;
-import com.cafe24.noahshop.vo.OptionVo;
-import com.cafe24.noahshop.vo.ProductVo;
+import com.cafe24.noahshop.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +38,10 @@ public class ProductServiceImpl implements ProductService {
 
         ProductVo productVo = productDao.getProductByNo(no);
         map.put("productDetail", productVo);
+
+        List<ProductDetailVo> details = productDao.getProductDetailByProductNo(no);
+        map.put("details", details);
+
         // option 정보
         List<OptionVo> optionList = optionDao.getOptionListByProductNo(no);
 

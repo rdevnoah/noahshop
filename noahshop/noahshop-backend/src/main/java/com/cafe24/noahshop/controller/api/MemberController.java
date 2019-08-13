@@ -102,7 +102,7 @@ public class MemberController {
 	@PostMapping("/login/auth")
 	public ResponseEntity<JSONResult> loginAuth(@RequestBody MemberVo requestVo){
 		String id = requestVo.getId();
-		//TODO: 하기
+
 		MemberVo vo = memberService.getById(id);
 		if (vo == null){
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(JSONResult.fail("회원이 존재하지 않습니다."));

@@ -3,6 +3,7 @@ package com.cafe24.noahshop.frontend.security;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -49,8 +50,27 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
     	if( accept == null || accept.matches( ".*application/json.*" ) == false ) {
     		HttpSession session = request.getSession(true);
     		session.setAttribute("authUser", securityUser);
-    		session.setAttribute("cart", securityUser.getCartString());
-			System.out.println(securityUser.getName());
+    		// 회원인 경우 backend에서 cartInfo redis에서 가져오고 세팅하기
+
+			Cookie[] cookies = request.getCookies();
+
+
+			for (int i=0 ; i<cookies.length ; i++){
+				if (cookies[i].getName().equals("memberCartInfo")){
+					Cookie cartCookie = cookies[i];
+					cartCookie.setMaxAge(0);
+					cartCookie.setValue(null);
+					response.addCookie(cartCookie);
+
+					cartCookie = new Cookie("memberCartInfo", securityUser.getCartString());
+					response.addCookie(cartCookie);
+					getRedirectStrategy().sendRedirect( request, response, "/" );
+					return;
+				}
+			}
+
+			Cookie cartCookie = new Cookie("memberCartInfo", securityUser.getCartString());
+
             getRedirectStrategy().sendRedirect( request, response, "/" );
     		return;
     	}
