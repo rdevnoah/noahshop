@@ -45,32 +45,7 @@
 
 				<div class="card mt-4">
 					<div class="card-body">
-						<h1>카트정보 !!</h1>
-						<table>
-							<tr>
-								<th>
-									상품명
-								</th>
-								<th>
-									상품코드
-								</th>
-								<th>
-									가격
-								</th>
-								<th>
-									수량
-								</th>
-							</tr>
-							<c:forEach items="${requestScope.cartList}" var="product">
-								<tr>
-									<td>${product.name }</td>
-									<td>${product.code }</td>
-									<td>${product.price }</td>
-									<td>${product.optionStockVo[0].stock }</td>
-								</tr>
-							</c:forEach>
-						</table>
-						<a href="${pageContext.servletContext.contextPath }/order/orderform"><button type="button">주문</button></a>
+						<h1>orderform</h1>
 					</div>
 					<p class="card-text">
 
