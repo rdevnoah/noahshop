@@ -92,6 +92,16 @@
 			)
 	</select>
 
+	<select id="getProductListByOrderDtoList" parameterType="map" resultMap="productResult">
+		select p.no, p.code, p.name, p.price, pd.no as productDetailNo, pd.stock, pd.option_child1_no as optionChild1No, pd.option_child2_no as optionChild2No
+		from product p, product_detail pd
+		where p.no=pd.product_no and(
+		<foreach collection="cartList" item="item" index="index" separator="or">
+			pd.no=${item.productDetailNo }
+		</foreach>
+			)
+	</select>
+
 
 	<resultMap id="productResult" type="productvo">
 		<result property="no" column="no"/>
@@ -104,6 +114,7 @@
 			<id property="url" column="image_url"/>
 		</collection>
 		<collection property="optionStockVo" javaType="java.util.ArrayList" ofType="optionStockVo">
+			<id property="stock" column="stock"/>
 			<id property="productDetailNo" column="productDetailNo"/>
 			<id property="optionChild1No" column="optionChild1No"/>
 			<id property="optionChild2No" column="optionChild2No"/>

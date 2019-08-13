@@ -64,6 +64,7 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 			}
 			if (cartCookie == null){
 				cartCookie = new Cookie(securityUser.getName(), securityUser.getCartString());
+				cartCookie.setPath("/");
 			}
 
 			response.addCookie(cartCookie);

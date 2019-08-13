@@ -2,6 +2,7 @@ package com.cafe24.noahshop.frontend.controller;
 
 import com.cafe24.noahshop.frontend.security.SecurityUser;
 import com.cafe24.noahshop.frontend.service.OrderService;
+import com.cafe24.noahshop.frontend.vo.ProductVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,6 +46,8 @@ public class OrderController {
         Map<String, Object> map = new HashMap<>();
 
         String cartInfo = "";
+
+        //회원 주문의 경우
         if (session != null && session.getAttribute("authUser") != null){
             SecurityUser authUser = (SecurityUser)session.getAttribute("authUser");
             Cookie[] cookies = request.getCookies();
@@ -53,10 +57,18 @@ public class OrderController {
                     break;
                 }
             }
+
+
             map = orderService.getOrderformByUser(cartInfo, authUser.getNo());
         }
 
+        //Todo: 비회원 주문
+
+
+
         model.addAttribute("info", map);
+
+
 
         return "order/orderform";
     }

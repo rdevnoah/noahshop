@@ -49,7 +49,7 @@ public class RestTemplateTest {
 		MemberVo vo = new MemberVo();
 
 		JSONResult<Map<String, Object>> result = restTemplate.getForObject(API_URL, JSONResult.class);
-		System.out.println(result.getData().get("productList"));;
+
 	}
 
 	@Test
@@ -69,10 +69,10 @@ public class RestTemplateTest {
 		}
 
 
-		System.out.println(successBody.getData().get("authVo"));
 
 
-		//System.out.println("---------"+response.getBody().getMessage());
+
+
 
 
 	}

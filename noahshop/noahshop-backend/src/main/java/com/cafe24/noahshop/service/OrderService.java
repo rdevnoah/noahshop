@@ -2,6 +2,8 @@ package com.cafe24.noahshop.service;
 
 import com.cafe24.noahshop.vo.OrderVo;
 
+import java.util.Map;
+
 /**
  * @author : rdevnoah
  * @version : 1.0
@@ -25,4 +27,5 @@ public interface OrderService {
     String orderCodeGenerator(String date);
 
 
+    Map<String, Object> getOrderForm(Map<String, Object> params);
 }

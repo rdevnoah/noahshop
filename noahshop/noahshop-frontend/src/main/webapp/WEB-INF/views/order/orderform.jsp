@@ -42,22 +42,152 @@
 			<!-- /.col-lg-3 -->
 
 			<div class="col-lg-9">
+				<h1>주문 작성하기</h1>
+				<form>
+					<div class="card card-outline-secondary my-4">
+						<div class="card-header">
+							<h3 class="card-title">주문 상품 정보</h3>
+						</div>
 
-				<div class="card mt-4">
-					<div class="card-body">
-						<h1>orderform</h1>
+						<div class="card-body">
+							<p class="card-text">
+								<table>
+									<tr>
+										<th>
+											상품명
+										</th>
+										<th>
+											상품코드
+										</th>
+										<th>
+											수량
+										</th>
+										<th>
+											가격
+										</th>
+									</tr>
+									<c:forEach items="${requestScope.info.productList}" var="product" varStatus="status">
+										<tr>
+											<td>
+												<input type="hidden" name="orderProductList[${status.index}].productDeatilNo" value="${product.optionStockVo[0].productDetailNo}">
+												<input type="hidden" name="orderProductList[${status.index}].quantity" value="${product.optionStockVo[0].stock}">
+													${product.name }
+											</td>
+											<td>
+													${product.code }
+											</td>
+											<td>
+													${product.optionStockVo[0].stock }
+											</td>
+											<td>
+													${product.price }
+											</td>
+										</tr>
+									</c:forEach>
+
+								</table>
+							${requestScope.info.productList}
+							</p>
+						</div>
+						<div class="card-footer">
+							총 결재 금액 : ${requestScope.info.totalPrice }
+							<input type="hidden" name="price" value="${requestScope.info.totalPrice }">
+						</div>
+
+
+
 					</div>
-					<p class="card-text">
+					<!-- /.card -->
 
-					</p>
+					<div class="card card-outline-secondary my-4">
+						<div class="card-header">
+							<h3 class="card-title">주문자 정보</h3>
+						</div>
 
-				</div>
-				<!-- /.card -->
+						<div class="card-body">
+							<p class="card-text">
+							<div>
+								주문자 : <input type="text" value="${requestScope.info.memberInfo.name }">
+							</div>
+							<div>
+								연락처 : <input type="text" value="${requestScope.info.memberInfo.tel }">
+							</div>
+							<div>
+								이메일 : <input type="text" value="${requestScope.info.memberInfo.email }">
+							</div>
+							<div>
+								주소 : <input type="text" value="${requestScope.info.memberInfo.address }">
+							</div>
+							</p>
+						</div>
+
+					</div>
+					<div class="card card-outline-secondary my-4">
+						<div class="card-header">
+							<h3 class="card-title">배송지 정보</h3>
+						</div>
+
+						<div class="card-body">
+							<p class="card-text">
+							<div>
+								<input type="hidden" name="memberNo" value="${requestScope.info.memberInfo.no}">
+								받는 분 : <input type="text" name="buyerName" value="${requestScope.info.memberInfo.name }">
+
+							</div>
+							<div>
+								연락처 : <input type="text" name="buyerTel" value="${requestScope.info.memberInfo.tel }">
+							</div>
+							<div>
+								이메일 : <input type="text" name="email" value="${requestScope.info.memberInfo.email }">
+							</div>
+							<div>
+								주소 : <input type="text" name="address" value="${requestScope.info.memberInfo.address }">
+							</div>
+							<div>
+								배송 메세지 :
+								<select name="">
+									<option value="부재시 경비실에 맡겨주세요">부재시 경비실에 맡겨주세요</option>
+									<option value="배송 전에 연락 주세요">배송 전에 연락 주세요</option>
+									<option value="문앞에 두세요">문앞에 두세요</option>
+								</select>
+							</div>
+							</p>
+						</div>
+
+					</div>
+
+					<div class="card card-outline-secondary my-4">
+						<div class="card-header">
+							<h3 class="card-title">결제 정보</h3>
+						</div>
+
+						<div class="card-body">
+							<p class="card-text">
+							<div>
+								결제방식 :
+								<select name="payment">
+									<option value="">-------------</option>
+									<option value="무통장입금">무통장 입금</option>
+									<option value="카드결제">카드 결제</option>
+								</select>
+							</div>
+							</p>
+						</div>
+						<div class="card-footer">
+							<button type="button" class="btn btn-primary btn-sm">
+								주문하기
+							</button>
+
+						</div>
+					</div>
+				</form>
+
+
 
 			</div>
 			<!-- /.col-lg-9 -->
-
 		</div>
+		<!-- row -->
 
 	</div>
 	<!-- /.container -->

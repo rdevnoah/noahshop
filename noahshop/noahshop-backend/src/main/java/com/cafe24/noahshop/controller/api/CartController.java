@@ -47,11 +47,7 @@ public class CartController {
 	@PostMapping("/list")
 	public JSONResult getCartList(@RequestBody List<ProductDetailVo> cartList){
 
-		System.out.println(cartList);
-
 	    List<ProductVo> result = cartService.getCartListByProductDetailVo(cartList);
-
-		System.out.println("################" + result);
 
 	    return JSONResult.success(result);
 	}

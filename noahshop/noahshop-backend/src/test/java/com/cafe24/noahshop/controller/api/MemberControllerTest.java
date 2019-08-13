@@ -38,7 +38,6 @@ public class MemberControllerTest {
 
 	@Before
 	public void setUp() {
-		System.out.println("makemockMVC");
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 	}
 

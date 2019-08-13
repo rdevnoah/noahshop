@@ -1,5 +1,6 @@
 package com.cafe24.noahshop.repository;
 
+import com.cafe24.noahshop.dto.OrderDto;
 import com.cafe24.noahshop.vo.ImageVo;
 import com.cafe24.noahshop.vo.OptionVo;
 import com.cafe24.noahshop.vo.ProductDetailVo;
@@ -51,4 +52,6 @@ public interface ProductDao {
     List<ProductDetailVo> getProductDetailByProductNo(Long no);
 
     List<ProductVo> getCartListByProductDetailVo(List<ProductDetailVo> list);
+
+    List<ProductVo> getProductListByOrderDtoList(List<OrderDto> cartList);
 }

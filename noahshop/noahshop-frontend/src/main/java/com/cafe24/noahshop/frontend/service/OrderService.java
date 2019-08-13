@@ -1,8 +1,12 @@
 package com.cafe24.noahshop.frontend.service;
 
 import com.cafe24.noahshop.frontend.dto.JSONResult;
+import com.cafe24.noahshop.frontend.dto.OrderDto;
 import com.cafe24.noahshop.frontend.dto.ResponseJSONResult;
 import com.cafe24.noahshop.frontend.vo.MemberVo;
+import com.cafe24.noahshop.frontend.vo.OptionStockVo;
+import com.cafe24.noahshop.frontend.vo.ProductDetailVo;
+import com.cafe24.noahshop.frontend.vo.ProductVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -11,6 +15,8 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,7 +48,26 @@ public class OrderService {
         // cartInfo 파싱하고, 유저no와 detail 정보, stock을 가지로 form 가져온다.
 
 
-        // 여기 로직.
+
+        List<OrderDto> orderDtoList = new ArrayList<>();
+        String[] arr = cartInfo.split("/");
+
+        for (int i=0 ; i<arr.length ; i++){
+
+            String[] arr2 = arr[i].split(":");
+            OrderDto dto = new OrderDto();
+            dto.setMemberNo(memberNo);
+            dto.setProductDetailNo(Long.parseLong(arr2[0]));
+            dto.setStock(Integer.parseInt(arr2[1]));
+            orderDtoList.add(dto);
+        }
+
+        ResponseEntity<JSONResultMap> response = null;
+        HttpEntity<List<OrderDto>> entity = new HttpEntity<>(orderDtoList);
+        response = restTemplate.exchange(API_URL + "/api/order/orderform/" + memberNo, HttpMethod.POST, entity, JSONResultMap.class);
+
+        result = response.getBody().getData();
+
 
         return result;
     }

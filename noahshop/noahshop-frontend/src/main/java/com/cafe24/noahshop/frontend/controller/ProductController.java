@@ -37,9 +37,9 @@ public class ProductController {
 
     @GetMapping("/detail/{no}")
     public String getDetailByNo(@PathVariable(value = "") Long no, Model model){
-        System.out.println(no);
+
         Map<String, Object> map = productService.getProductDetailByNo(no);
-        System.out.println(map);
+
 
         model.addAttribute("productDetail", map);
 

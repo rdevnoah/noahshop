@@ -59,11 +59,13 @@ public class CartController {
             cartVo.setMemberNo(authUser.getNo());
             cartVo.setProductInfo(parsingCart);
 
-            cartService.addMemberCart(cartVo);
 
             Cookie[] cookies = request.getCookies();
             String cartInfo = getCartCookieValue(cookies, authUser.getName());
+
+            cartService.addMemberCart(cartVo);
             Cookie cartCookie = new Cookie(authUser.getName(), cartInfo + parsingCart);
+            cartCookie.setPath("/");
             response.addCookie(cartCookie);
             return "redirect:/";
         }
@@ -72,7 +74,9 @@ public class CartController {
         // 비회원 전용 쿠키 발급 후 사용
         Cookie[] cookies = request.getCookies();
         String cartInfo = getCartCookieValue(cookies, "noMemberCartInfo");
-        response.addCookie(new Cookie("noMemberCartInfo", cartInfo+parsingCart));
+        Cookie nonAuthUSerCartCookie = new Cookie("noMameberCartInfo", cartInfo+parsingCart);
+        nonAuthUSerCartCookie.setPath("/");
+        response.addCookie(nonAuthUSerCartCookie);
 
         return "redirect:/";
     }
@@ -95,8 +99,6 @@ public class CartController {
         if ("".equals(cartInfo)){
             return "products/cart";
         }
-
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + cartInfo);
         List<ProductVo> list = cartService.getCartByCookie(cartInfo);
 
 

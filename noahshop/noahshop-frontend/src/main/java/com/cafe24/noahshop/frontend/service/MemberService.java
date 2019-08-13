@@ -57,8 +57,6 @@ public class MemberService {
     public JSONResult checkId(String id) {
         JSONResult response = restTemplate.getForObject(API_URL+"/api/user/checkId/"+id, JSONResult.class);
 
-        System.out.println(response);
-
         return response;
     }
 

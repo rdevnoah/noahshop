@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public String fetchCartByNo(Long no) {
         Optional<CartVo> cartInfo = cartRepository.findById(no.toString());
-        System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + no);
+
         String info = cartInfo.orElse(new CartVo()).getProductInfo();
 
         return info;

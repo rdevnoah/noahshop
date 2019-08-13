@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
 			JSONResult jsonResult = JSONResult.fail(errors.toString());
 			String result = new ObjectMapper().writeValueAsString(jsonResult);
 			
-			//System.out.println(result);
+
 			OutputStream os = response.getOutputStream();
 			os.write(result.getBytes("UTF-8"));
 			os.flush();

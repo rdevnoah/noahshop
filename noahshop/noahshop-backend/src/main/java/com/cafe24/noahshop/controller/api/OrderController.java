@@ -1,12 +1,14 @@
 package com.cafe24.noahshop.controller.api;
 
 import com.cafe24.noahshop.dto.JSONResult;
+import com.cafe24.noahshop.dto.OrderDto;
 import com.cafe24.noahshop.exception.StockException;
 import com.cafe24.noahshop.service.MemberService;
 import com.cafe24.noahshop.service.OrderService;
 import com.cafe24.noahshop.service.StockService;
 import com.cafe24.noahshop.vo.MemberVo;
 import com.cafe24.noahshop.vo.OrderVo;
+import com.cafe24.noahshop.vo.ProductVo;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +18,9 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -57,14 +61,22 @@ public class OrderController {
 		@ApiImplicitParam(name="no", value="사용자정보", required=true, dataType="long", defaultValue="")
 	})
 	@PostMapping("/orderform/{no}")
-	public JSONResult orderform(@PathVariable(value = "no") Long no) {
+	public JSONResult orderform(@PathVariable(value = "no") Long no, @RequestBody List<OrderDto> list) {
+
+		Map<String, Object> params = new HashMap<>();
+		params.put("memberNo", no);
+		params.put("cartList", list);
+
 
 		//Todo: 주문할 상품 정보 가져오기. 만약 비회원일 경우 비회원창 띄우는 것은 프론트에서.
 		// 상품 jsp에서 상품정보 (옵션1, 옵션2, 수량, 입력받는 dto 선언. )
+		//회원정보 가져오기 + dto 정보 가져오기
 
-		//회원정보 가져오기
-		MemberVo vo = memberService.getMemberByNo(no);
-		return JSONResult.success(vo);
+		Map<String, Object> result = orderService.getOrderForm(params);
+
+
+
+		return JSONResult.success(result);
 	}
 	
 	@ApiOperation(value="add order", notes = "상품 주문처리")

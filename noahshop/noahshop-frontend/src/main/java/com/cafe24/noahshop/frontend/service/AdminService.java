@@ -68,7 +68,7 @@ public class AdminService {
         String originalFilename = multipartFile.getOriginalFilename();
         String extName = originalFilename.substring(originalFilename.lastIndexOf('.') + 1);
         String saveFileName = generateSaveFileName(extName);
-        System.out.println("======================================================");
+
 
         try {
             byte[] fileDataBuffer;
@@ -85,7 +85,7 @@ public class AdminService {
 
             HttpEntity<ProductAddDto> entity = new HttpEntity<>(dto);
             ResponseEntity<JSONResult> response = restTemplate.exchange(API_URL+"/api/admin/product", HttpMethod.PUT, entity, JSONResult.class);
-            System.out.println(response.getBody());
+
         } catch (IOException e) {
             e.printStackTrace();
         }

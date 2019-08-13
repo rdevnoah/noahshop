@@ -2,6 +2,8 @@ package com.cafe24.noahshop.vo;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.util.List;
+
 public class OrderVo {
 	private Long no;
 	private Long memberNo;
@@ -26,12 +28,15 @@ public class OrderVo {
 
 	private String deliveryStatus;
 
+	private List<OrderProductVo> orderProductList;
+
+
 
 	public OrderVo() {
 	}
 
 
-	public OrderVo(Long no, Long memberNo, String orderCode, String orderDate, String address, @NotEmpty String isMember, String password, String payment, int price, String buyerName, String email, String status, String buyerTel, Long orderNo, Long productDetailNo, int quantity, String message) {
+	public OrderVo(Long no, Long memberNo, String orderCode, String orderDate, String address, String isMember, String password, String payment, int price, String buyerName, String email, String status, String buyerTel, Long orderNo, Long productDetailNo, int quantity, String message, String deliveryStatus, List<OrderProductVo> orderProductList) {
 		this.no = no;
 		this.memberNo = memberNo;
 		this.orderCode = orderCode;
@@ -49,6 +54,8 @@ public class OrderVo {
 		this.productDetailNo = productDetailNo;
 		this.quantity = quantity;
 		this.message = message;
+		this.deliveryStatus = deliveryStatus;
+		this.orderProductList = orderProductList;
 	}
 
 	public String getDeliveryStatus() {
@@ -193,6 +200,39 @@ public class OrderVo {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public List<OrderProductVo> getOrderProductList() {
+		return orderProductList;
+	}
+
+	public void setOrderProductList(List<OrderProductVo> orderProductList) {
+		this.orderProductList = orderProductList;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderVo{" +
+				"no=" + no +
+				", memberNo=" + memberNo +
+				", orderCode='" + orderCode + '\'' +
+				", orderDate='" + orderDate + '\'' +
+				", address='" + address + '\'' +
+				", isMember='" + isMember + '\'' +
+				", password='" + password + '\'' +
+				", payment='" + payment + '\'' +
+				", price=" + price +
+				", buyerName='" + buyerName + '\'' +
+				", email='" + email + '\'' +
+				", status='" + status + '\'' +
+				", buyerTel='" + buyerTel + '\'' +
+				", orderNo=" + orderNo +
+				", productDetailNo=" + productDetailNo +
+				", quantity=" + quantity +
+				", message='" + message + '\'' +
+				", deliveryStatus='" + deliveryStatus + '\'' +
+				", orderProductList=" + orderProductList +
+				'}';
 	}
 }
 

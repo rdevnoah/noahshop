@@ -124,7 +124,7 @@ public class MemberController {
 			@ApiImplicitParam(name = "vo", value = "회원정보", required = true, dataType = "MemberVo", defaultValue = "") })
 	@PutMapping
 	public ResponseEntity<JSONResult> join(@RequestBody @Valid MemberVo vo, BindingResult result) {
-		System.out.println("%%%%%%%%%%%%" + vo.getId());
+
 		if (result.hasErrors()) {
 			String message = "";
 			// 에러 메세지 확인
