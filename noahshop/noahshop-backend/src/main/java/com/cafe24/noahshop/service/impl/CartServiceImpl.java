@@ -29,7 +29,7 @@ public class CartServiceImpl implements CartService {
     public boolean addCart(CartVo vo) {
         // redis add
         cartRepository.save(vo);
-        return false;
+        return true;
     }
 
     @Override

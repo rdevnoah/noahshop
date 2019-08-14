@@ -1,15 +1,9 @@
 package com.cafe24.noahshop.service.impl;
 
 import com.cafe24.noahshop.dto.OrderDto;
-import com.cafe24.noahshop.repository.MemberDao;
-import com.cafe24.noahshop.repository.OrderDao;
-import com.cafe24.noahshop.repository.ProductDao;
-import com.cafe24.noahshop.repository.StockDao;
+import com.cafe24.noahshop.repository.*;
 import com.cafe24.noahshop.service.OrderService;
-import com.cafe24.noahshop.vo.DeliveryVo;
-import com.cafe24.noahshop.vo.MemberVo;
-import com.cafe24.noahshop.vo.OrderVo;
-import com.cafe24.noahshop.vo.ProductVo;
+import com.cafe24.noahshop.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -32,6 +27,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private MemberDao memberDao;
+
+    @Autowired
+    private CartRepository cartRepository;
 
     @Transactional
     @Override
@@ -60,6 +58,36 @@ public class OrderServiceImpl implements OrderService {
         deliveryVo = orderDao.addDelivery(deliveryVo);
 
         stockDao.updateStock(vo);
+
+        // 장바구니에서 제거
+        // 먼저 기존 장바구니에서 cartInfo 가져오고
+
+        Optional<CartVo> cartInfo = cartRepository.findById(vo.getMemberNo().toString());
+        String info = cartInfo.orElse(new CartVo()).getProductInfo();
+
+
+
+        // 문자열 자른 뒤, 0:0/ 포함되어있으면 그거 ""로 바꾸고 다시 add 해준다.
+        CartVo cartVo = new CartVo();
+        cartVo.setMemberNo(vo.getMemberNo());
+        String orderStr = "";
+
+
+        for (OrderProductVo ovo : vo.getOrderProductList()){
+            String no = ovo.getProductDetailNo().toString();
+            int quantity = ovo.getQuantity();
+            String oneCart = no + ":" + quantity + "/";
+            if (info.contains(oneCart)){
+                System.out.println("contains!");
+                info = info.replaceFirst(oneCart, "");
+            }
+        }
+
+
+
+
+        cartVo.setProductInfo(info);
+        cartRepository.save(cartVo);
 
         return vo;
     }

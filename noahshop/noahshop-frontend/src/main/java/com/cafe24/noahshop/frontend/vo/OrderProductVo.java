@@ -53,4 +53,14 @@ public class OrderProductVo {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+
+    @Override
+    public String toString() {
+        return "OrderProductVo{" +
+                "orderNo=" + orderNo +
+                ", productDetailNo=" + productDetailNo +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

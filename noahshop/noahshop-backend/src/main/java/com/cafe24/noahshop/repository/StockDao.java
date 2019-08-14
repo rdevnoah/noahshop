@@ -1,5 +1,6 @@
 package com.cafe24.noahshop.repository;
 
+import com.cafe24.noahshop.vo.OrderProductVo;
 import com.cafe24.noahshop.vo.OrderVo;
 
 /**
@@ -21,7 +22,7 @@ import com.cafe24.noahshop.vo.OrderVo;
  * @since : 2019-07-30
  */
 public interface StockDao {
-    int checkStock(OrderVo vo);
+    int checkStock(OrderProductVo vo);
 
     int updateStock(OrderVo vo);
 }

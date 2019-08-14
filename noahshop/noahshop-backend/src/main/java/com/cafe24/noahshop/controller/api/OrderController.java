@@ -103,6 +103,8 @@ public class OrderController {
 			return JSONResult.fail(e.getMessage());
 		}
 
+		vo.setStatus("결제대기");
+
 		vo = orderService.addOrder(vo);
 
 		return JSONResult.success(vo);

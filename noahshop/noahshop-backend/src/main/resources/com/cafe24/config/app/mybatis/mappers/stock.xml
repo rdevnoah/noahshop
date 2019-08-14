@@ -3,15 +3,17 @@
 
 <mapper namespace="stock">
 
-	<select id="checkStockFromOrder" parameterType="ordervo" resultType="int">
+	<select id="checkStockFromOrder" parameterType="orderproductvo" resultType="int">
 		select (stock - #{quantity })
 		from product_detail
 		where no=#{productDetailNo }
 	</select>
 
-	<update id="updateStockFromOrder" parameterType="ordervo">
-		update product_detail set stock=stock-#{quantity }
-		where no=#{productDetailNo }
+	<update id="updateStockFromOrder" parameterType="map">
+		<foreach collection="orderProductList" item="item" index="index" separator=";">
+			update product_detail set stock=stock-#{item.quantity }
+			where no=#{item.productDetailNo }
+		</foreach>
 	</update>
 
 </mapper>

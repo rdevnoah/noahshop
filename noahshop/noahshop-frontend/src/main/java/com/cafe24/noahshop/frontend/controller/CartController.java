@@ -57,12 +57,12 @@ public class CartController {
             authUser = (SecurityUser)session.getAttribute("authUser");
             CartVo cartVo = new CartVo();
             cartVo.setMemberNo(authUser.getNo());
-            cartVo.setProductInfo(parsingCart);
 
 
             Cookie[] cookies = request.getCookies();
             String cartInfo = getCartCookieValue(cookies, authUser.getName());
 
+            cartVo.setProductInfo(cartInfo + parsingCart);
             cartService.addMemberCart(cartVo);
             Cookie cartCookie = new Cookie(authUser.getName(), cartInfo + parsingCart);
             cartCookie.setPath("/");

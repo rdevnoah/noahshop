@@ -2,8 +2,12 @@ package com.cafe24.noahshop.frontend.controller;
 
 import com.cafe24.noahshop.frontend.security.SecurityUser;
 import com.cafe24.noahshop.frontend.service.OrderService;
+import com.cafe24.noahshop.frontend.vo.OrderProductVo;
+import com.cafe24.noahshop.frontend.vo.OrderVo;
 import com.cafe24.noahshop.frontend.vo.ProductVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,8 +75,46 @@ public class OrderController {
 
         model.addAttribute("info", map);
 
-
-
         return "order/orderform";
+    }
+
+    @RequestMapping("/add")
+    public String add(OrderVo vo, @AuthenticationPrincipal SecurityUser authUser, HttpServletRequest request, HttpServletResponse response){
+
+
+        if (authUser != null){
+            //회원
+
+            vo.setIsMember("Y");
+
+            boolean result = orderService.addOrder(vo);
+            Cookie[] cookies = request.getCookies();
+
+            String cartInfo = "";
+            for (int i=0 ; i<cookies.length ; i++){
+                if (cookies[i].getName().equals(authUser.getName())){
+                    cartInfo=cookies[i].getValue();
+                    break;
+                }
+            }
+
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ cartInfo : " + cartInfo);
+            for (OrderProductVo ovo : vo.getOrderProductList()){
+                String no = ovo.getProductDetailNo().toString();
+                int quantity = ovo.getQuantity();
+                String oneCart = no + ":" + quantity + "/";
+                if (cartInfo.contains(oneCart)){
+                    cartInfo = cartInfo.replaceFirst(oneCart, "");
+                }
+            }
+
+            Cookie cartCookie = new Cookie(authUser.getName(), cartInfo);
+            cartCookie.setPath("/");
+            response.addCookie(cartCookie);
+
+
+        }
+
+        return "redirect:/";
     }
 }

@@ -3,10 +3,7 @@ package com.cafe24.noahshop.frontend.service;
 import com.cafe24.noahshop.frontend.dto.JSONResult;
 import com.cafe24.noahshop.frontend.dto.OrderDto;
 import com.cafe24.noahshop.frontend.dto.ResponseJSONResult;
-import com.cafe24.noahshop.frontend.vo.MemberVo;
-import com.cafe24.noahshop.frontend.vo.OptionStockVo;
-import com.cafe24.noahshop.frontend.vo.ProductDetailVo;
-import com.cafe24.noahshop.frontend.vo.ProductVo;
+import com.cafe24.noahshop.frontend.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -70,6 +67,19 @@ public class OrderService {
 
 
         return result;
+    }
+
+    public boolean addOrder(OrderVo vo) {
+        ResponseEntity<JSONResult> response = null;
+        HttpEntity<OrderVo> entity = new HttpEntity<>(vo);
+
+        response = restTemplate.exchange(API_URL+"/api/order", HttpMethod.PUT, entity, JSONResult.class);
+        if ("success".equals(response.getBody().getResult())){
+            return true;
+        }
+
+        return false;
+
     }
 
     private static class JSONResultMap extends JSONResult<Map<String, Object>>{}

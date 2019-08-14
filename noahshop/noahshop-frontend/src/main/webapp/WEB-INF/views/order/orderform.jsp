@@ -43,7 +43,7 @@
 
 			<div class="col-lg-9">
 				<h1>주문 작성하기</h1>
-				<form>
+				<form action="${pageContext.servletContext.contextPath }/order/add">
 					<div class="card card-outline-secondary my-4">
 						<div class="card-header">
 							<h3 class="card-title">주문 상품 정보</h3>
@@ -69,7 +69,7 @@
 									<c:forEach items="${requestScope.info.productList}" var="product" varStatus="status">
 										<tr>
 											<td>
-												<input type="hidden" name="orderProductList[${status.index}].productDeatilNo" value="${product.optionStockVo[0].productDetailNo}">
+												<input type="hidden" name="orderProductList[${status.index}].productDetailNo" value="${product.optionStockVo[0].productDetailNo}">
 												<input type="hidden" name="orderProductList[${status.index}].quantity" value="${product.optionStockVo[0].stock}">
 													${product.name }
 											</td>
@@ -145,7 +145,7 @@
 							</div>
 							<div>
 								배송 메세지 :
-								<select name="">
+								<select name="message">
 									<option value="부재시 경비실에 맡겨주세요">부재시 경비실에 맡겨주세요</option>
 									<option value="배송 전에 연락 주세요">배송 전에 연락 주세요</option>
 									<option value="문앞에 두세요">문앞에 두세요</option>
@@ -174,7 +174,7 @@
 							</p>
 						</div>
 						<div class="card-footer">
-							<button type="button" class="btn btn-primary btn-sm">
+							<button type="submit" class="btn btn-primary btn-sm">
 								주문하기
 							</button>
 

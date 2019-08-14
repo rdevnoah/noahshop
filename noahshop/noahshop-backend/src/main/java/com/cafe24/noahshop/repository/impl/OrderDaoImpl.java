@@ -7,6 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Repository
 public class OrderDaoImpl implements OrderDao {
 
@@ -21,7 +24,10 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public OrderVo addOrderProduct(OrderVo vo) {
-        sqlSession.insert("order.insertOrderProduct", vo);
+        Map<String, Object> map = new HashMap<>();
+        map.put("vo", vo);
+        map.put("orderProductList", vo.getOrderProductList());
+        sqlSession.insert("order.insertOrderProduct", map);
         return vo;
     }
 

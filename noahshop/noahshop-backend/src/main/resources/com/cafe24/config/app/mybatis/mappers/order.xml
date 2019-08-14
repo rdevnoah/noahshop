@@ -17,9 +17,11 @@
 		</selectKey>
 	</insert>
 
-	<insert id="insertOrderProduct" parameterType="ordervo">
-		insert into order_product(order_no, product_detail_no, quantity)
-		values (#{no }, #{productDetailNo }, #{quantity })
+	<insert id="insertOrderProduct" parameterType="map">
+		<foreach collection="orderProductList" item="item" index="index" separator=";">
+			insert into order_product(order_no, product_detail_no, quantity)
+			values (#{vo.no }, #{item.productDetailNo }, #{item.quantity })
+		</foreach>
 	</insert>
 
 	<insert id="insertDelivery" parameterType="deliveryvo">

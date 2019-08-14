@@ -53,25 +53,19 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
     		// 회원인 경우 backend에서 cartInfo redis에서 가져오고 세팅하기
 
 			Cookie[] cookies = request.getCookies();
+			String cartInfo="";
 
-			Cookie cartCookie = null;
 			for (int i=0 ; i<cookies.length ; i++){
 				if (cookies[i].getName().equals(securityUser.getName())){
-					cartCookie = cookies[i];
-					cartCookie.setValue(securityUser.getCartString());
+					cartInfo= securityUser.getCartString();
+
 					break;
 				}
 			}
-			if (cartCookie == null){
-				cartCookie = new Cookie(securityUser.getName(), securityUser.getCartString());
-				cartCookie.setPath("/");
-			}
 
+			Cookie cartCookie = new Cookie(securityUser.getName(), cartInfo);
+			cartCookie.setPath("/");
 			response.addCookie(cartCookie);
-
-			// 이곳에 구현.
-
-
 
             getRedirectStrategy().sendRedirect( request, response, "/" );
     		return;
