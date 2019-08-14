@@ -3,10 +3,12 @@ package com.cafe24.noahshop.frontend.controller;
 import com.cafe24.noahshop.frontend.dto.ProductAddDto;
 import com.cafe24.noahshop.frontend.service.AdminService;
 import com.cafe24.noahshop.frontend.vo.MemberVo;
+import com.cafe24.noahshop.frontend.vo.OrderVo;
 import com.cafe24.noahshop.frontend.vo.ProductVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -65,5 +67,23 @@ public class AdminController {
     public String addProduct(ProductAddDto dto){
         adminService.addProductService(dto);
         return "redirect:/admin/product/list";
+    }
+
+    @RequestMapping("/order/list")
+    public String orderList(Model model){
+
+        List<OrderVo> list = adminService.getOrderList();
+
+        model.addAttribute("list", list);
+        return "admin/order/order_list";
+    }
+
+    @RequestMapping("/order/detail/{no}")
+    public String orderDetailByNo(@PathVariable Long no, Model model){
+        Map<String, Object> map = adminService.getOrderDetailByNo(no);
+
+        model.addAttribute("map", map);
+
+        return "admin/order/detail";
     }
 }

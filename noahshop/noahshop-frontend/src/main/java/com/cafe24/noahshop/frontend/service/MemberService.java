@@ -3,6 +3,7 @@ package com.cafe24.noahshop.frontend.service;
 import com.cafe24.noahshop.frontend.dto.JSONResult;
 import com.cafe24.noahshop.frontend.dto.ResponseJSONResult;
 import com.cafe24.noahshop.frontend.vo.MemberVo;
+import com.cafe24.noahshop.frontend.vo.OrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -76,8 +78,17 @@ public class MemberService {
         return successBody;
     }
 
+    public List<OrderVo> getOrderListByUserNo(Long no) {
+        JSONResultOrderList response = null;
+        response = restTemplate.getForObject(API_URL+"/api/user/orderlist/" + no, JSONResultOrderList.class);
+
+
+        return response.getData();
+    }
+
     public static class JSONResultLogin extends JSONResult<Map<String, Object>>
     {};
     public static class JSONResultJoin extends JSONResult<MemberVo>{};
+    public static class JSONResultOrderList extends JSONResult<List<OrderVo>>{};
 
 }

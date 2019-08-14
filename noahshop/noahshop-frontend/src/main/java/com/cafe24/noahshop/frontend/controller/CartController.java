@@ -1,6 +1,7 @@
 package com.cafe24.noahshop.frontend.controller;
 
 import com.cafe24.noahshop.frontend.dto.ProductAddDto;
+import com.cafe24.noahshop.frontend.dto.ProductDto;
 import com.cafe24.noahshop.frontend.security.SecurityUser;
 import com.cafe24.noahshop.frontend.service.CartService;
 import com.cafe24.noahshop.frontend.vo.CartVo;
@@ -99,7 +100,7 @@ public class CartController {
         if ("".equals(cartInfo)){
             return "products/cart";
         }
-        List<ProductVo> list = cartService.getCartByCookie(cartInfo);
+        List<ProductDto> list = cartService.getCartByCookie(cartInfo);
 
 
         model.addAttribute("cartList", list);

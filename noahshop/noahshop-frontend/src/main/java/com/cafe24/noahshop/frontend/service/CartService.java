@@ -1,6 +1,7 @@
 package com.cafe24.noahshop.frontend.service;
 
 import com.cafe24.noahshop.frontend.dto.JSONResult;
+import com.cafe24.noahshop.frontend.dto.ProductDto;
 import com.cafe24.noahshop.frontend.vo.CartVo;
 import com.cafe24.noahshop.frontend.vo.ProductDetailVo;
 import com.cafe24.noahshop.frontend.vo.ProductVo;
@@ -55,7 +56,7 @@ public class CartService {
         return true;
     }
 
-    public List<ProductVo> getCartByCookie(String cartInfo) {
+    public List<ProductDto> getCartByCookie(String cartInfo) {
         String[] arr = cartInfo.split("/");
 
         List<ProductDetailVo> cartList= new ArrayList<>();
@@ -74,11 +75,11 @@ public class CartService {
 
         response = restTemplate.exchange(API_URL+"/api/cart/list", HttpMethod.POST, entity, JSONResultCartList.class);
 
-        List<ProductVo> result = response.getBody().getData();
+        List<ProductDto> result = response.getBody().getData();
         return result;
 
 
     }
 
-    private static class JSONResultCartList extends JSONResult<List<ProductVo>>{}
+    private static class JSONResultCartList extends JSONResult<List<ProductDto>>{}
 }

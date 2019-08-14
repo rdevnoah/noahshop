@@ -25,12 +25,16 @@
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cart">장바구니</a>
-						</li>
+
 						<sec:authorize access="isAuthenticated()">
 							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.servletContext.contextPath }/cart">장바구니</a>
+							</li>
+							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃<span class="sr-only">(current)</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/mypage">마이페이지<span class="sr-only">(current)</span></a>
 							</li>
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<li class="nav-item">
@@ -52,13 +56,17 @@
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cart">장바구니</a>
-						</li>
 						<sec:authorize access="isAuthenticated()">
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.servletContext.contextPath }/cart">장바구니</a>
+							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃<span class="sr-only">(current)</span></a>
 							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/mypage">마이페이지<span class="sr-only">(current)</span></a>
+							</li>
+
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<li class="nav-item">
 									<a class="nav-link" href="${pageContext.servletContext.contextPath }/admin">관리자페이지</a>
@@ -79,12 +87,16 @@
 						<li class="nav-item">
 							<a class="nav-link active" href="${pageContext.servletContext.contextPath }">홈</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cart">장바구니</a>
-						</li>
+
 						<sec:authorize access="isAuthenticated()">
 							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.servletContext.contextPath }/cart">장바구니</a>
+							</li>
+							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃<span class="sr-only">(current)</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/mypage">마이페이지<span class="sr-only">(current)</span></a>
 							</li>
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<li class="nav-item">

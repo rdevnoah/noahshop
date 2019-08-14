@@ -1,5 +1,6 @@
 package com.cafe24.noahshop.service;
 
+import com.cafe24.noahshop.dto.ProductDto;
 import com.cafe24.noahshop.vo.CartVo;
 import com.cafe24.noahshop.vo.ProductDetailVo;
 import com.cafe24.noahshop.vo.ProductVo;
@@ -31,5 +32,5 @@ public interface CartService {
 
     String fetchCartByNo(Long no);
 
-    List<ProductVo> getCartListByProductDetailVo(List<ProductDetailVo> list);
+    List<ProductDto> getCartListByProductDetailVo(List<ProductDetailVo> list);
 }

@@ -1,13 +1,16 @@
 package com.cafe24.noahshop.frontend.controller;
 
 import com.cafe24.noahshop.frontend.dto.JSONResult;
+import com.cafe24.noahshop.frontend.security.SecurityUser;
 import com.cafe24.noahshop.frontend.service.MemberService;
 import com.cafe24.noahshop.frontend.vo.MemberVo;
+import com.cafe24.noahshop.frontend.vo.OrderVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import jdk.internal.org.objectweb.asm.TypeReference;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -78,6 +82,21 @@ public class MemberController {
 	@RequestMapping("/joinsuccess")
 	public String joinSuccess(){
 		return "user/joinsuccess";
+	}
+
+	@GetMapping("/mypage")
+	public String mypage(){
+		return "user/mypage";
+	}
+
+	@GetMapping("/orderinfo")
+	public String orderInfo(@AuthenticationPrincipal SecurityUser authUser, Model model){
+		List<OrderVo> list = memberService.getOrderListByUserNo(authUser.getNo());
+
+		model.addAttribute("list", list);
+
+
+		return "user/orderinfo";
 	}
 
 }

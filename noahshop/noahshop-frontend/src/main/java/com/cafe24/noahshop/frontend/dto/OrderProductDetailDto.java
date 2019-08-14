@@ -106,4 +106,18 @@ public class OrderProductDetailDto {
     public void setProductName(String productName) {
         this.productName = productName;
     }
+
+    @Override
+    public String toString() {
+        return "OrderProductDetailDto{" +
+                "orderNo=" + orderNo +
+                ", productDetailNo=" + productDetailNo +
+                ", quantity=" + quantity +
+                ", optionChildNo1=" + optionChildNo1 +
+                ", optionChildNo2=" + optionChildNo2 +
+                ", optionChildName1='" + optionChildName1 + '\'' +
+                ", optionChildName2='" + optionChildName2 + '\'' +
+                ", productName='" + productName + '\'' +
+                '}';
+    }
 }

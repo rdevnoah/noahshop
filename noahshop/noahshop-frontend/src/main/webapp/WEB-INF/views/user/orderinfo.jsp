@@ -42,43 +42,27 @@
 			<!-- /.col-lg-3 -->
 
 			<div class="col-lg-9">
+				<table>
+					<tr>
+						<th>주문코드</th>
+						<th>주문일</th>
+						<th>결제금액</th>
+						<th>결제방식</th>
+						<th>주문상태</th>
+						<th>배송상태</th>
+					</tr>
+					<c:forEach items="${requestScope.list}" var="order">
+						<tr>
+							<td>${order.orderCode}</td>
+							<td>${order.orderDate}</td>
+							<td>${order.price}</td>
+							<td>${order.payment}</td>
+							<td>${order.status}</td>
+							<td>${order.deliveryStatus}</td>
+						</tr>
 
-				<div class="card mt-4">
-					<div class="card-body">
-						<h1>카트정보 !!</h1>
-						<table>
-							<tr>
-								<th>
-									상품명
-								</th>
-								<th>
-									상품코드
-								</th>
-								<th>
-									가격
-								</th>
-								<th>
-									수량
-								</th>
-							</tr>
-							<c:forEach items="${requestScope.cartList}" var="product">
-								<tr>
-									<td>${product.name }</td>
-									<td>${product.code }</td>
-									<td>${product.price }</td>
-									<td>${product.stock }</td>
-								</tr>
-							</c:forEach>
-						</table>
-						<a href="${pageContext.servletContext.contextPath }/order/orderform"><button type="button">주문</button></a>
-					</div>
-					<p class="card-text">
-
-					</p>
-
-				</div>
-				<!-- /.card -->
-
+					</c:forEach>
+				</table>
 			</div>
 			<!-- /.col-lg-9 -->
 

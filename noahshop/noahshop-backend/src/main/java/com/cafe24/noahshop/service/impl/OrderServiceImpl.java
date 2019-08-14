@@ -1,6 +1,7 @@
 package com.cafe24.noahshop.service.impl;
 
 import com.cafe24.noahshop.dto.OrderDto;
+import com.cafe24.noahshop.dto.ProductDto;
 import com.cafe24.noahshop.repository.*;
 import com.cafe24.noahshop.service.OrderService;
 import com.cafe24.noahshop.vo.*;
@@ -110,11 +111,11 @@ public class OrderServiceImpl implements OrderService {
         MemberVo vo = memberDao.getMemberByNo(map);
         result.put("memberInfo", vo);
 
-        List<ProductVo> productList = productDao.getProductListByOrderDtoList((List<OrderDto>) params.get("cartList"));
+        List<ProductDto> productList = productDao.getProductListByOrderDtoList((List<OrderDto>) params.get("cartList"));
         result.put("productList", productList);
         int cost = 0;
-        for (ProductVo pvo : productList){
-            cost += pvo.getPrice() * pvo.getOptionStockVo().get(0).getStock();
+        for (ProductDto pvo : productList){
+            cost += pvo.getPrice() * pvo.getStock();
         }
         result.put("totalPrice", cost);
 

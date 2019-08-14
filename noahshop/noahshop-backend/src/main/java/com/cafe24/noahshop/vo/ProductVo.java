@@ -17,12 +17,14 @@ public class ProductVo {
 	private String isSell;
 	private List<OptionStockVo> optionStockVo;
 
+	private OptionStockVo osVo;
+
 	private List<ImageVo> imageList;
 
 	public ProductVo() {
 	}
 
-	public ProductVo(Long no, @NotEmpty String code, String name, int price, String description, Long categoryNo, String regDate, String dpMain, String isSell, List<OptionStockVo> optionStockVo, List<ImageVo> imageList) {
+	public ProductVo(Long no, @NotEmpty String code, String name, int price, String description, Long categoryNo, String regDate, String dpMain, String isSell, List<OptionStockVo> optionStockVo, OptionStockVo osVo, List<ImageVo> imageList) {
 		this.no = no;
 		this.code = code;
 		this.name = name;
@@ -33,6 +35,7 @@ public class ProductVo {
 		this.dpMain = dpMain;
 		this.isSell = isSell;
 		this.optionStockVo = optionStockVo;
+		this.osVo = osVo;
 		this.imageList = imageList;
 	}
 
@@ -124,6 +127,15 @@ public class ProductVo {
 		this.imageList = imageList;
 	}
 
+
+	public OptionStockVo getOsVo() {
+		return osVo;
+	}
+
+	public void setOsVo(OptionStockVo osVo) {
+		this.osVo = osVo;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductVo{" +
@@ -137,6 +149,7 @@ public class ProductVo {
 				", dpMain='" + dpMain + '\'' +
 				", isSell='" + isSell + '\'' +
 				", optionStockVo=" + optionStockVo +
+				", osVo=" + osVo +
 				", imageList=" + imageList +
 				'}';
 	}

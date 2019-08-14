@@ -82,7 +82,7 @@
 	</update>
 
 
-	<select id="getCartListByProductDetailVo" parameterType="map" resultMap="productResult">
+	<select id="getCartListByProductDetailVo" parameterType="map" resultType="productdto">
 		select p.no, p.code, p.name, p.price, pd.no as productDetailNo, pd.stock, pd.option_child1_no as optionChild1No, pd.option_child2_no as optionChild2No
 		from product p, product_detail pd
 		where p.no=pd.product_no and(
@@ -92,7 +92,7 @@
 			)
 	</select>
 
-	<select id="getProductListByOrderDtoList" parameterType="map" resultMap="productResult">
+	<select id="getProductListByOrderDtoList" parameterType="map" resultType="productdto">
 		select p.no, p.code, p.name, p.price, pd.no as productDetailNo, pd.stock, pd.option_child1_no as optionChild1No, pd.option_child2_no as optionChild2No
 		from product p, product_detail pd
 		where p.no=pd.product_no and(
@@ -104,7 +104,7 @@
 
 
 	<resultMap id="productResult" type="productvo">
-		<result property="no" column="no"/>
+		<id property="no" column="no"/>
 		<result property="name" column="name"/>
 		<result property="price" column="price"/>
 		<result property="description" column="description"/>
@@ -121,6 +121,9 @@
 
 		</collection>
 	</resultMap>
+
+
+
 
 
 </mapper>

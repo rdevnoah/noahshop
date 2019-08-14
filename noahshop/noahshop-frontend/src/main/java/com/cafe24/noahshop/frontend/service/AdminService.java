@@ -2,10 +2,7 @@ package com.cafe24.noahshop.frontend.service;
 
 import com.cafe24.noahshop.frontend.dto.JSONResult;
 import com.cafe24.noahshop.frontend.dto.ProductAddDto;
-import com.cafe24.noahshop.frontend.vo.ImageVo;
-import com.cafe24.noahshop.frontend.vo.MemberVo;
-import com.cafe24.noahshop.frontend.vo.ProductImageVo;
-import com.cafe24.noahshop.frontend.vo.ProductVo;
+import com.cafe24.noahshop.frontend.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -112,7 +109,21 @@ public class AdminService {
 
     }
 
-    public static class JSONResultProductList extends JSONResult<List<ProductVo>>{}
-    public static class JSONResultMemberList extends JSONResult<List<MemberVo>>{}
-    public static class JSONResultAddForm extends JSONResult<Map<String, Object>>{}
+    public List<OrderVo> getOrderList() {
+        JSONResultOrderList response = restTemplate.getForObject(API_URL+"/api/admin/order/list", JSONResultOrderList.class);
+
+        return response.getData();
+    }
+
+    public Map<String, Object> getOrderDetailByNo(Long no) {
+        JSONResultMap response = restTemplate.getForObject(API_URL+"/api/admin/order/detail/" + no, JSONResultMap.class);
+
+        return response.getData();
+    }
+
+    public static class JSONResultProductList extends JSONResult<List<ProductVo>>{};
+    public static class JSONResultMemberList extends JSONResult<List<MemberVo>>{};
+    public static class JSONResultAddForm extends JSONResult<Map<String, Object>>{};
+    public static class JSONResultOrderList extends JSONResult<List<OrderVo>>{};
+    public static class JSONResultMap extends JSONResult<Map<String, Object>>{};
 }

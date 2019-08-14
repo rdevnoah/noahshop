@@ -69,15 +69,15 @@
 									<c:forEach items="${requestScope.info.productList}" var="product" varStatus="status">
 										<tr>
 											<td>
-												<input type="hidden" name="orderProductList[${status.index}].productDetailNo" value="${product.optionStockVo[0].productDetailNo}">
-												<input type="hidden" name="orderProductList[${status.index}].quantity" value="${product.optionStockVo[0].stock}">
+												<input type="hidden" name="orderProductList[${status.index}].productDetailNo" value="${product.productDetailNo}">
+												<input type="hidden" name="orderProductList[${status.index}].quantity" value="${product.stock}">
 													${product.name }
 											</td>
 											<td>
 													${product.code }
 											</td>
 											<td>
-													${product.optionStockVo[0].stock }
+													${product.stock }
 											</td>
 											<td>
 													${product.price }
@@ -86,7 +86,7 @@
 									</c:forEach>
 
 								</table>
-							${requestScope.info.productList}
+
 							</p>
 						</div>
 						<div class="card-footer">

@@ -2,6 +2,7 @@ package com.cafe24.noahshop.controller.api;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.cafe24.noahshop.dto.ProductDto;
 import com.cafe24.noahshop.vo.CartVo;
 import com.cafe24.noahshop.vo.ProductDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class CartController {
 	@PostMapping("/list")
 	public JSONResult getCartList(@RequestBody List<ProductDetailVo> cartList){
 
-	    List<ProductVo> result = cartService.getCartListByProductDetailVo(cartList);
+	    List<ProductDto> result = cartService.getCartListByProductDetailVo(cartList);
 
 	    return JSONResult.success(result);
 	}

@@ -1,6 +1,7 @@
 package com.cafe24.noahshop.service.impl;
 
 
+import com.cafe24.noahshop.dto.ProductDto;
 import com.cafe24.noahshop.repository.CartRepository;
 import com.cafe24.noahshop.repository.ProductDao;
 import com.cafe24.noahshop.service.CartService;
@@ -43,8 +44,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<ProductVo> getCartListByProductDetailVo(List<ProductDetailVo> list) {
-        List<ProductVo> result = productDao.getCartListByProductDetailVo(list);
+    public List<ProductDto> getCartListByProductDetailVo(List<ProductDetailVo> list) {
+        List<ProductDto> result = productDao.getCartListByProductDetailVo(list);
 
         return result;
     }

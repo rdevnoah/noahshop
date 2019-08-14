@@ -1,6 +1,7 @@
 package com.cafe24.noahshop.repository.impl;
 
 import com.cafe24.noahshop.dto.OrderDto;
+import com.cafe24.noahshop.dto.ProductDto;
 import com.cafe24.noahshop.repository.ProductDao;
 import com.cafe24.noahshop.vo.ImageVo;
 import com.cafe24.noahshop.vo.OptionVo;
@@ -82,26 +83,28 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<ProductVo> getCartListByProductDetailVo(List<ProductDetailVo> list) {
+    public List<ProductDto> getCartListByProductDetailVo(List<ProductDetailVo> list) {
         Map<String, Object> map = new HashMap<>();
         map.put("productDetail", list);
-        List<ProductVo> result = sqlSession.selectList("product.getCartListByProductDetailVo", map);
+        List<ProductDto> result = sqlSession.selectList("product.getCartListByProductDetailVo", map);
+
 
         for (int i=0 ; i<list.size() ; i++){
-            result.get(i).getOptionStockVo().get(0).setStock(list.get(i).getStock());
+            result.get(i).setStock(list.get(i).getStock());
         }
+
         return result;
     }
 
     @Override
-    public List<ProductVo> getProductListByOrderDtoList(List<OrderDto> cartList) {
+    public List<ProductDto> getProductListByOrderDtoList(List<OrderDto> cartList) {
         Map<String, Object> map = new HashMap<>();
         map.put("productDetailNo", cartList.get(0).getMemberNo());
         map.put("cartList", cartList);
-        List<ProductVo> result = sqlSession.selectList("product.getProductListByOrderDtoList", map);
+        List<ProductDto> result = sqlSession.selectList("product.getProductListByOrderDtoList", map);
 
         for (int i=0 ; i< cartList.size() ; i++){
-            result.get(i).getOptionStockVo().get(0).setStock(cartList.get(i).getStock());
+            result.get(i).setStock(cartList.get(i).getStock());
         }
 
         return result;
