@@ -44,6 +44,20 @@ spring:
     aop:
         auto: true
 
+    application:
+        name: noahshop-backend
+
+    #zipkin
+    zipkin:
+        base-url: http://127.0.0.1:9411/
+
+    #sleuth
+    sleuth:
+        sampler:
+            probability: 1
+        enabled: true
+
+
 # mybatis
 mybatis:
     config-location: classpath:com/cafe24/config/app/mybatis/configuration.xml
