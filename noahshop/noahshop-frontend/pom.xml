@@ -17,8 +17,25 @@
 		<!-- mysql-connector-version>5.1.38</mysql-connector-version -->
 		<jcloverslf4j.version>1.7.6</jcloverslf4j.version>
 		<logback.version>1.1.1</logback.version>
-	</properties>
-  
+	 	 <brave.version>5.6.6</brave.version>
+	  <log4j.version>2.11.2</log4j.version>
+  </properties>
+
+
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.zipkin.brave</groupId>
+				<artifactId>brave-bom</artifactId>
+				<version>${brave.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
   
   <dependencies>
 		<!-- Spring Core -->
@@ -224,5 +241,65 @@
 			<version>${logback.version}</version>
 		</dependency>
 
-	</dependencies>
+
+	  <dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpclient</artifactId>
+		  <version>4.5.9</version>
+	  </dependency>
+
+
+	  <!-- Adds the MVC class and method names to server spans -->
+	  <dependency>
+		  <groupId>io.zipkin.brave</groupId>
+		  <artifactId>brave-instrumentation-spring-webmvc</artifactId>
+	  </dependency>
+	  <!-- Instruments the underlying HttpClient requests that call the backend -->
+	  <dependency>
+		  <groupId>io.zipkin.brave</groupId>
+		  <artifactId>brave-instrumentation-httpclient</artifactId>
+	  </dependency>
+
+	  <!-- Integrates so you can use log patterns like %X{traceId}/%X{spanId} -->
+	  <dependency>
+		  <groupId>org.apache.logging.log4j</groupId>
+		  <artifactId>log4j-core</artifactId>
+		  <version>${log4j.version}</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.apache.logging.log4j</groupId>
+		  <artifactId>log4j-jul</artifactId>
+		  <version>${log4j.version}</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.apache.logging.log4j</groupId>
+		  <artifactId>log4j-jcl</artifactId>
+		  <version>${log4j.version}</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.apache.logging.log4j</groupId>
+		  <artifactId>log4j-slf4j-impl</artifactId>
+		  <version>${log4j.version}</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>io.zipkin.brave</groupId>
+		  <artifactId>brave-context-log4j2</artifactId>
+	  </dependency>
+
+      <!-- The below are needed to report traces to http://localhost:9411/api/v2/spans -->
+      <dependency>
+          <groupId>io.zipkin.brave</groupId>
+          <artifactId>brave-spring-beans</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>io.zipkin.brave</groupId>
+          <artifactId>brave</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>io.zipkin.reporter2</groupId>
+          <artifactId>zipkin-sender-okhttp3</artifactId>
+      </dependency>
+
+
+  </dependencies>
 </project>

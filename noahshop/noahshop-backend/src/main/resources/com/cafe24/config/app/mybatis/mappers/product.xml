@@ -118,6 +118,7 @@
 			<id property="productDetailNo" column="productDetailNo"/>
 			<id property="optionChild1No" column="optionChild1No"/>
 			<id property="optionChild2No" column="optionChild2No"/>
+			<id property="optionChild1Name" column="optionChild1Name"/>
 
 		</collection>
 	</resultMap>
