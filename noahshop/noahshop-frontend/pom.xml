@@ -18,7 +18,7 @@
 		<jcloverslf4j.version>1.7.6</jcloverslf4j.version>
 		<logback.version>1.1.1</logback.version>
 	 	 <brave.version>5.6.6</brave.version>
-	  <log4j.version>2.11.2</log4j.version>
+	  <log4j.version>2.16.0</log4j.version>
   </properties>
 
 
